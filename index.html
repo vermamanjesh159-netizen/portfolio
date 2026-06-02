@@ -3,209 +3,632 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hetvi Tank - Python Developer</title>
+    <title>Manjesh Verma — Python Developer</title>
+    <meta name="description" content="Portfolio of Manjesh Verma — Python Developer with 3+ years of experience in FastAPI, AI/ML, and Cloud Technologies. Building fast, scalable applications.">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
-    <script defer src="script.js"></script>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-    <header>
+
+    <!-- 3D Canvas Background -->
+    <canvas id="three-canvas"></canvas>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation -->
+    <header id="main-header">
         <nav>
-            <div class="logo">HT</div>
-            <button class="mobile-nav-toggle">
-                <i class="fas fa-bars"></i>
+            <a href="#hero" class="nav-logo">
+                <span class="logo-bracket">[</span>MV<span class="logo-bracket">]</span>
+            </a>
+            <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
             </button>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#certifications">Certifications</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#awards">Awards</a></li>
-                <li><a href="#contact">Contact</a></li>
-            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about" data-key="A"><span class="nav-key">[A]</span> About</a></li>
+                <li><a href="#experience" data-key="E"><span class="nav-key">[E]</span> Experience</a></li>
+                <li><a href="#skills" data-key="S"><span class="nav-key">[S]</span> Skills</a></li>
+                <li><a href="#ai-workflow" data-key="I"><span class="nav-key">[I]</span> AI Workflows</a></li>
+                <li><a href="#certifications" data-key="C"><span class="nav-key">[C]</span> Certs</a></li>
+                <li><a href="#projects" data-key="P"><span class="nav-key">[P]</span> Projects</a></li>
+                <li><a href="#contact" data-key="X"><span class="nav-key">[X]</span> Contact</a></li>
             </ul>
         </nav>
     </header>
 
+    <!-- Side Navigation Indicator -->
+    <aside class="side-nav" id="sideNav">
+        <div class="side-nav-track">
+            <div class="side-nav-progress" id="sideNavProgress"></div>
+        </div>
+        <ul>
+            <li><a href="#hero" class="side-nav-link active" data-section="hero"><span class="dot"></span><span class="label">HOME</span></a></li>
+            <li><a href="#about" class="side-nav-link" data-section="about"><span class="dot"></span><span class="label">ABOUT</span></a></li>
+            <li><a href="#experience" class="side-nav-link" data-section="experience"><span class="dot"></span><span class="label">EXPERIENCE</span></a></li>
+            <li><a href="#skills" class="side-nav-link" data-section="skills"><span class="dot"></span><span class="label">SKILLS</span></a></li>
+            <li><a href="#ai-workflow" class="side-nav-link" data-section="ai-workflow"><span class="dot"></span><span class="label">AI WORKFLOWS</span></a></li>
+            <li><a href="#certifications" class="side-nav-link" data-section="certifications"><span class="dot"></span><span class="label">CERTS</span></a></li>
+            <li><a href="#projects" class="side-nav-link" data-section="projects"><span class="dot"></span><span class="label">PROJECTS</span></a></li>
+            <li><a href="#contact" class="side-nav-link" data-section="contact"><span class="dot"></span><span class="label">CONTACT</span></a></li>
+        </ul>
+    </aside>
+
     <main>
-        <section id="home" class="hero">
-            <div class="hero-content" >
-                <h1>Hetvi Tank</h1>
-                <h2>Python Developer</h2>
-                <p>3 Years of Experience in FastAPI, AI/ML</p>
-                <p> and Cloud Technologies</p>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn primary-btn">Contact Me</a>
-                    <a href="doc/resume.pdf" target="_blank" class="btn secondary-btn">Resume</a>
-                    <!-- <a href="#projects" class="btn secondary-btn">View Projects</a> -->
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="hero-car-bg">
+                <div class="hero-car-sprite"></div>
+            </div>
+            <div class="hero-content">
+                <div class="hero-tag">
+                    <span class="tag-dot"></span>
+                    <span>Available for opportunities</span>
+                </div>
+                <h1 class="hero-title">
+                    <span class="title-line" data-delay="0">MANJESH</span>
+                    <span class="title-line accent" data-delay="1">VERMA</span>
+                </h1>
+                <p class="hero-subtitle">Python Developer</p>
+                <div class="hero-cta">
+                    <a href="#contact" class="btn btn-primary" id="heroContactBtn">
+                        <span>Get in Touch</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="doc/resume.pdf" target="_blank" class="btn btn-outline" id="heroResumeBtn">
+                        <span>Resume</span>
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
+                <div class="hero-terminal">
+                    <div class="terminal-header">
+                        <span class="terminal-dot red"></span>
+                        <span class="terminal-dot yellow"></span>
+                        <span class="terminal-dot green"></span>
+                        <span class="terminal-title">terminal</span>
+                    </div>
+                    <div class="terminal-body">
+                        <span class="terminal-prompt">$</span>
+                        <span class="terminal-text" id="terminalText"></span>
+                        <span class="terminal-cursor">|</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="about" class="about">
-            <h2>About Me</h2>
-            <div class="about-content" >
-                <div class="about-text" >
-                    <p>
-                        🚀 Passionate Python Developer with 2.5+ years of experience in building fast, scalable, and high-performance applications using FastAPI.
-                    </p>
-                    <p>
-                        💡 I specialize in backend development, API design, and database integration, working with MySQL, PostgreSQL, and MongoDB to ensure smooth data management.
-                    </p>
-                    <p>
-                        🤖 I have hands-on experience with AI/ML tools like Amazon Lex, Rekognition, and Textract, using them to automate workflows and enhance intelligence in applications.
-                    </p>
-                    <p>☁️ Skilled in AWS & Google Cloud, I build reliable and scalable cloud solutions to solve real-world problems.</p>
-                    <p>💻 Always exploring new tech, I love creating impactful and efficient software solutions. Let's build something amazing together! 🚀✨</p>
+        <!-- About Section -->
+        <section id="about" class="content-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-tag">01</span>
+                    <h2 class="section-title">About <span class="accent">Me</span></h2>
                 </div>
-                <div id  = "skills"class="tech-stack" >
-                    <h3>Technology Stack</h3>
-                    <ul>
-                        <li><i class="fas fa-code"></i> Python</li>
-                        <li><i class="fas fa-brain"></i> AI/ML</li>
-                        <li><i class="fas fa-server"></i> FastAPI, Django</li>
-                        <li><i class="fas fa-database"></i> MySQL, PostgreSQL, MongoDB</li>
-                        <li><i class="fas fa-docker"></i> Docker</li>
-                        <li><i class="fas fa-cloud"></i> AWS &amp; Google Cloud</li>
-                    </ul>
+                <div class="about-grid">
+                    <div class="about-card glass-card">
+                        <div class="about-text">
+                            <div class="about-item">
+                                <span class="about-emoji"></span>
+                                <p>Passionate Python Developer with 3+ years of experience in building fast, scalable, and high-performance applications using FastAPI and NestJS.</p>
+                            </div>
+                            <div class="about-item">
+                                <span class="about-emoji"></span>
+                                <p>I specialize in backend systems, API architecture, and database integrations, leveraging PostgreSQL, Supabase (BaaS), MongoDB, and MySQL for seamless data management.</p>
+                            </div>
+                            <div class="about-item">
+                                <span class="about-emoji"></span>
+                                <p>I have extensive experience building AI-driven software, deploying Retrieval-Augmented Generation (RAG) pipelines, and leveraging LangChain to build intelligent, context-aware applications.</p>
+                            </div>
+                            <div class="about-item">
+                                <span class="about-emoji"></span>
+                                <p>Skilled in modern cloud workflows & DevOps, I containerize environments using Docker, deploy applications via Netlify, and manage infrastructure on Google Cloud Platform.</p>
+                            </div>
+                            <div class="about-item">
+                                <span class="about-emoji"></span>
+                                <p>Always exploring new tech, I love creating impactful and efficient software solutions. Let's build something amazing together!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat-card glass-card">
+                            <div class="stat-value">
+                                <span class="stat-number" data-count="3">0</span>
+                                <span class="stat-suffix">+</span>
+                            </div>
+                            <span class="stat-label">Years Experience</span>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <div class="stat-value">
+                                <span class="stat-number" data-count="4">0</span>
+                                <span class="stat-suffix">+</span>
+                            </div>
+                            <span class="stat-label">Live Projects</span>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <div class="stat-value">
+                                <span class="stat-number" data-count="3">0</span>
+                                <span class="stat-suffix">+</span>
+                            </div>
+                            <span class="stat-label">Practice Projects</span>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <div class="stat-value">
+                                <span class="stat-number" data-count="3">0</span>
+                            </div>
+                            <span class="stat-label">Certifications</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
-        
-        <section id="certifications" class="certifications">
-            <h2>Certifications</h2>
-            <div class="cert-grid">
-                <div class="cert-card">
-                    <img src="doc/images/google.png" alt="Google Cloud Logo" style="width: 60px; height: 55px; border-radius: 50%;" />
-                    <h3>Google Associate Cloud Engineer</h3>
-                    <a href="https://www.credly.com/badges/5e384f78-45ba-4e6b-8285-af301d88d6c4/linked_in_profile" target="_blank">
-                        <p>Google Cloud Platform</p>
-                    </a>
-                    <span class="date">2025</span>
-                </div>
-                
-                <div class="cert-card">
-                    <img src="doc/images/git.png" alt="GitHub Logo" style="width: 60px; height: 60px; border-radius: 50%;" />
 
-                    <h3>GIT Foundations</h3>
-                    <a href="https://www.credly.com/badges/25dd087f-99ed-475b-ba25-b0fa8ceb5aeb/linked_in_profile" target="_blank">
-                        <p>GitHub</p>
-                    </a>
-                    <span class="date">2024</span>
+        <!-- Experience Section -->
+        <section id="experience" class="content-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-tag">02</span>
+                    <h2 class="section-title">Professional <span class="accent">Experience</span></h2>
                 </div>
-            
-                <div class="cert-card">
-                    <img src="doc/images/aws.png" alt="AWS Logo" style="width: 60px; height: 60px; border-radius: 50%;"/>
-                    <h3>AWS Cloud Practitioner</h3>
-                    <a href="https://www.credly.com/badges/6a57a7e5-7f8e-401d-b1af-a4e1d36002c2/linked_in_profile" target="_blank">
-                        <p>Amazon Web Services</p>
-                    </a>
-                    <span class="date">2023</span>
+                <div class="experience-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot current"></div>
+                        <div class="experience-card glass-card">
+                            <div class="experience-header">
+                                <div class="experience-title-group">
+                                    <h3>Python Developer</h3>
+                                    <a href="https://shantiinfosoft.com/" target="_blank" class="company-name">Shanti Infosoft LLP <i class="fas fa-external-link-alt" style="font-size: 0.8rem; margin-left: 4px;"></i></a>
+                                </div>
+                                <span class="experience-date date-present">Sep 2025 – Present</span>
+                            </div>
+                            <p class="company-location"><i class="fas fa-map-marker-alt"></i> Indore, India</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="experience-card glass-card">
+                            <div class="experience-header">
+                                <div class="experience-title-group">
+                                    <h3>Software Developer</h3>
+                                    <a href="https://fxbytes.com/" target="_blank" class="company-name">FxBytes Technologies Pvt. Ltd. <i class="fas fa-external-link-alt" style="font-size: 0.8rem; margin-left: 4px;"></i></a>
+                                </div>
+                                <span class="experience-date">July 2023 – Aug 2025</span>
+                            </div>
+                            <p class="company-location"><i class="fas fa-map-marker-alt"></i> Indore, India</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
         </section>
 
-        <section id="projects">
-            <h2>Projects</h2>
-            <div class="projects-container">
-                <button class="slide-left">&#10094;</button>
+        <!-- Skills Section -->
+        <section id="skills" class="content-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-tag">03</span>
+                    <h2 class="section-title">Tech <span class="accent">Stack & Expertise</span></h2>
+                </div>
+                <div class="skills-categories-grid">
+                    <!-- Category 1: Backend & Languages -->
+                    <div class="skills-category-card glass-card" data-tilt>
+                        <div class="category-header">
+                            <div class="category-icon icon-backend">
+                                <i class="fas fa-terminal"></i>
+                            </div>
+                            <h3>Backend & Languages</h3>
+                        </div>
+                        <p class="category-desc">Designing robust backend logic, asynchronous workflows, and high-performance server architectures.</p>
+                        
+                        <div class="skills-list">
+                            <div class="skill-item">
+                                <span class="skill-name">Python</span>
+                                <span class="skill-level badge-expert">Expert</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">FastAPI</span>
+                                <span class="skill-level badge-expert">Expert</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Django</span>
+                                <span class="skill-level badge-advanced">Advanced</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">NestJS</span>
+                                <span class="skill-level badge-proficient">Proficient</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">QuickBooks API</span>
+                                <span class="skill-level badge-advanced">Advanced</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Graph Explorer (APIs)</span>
+                                <span class="skill-level badge-advanced">Advanced</span>
+                            </div>
+                        </div>
+
+                        <div class="category-bullets">
+                            <h4>Key Strengths</h4>
+                            <ul>
+                                <li>Building scalable, ultra-fast asynchronous REST APIs with FastAPI</li>
+                                <li>Rapid prototyping and web app development with Django MVC architecture</li>
+                                <li>Designing structured, enterprise-ready backend systems with NestJS & TypeScript</li>
+                                <li>Integrating QuickBooks API, Graph Explorer, and OAuth2 session workflows</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Category 2: AI / ML & Automation -->
+                    <div class="skills-category-card glass-card" data-tilt>
+                        <div class="category-header">
+                            <div class="category-icon icon-ai">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3>Artificial Intelligence (AI)</h3>
+                        </div>
+                        <p class="category-desc">Designing and implementing intelligent systems, context-aware LLM applications, and predictive data pipelines.</p>
+                        
+                        <div class="skills-list">
+                            <div class="skill-item">
+                                <span class="skill-name">Retrieval-Augmented Generation (RAG)</span>
+                                <span class="skill-level badge-advanced">Advanced</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">LangChain ecosystem</span>
+                                <span class="skill-level badge-advanced">Advanced</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">AI / ML & Automation</span>
+                                <span class="skill-level badge-advanced">Advanced</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Predictive Algorithms</span>
+                                <span class="skill-level badge-proficient">Proficient</span>
+                            </div>
+                        </div>
+
+                        <div class="category-bullets">
+                            <h4>Key Strengths</h4>
+                            <ul>
+                                <li>Building production-grade Retrieval-Augmented Generation (RAG) workspaces</li>
+                                <li>Developing advanced LLM agents and multi-step reasoning workflows with LangChain</li>
+                                <li>Creating predictive algorithms and automated data-processing pipelines</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Category 3: Cloud & DevOps -->
+                    <div class="skills-category-card glass-card" data-tilt>
+                        <div class="category-header">
+                            <div class="category-icon icon-cloud">
+                                <i class="fas fa-cloud"></i>
+                            </div>
+                            <h3>Cloud & DevOps</h3>
+                        </div>
+                        <p class="category-desc">Deploying scalable web applications, containerizing services, and configuring automated CI/CD deployment pipelines.</p>
+                        
+                        <div class="skills-list">
+                            <div class="skill-item">
+                                <span class="skill-name">Netlify</span>
+                                <span class="skill-level badge-expert">Expert</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Google Cloud Platform</span>
+                                <span class="skill-level badge-advanced">Advanced</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Docker</span>
+                                <span class="skill-level badge-expert">Expert</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Git / GitHub</span>
+                                <span class="skill-level badge-expert">Expert</span>
+                            </div>
+                        </div>
+
+                        <div class="category-bullets">
+                            <h4>Key Strengths</h4>
+                            <ul>
+                                <li>Creating production-ready containerized environments using Docker</li>
+                                <li>Deploying modern frontends and serverless edge functions on Netlify</li>
+                                <li>Managing cloud architectures, compute resources, and IAM security on Google Cloud</li>
+                                <li>Setting up robust CI/CD workflows and secure environments via GitHub Actions</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Category 4: Databases & Architecture -->
+                    <div class="skills-category-card glass-card" data-tilt>
+                        <div class="category-header">
+                            <div class="category-icon icon-database">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h3>Databases & Architecture</h3>
+                        </div>
+                        <p class="category-desc">Designing scalable database schemas, query optimization, and leveraging Backend-as-a-Service (BaaS) platforms.</p>
+                        
+                        <div class="skills-list">
+                            <div class="skill-item">
+                                <span class="skill-name">PostgreSQL</span>
+                                <span class="skill-level badge-expert">Expert</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Supabase (BaaS)</span>
+                                <span class="skill-level badge-expert">Expert</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">MongoDB</span>
+                                <span class="skill-level badge-advanced">Advanced</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">MySQL</span>
+                                <span class="skill-level badge-advanced">Advanced</span>
+                            </div>
+                        </div>
+
+                        <div class="category-bullets">
+                            <h4>Key Strengths</h4>
+                            <ul>
+                                <li>Relational and non-relational database design, query planning, and optimization</li>
+                                <li>Building real-time backends with Supabase, custom functions, and Row-Level Security (RLS)</li>
+                                <li>Implementing scalable document storage with MongoDB and building automated pipelines</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Workflow Section -->
+        <section id="ai-workflow" class="content-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-tag">04</span>
+                    <h2 class="section-title">AI-Powered Agentic Workflows <span class="accent">for Modern Software Development</span></h2>
+                </div>
+                <p class="contact-subtitle" style="margin-top: -2rem; margin-bottom: 4rem; text-align: center;">Leveraging advanced AI systems and agentic coding workflows to accelerate development velocity and build robust software.</p>
+                <div class="workflow-grid">
+                    <!-- Tool 1: Antigravity -->
+                    <div class="workflow-card glass-card" data-tilt>
+                        <div class="workflow-icon" style="background: rgba(34,211,238,0.15); color: var(--accent3);">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>Antigravity (DeepMind)</h3>
+                        <div class="project-glow"></div>
+                    </div>
+
+                    <!-- Tool 2: Cursor AI -->
+                    <div class="workflow-card glass-card" data-tilt>
+                        <div class="workflow-icon" style="background: rgba(192,132,252,0.15); color: var(--accent2);">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>Cursor AI Editor</h3>
+                        <div class="project-glow"></div>
+                    </div>
+
+                    <!-- Tool 3: Advanced Claude Prompting -->
+                    <div class="workflow-card glass-card" data-tilt>
+                        <div class="workflow-icon" style="background: rgba(129,140,248,0.15); color: var(--accent);">
+                            <i class="fas fa-terminal"></i>
+                        </div>
+                        <h3>Claude & Prompting</h3>
+                        <div class="project-glow"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section id="certifications" class="content-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-tag">05</span>
+                    <h2 class="section-title">Certified <span class="accent">Expertise</span></h2>
+                </div>
+                <div class="cert-grid">
+                    <div class="cert-card glass-card" data-tilt>
+                        <div class="cert-badge">
+                            <div class="cert-badge-icon" style="color: #0078d4;">
+                                <i class="fab fa-microsoft"></i>
+                            </div>
+                        </div>
+                        <div class="cert-info">
+                            <h3>Microsoft Azure Architect Technologies</h3>
+                            <a href="https://drive.google.com/file/d/1V1TbjSUPJiE_cEhfXwSFSwqnVkS6z0as/view" target="_blank" class="cert-issuer">
+                                <i class="fas fa-external-link-alt"></i>
+                                Azure Web Apps
+                            </a>
+                            <span class="cert-date">2024</span>
+                        </div>
+                        <div class="cert-glow glow-cyan"></div>
+                    </div>
+                    <div class="cert-card glass-card" data-tilt>
+                        <div class="cert-badge">
+                            <div class="cert-badge-icon" style="color: #fbbf24;">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                        </div>
+                        <div class="cert-info">
+                            <h3>BI - Business Intelligence</h3>
+                            <a href="https://drive.google.com/file/d/1sRgHrfviNeWz4b7OkAiD36aAnMHJa0b0/view" target="_blank" class="cert-issuer">
+                                <i class="fas fa-external-link-alt"></i>
+                                Credential
+                            </a>
+                            <span class="cert-date">2024</span>
+                        </div>
+                        <div class="cert-glow glow-yellow"></div>
+                    </div>
+                    <div class="cert-card glass-card" data-tilt>
+                        <div class="cert-badge">
+                            <div class="cert-badge-icon" style="color: #387eb8;">
+                                <i class="fab fa-python"></i>
+                            </div>
+                        </div>
+                        <div class="cert-info">
+                            <h3>Data Analysis With Python</h3>
+                            <a href="https://drive.google.com/file/d/1P1AcPjB4VUbeT4UPqOezEWU06SfUWh-n/view" target="_blank" class="cert-issuer">
+                                <i class="fas fa-external-link-alt"></i>
+                                Credential
+                            </a>
+                            <span class="cert-date">2023</span>
+                        </div>
+                        <div class="cert-glow glow-blue"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="content-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-tag">06</span>
+                    <h2 class="section-title">Featured <span class="accent">Projects</span></h2>
+                </div>
                 <div class="projects-grid">
-                    <div class="project-card">
-                        <i class="fas fa-database"></i>
-                        <h3>Konark Inventory</h3>
-                        <p>AI/ML-based inventory management with Raspberry Pi OS.</p>
+                    <article class="project-card glass-card" data-tilt>
+                        <div class="project-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Conversational DB RAG Chatbot</h3>
+                        <p>Intelligent query pipeline querying structured datasets. Integrates pgvector, hybrid search, and OpenAI GPT-4 function calling for dynamic query rewriting.</p>
                         <div class="tech-tags">
+                            <span>Python</span>
                             <span>FastAPI</span>
+                            <span>RAG</span>
                             <span>PostgreSQL</span>
-                            <span>YOLOv8</span>
+                            <span>pgvector</span>
                         </div>
-                    </div>
-                    <div class="project-card">
-                        <i class="fas fa-cogs"></i>
-                        <h3>ETL Pipeline</h3>
-                        <p>Automated ETL pipeline for business insights.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/manjeshverma" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <a href="https://rag-document-reader.onrender.com/" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                        <div class="project-glow"></div>
+                    </article>
+                    <article class="project-card glass-card" data-tilt>
+                        <div class="project-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3>AgriFeed Portal</h3>
+                        <p>Smart agriculture platform managing crop feeds, vendor catalog distribution, and orders. Features real-time state synchronization and responsive layouts.</p>
+                        <div class="tech-tags">
+                            <span>React</span>
+                            <span>Vercel</span>
+                            <span>API Connection</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/manjeshverma" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <a href="https://agriculture-ycth.vercel.app/" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                        <div class="project-glow"></div>
+                    </article>
+                    <article class="project-card glass-card" data-tilt>
+                        <div class="project-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <h3>RedStore Django</h3>
+                        <p>Modern Django e-commerce platform featuring dynamic product catalogs, Stripe checkout integration, secure user sessions, and optimized hybrid JSON database architecture.</p>
                         <div class="tech-tags">
                             <span>Python</span>
-                            <span>Amazon Lex</span>
-                            <span>AWS Lambda</span>
+                            <span>Django</span>
+                            <span>Stripe</span>
+                            <span>PostgreSQL</span>
                         </div>
-                    </div>
-                  
-                    <div class="project-card">
-                        <i class="fas fa-poll"></i>
-                        <h3>Survey APIs</h3>
-                        <p>Survey management APIs with FastAPI.</p>
-                        <div class="tech-tags">
-                            <span>Python</span>
-                            <span>FastAPI</span>
+                        <div class="project-links">
+                            <a href="https://github.com/manjeshverma" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <a href="https://redstore-django.onrender.com/" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
                         </div>
-                    </div>
-                    <div class="project-card">
-                        <i class="fas fa-shopping-cart"></i>
-                        <h3>Orderx</h3>
-                        <p>Vendor order collection & management system.</p>
-                        <div class="tech-tags">
-                            <span>Laravel</span>
+                        <div class="project-glow"></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="content-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-tag">07</span>
+                    <h2 class="section-title">Let's <span class="accent">Connect</span></h2>
+                </div>
+                <p class="contact-subtitle">Have a project in mind? Let's build something amazing together.</p>
+                
+                <!-- Direct Contact Cards showing readable text -->
+                <div class="direct-contact-grid">
+                    <div class="direct-contact-card glass-card" data-tilt>
+                        <div class="contact-icon-wrapper">
+                            <i class="far fa-envelope"></i>
                         </div>
-                    </div>
-                    <div class="project-card">
-                        <i class="fas fa-truck"></i>
-                        <h3>Renuka Logistics</h3>
-                        <p>IoT-based logistics automation using QR codes.</p>
-                        <div class="tech-tags">
-                            <span>IoT</span>
-                            <span>QR Code</span>
+                        <div class="contact-info-block">
+                            <span class="contact-label">Email Me</span>
+                            <a href="mailto:manjeshverma124@gmail.com" class="contact-value-link">manjeshverma124@gmail.com</a>
                         </div>
-                    </div>
-                    <div class="project-card">
-                        <i class="fas fa-wallet"></i>
-                        <h3>Xpense</h3>
-                        <p>Led project task management for Xpense, enhancing features to align with SAP Concur.</p>
-                        <div class="tech-tags">
-                            <span>Management</span>
-                            
-                        </div>
+                        <button class="copy-btn" data-copy="manjeshverma124@gmail.com" title="Copy Email">
+                            <i class="far fa-copy"></i>
+                        </button>
+                        <div class="project-glow"></div>
                     </div>
                     
+                    <div class="direct-contact-card glass-card" data-tilt>
+                        <div class="contact-icon-wrapper">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="contact-info-block">
+                            <span class="contact-label">Call / Message</span>
+                            <a href="tel:+917400667713" class="contact-value-link">+91 74006 67713</a>
+                        </div>
+                        <button class="copy-btn" data-copy="+917400667713" title="Copy Phone Number">
+                            <i class="far fa-copy"></i>
+                        </button>
+                        <div class="project-glow"></div>
+                    </div>
                 </div>
-                <button class="slide-right">&#10095;</button>
-                
-            </div>
-        </section>
-        
-        
-        <section id="awards" class="awards">
-            <h2>Awards &amp; Achievements</h2>
-            <div class="award-card">
-                <i class="fas fa-trophy"></i>
-                <h3>Superstar Individual Award</h3>
-                <p>Recognized for exceptional performance and valuable contributions across all my projects.</p>
-                
-            </div>
-        </section>
 
-        <section id="contact" class="contact">
-            <h2>Let's Connect</h2>
-            <div class="contact-grid">
-                <a href="https://www.linkedin.com/in/hetvitank/" target="_blank" class="contact-card" data-tilt>
-                    <i class="fab fa-linkedin"></i>
-                   
-                </a>
-                <a href="https://github.com/HetviTank" target="_blank" class="contact-card" data-tilt>
-                    <i class="fab fa-github"></i>
-                   
-                </a>
-                <a href="mailto:hetvitank0@gmail.com" target="_blank" class="contact-card" data-tilt>
-                    <i class="far fa-envelope"></i>
-                </a>
+                <!-- Circular Social Buttons matching requested design -->
+                <div class="social-links-row">
+                    <a href="https://www.linkedin.com/in/manjesh-verma/" target="_blank" class="social-circle-btn" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/manjeshverma" target="_blank" class="social-circle-btn" title="GitHub (Primary)">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://github.com/vermamanjesh159-netizen" target="_blank" class="social-circle-btn" title="GitHub (Secondary)">
+                        <i class="fas fa-code-branch"></i>
+                    </a>
+                    <a href="https://wa.me/917400667713" target="_blank" class="social-circle-btn" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
             </div>
         </section>
-        
     </main>
-    <p>&copy; 2024 Hetvi Tank. All rights reserved.</p>
- 
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-bracket">[</span>MV<span class="logo-bracket">]</span>
+            </div>
+            <p class="footer-copy">&copy; 2026 Manjesh Verma. Built with passion.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
