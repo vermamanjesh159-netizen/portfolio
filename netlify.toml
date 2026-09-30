@@ -13,13 +13,6 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: https:; font-src 'self' https: data:; style-src 'self' https: 'unsafe-inline';"
 
-# Ensure PDF resume opens inline in browser rather than forcing download
-[[headers]]
-  for = "/doc/resume.pdf"
-  [headers.values]
-    Content-Type = "application/pdf"
-    Content-Disposition = "inline"
-
 # Long-term caching configuration for static assets
 [[headers]]
   for = "/**/*.css"
