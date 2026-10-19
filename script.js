@@ -455,24 +455,36 @@ window.addEventListener('scroll', updateScrollProgress);
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 
-    drawers.forEach((drawer, i) => {
-      if (i < drawers.length - 1) {
-        const nextDrawer = drawers[i + 1];
-        const inner = drawer.querySelector('.drawer-inner') || drawer;
+    // Stacking card scale & dim effect: strictly for desktop viewports (> 1080px)
+    // where drawers use position: sticky stacking.
+    ScrollTrigger.matchMedia({
+      "(min-width: 1081px)": function () {
+        drawers.forEach((drawer, i) => {
+          if (i < drawers.length - 1) {
+            const nextDrawer = drawers[i + 1];
+            const inner = drawer.querySelector('.drawer-inner') || drawer;
 
-        // Card scales down to 0.96 and gently dims only as next card actually rises to overlap it
-        gsap.to(inner, {
-          scale: 0.96,
-          opacity: 0.5,
-          filter: 'brightness(0.75)',
-          ease: 'power1.out',
-          scrollTrigger: {
-            trigger: nextDrawer,
-            start: 'top 70%',     // only begins dimming when next card reaches 70% of viewport
-            end: 'top 10%',       // finishes dimming when next card reaches top
-            scrub: true,
-            invalidateOnRefresh: true,
+            gsap.to(inner, {
+              scale: 0.96,
+              opacity: 0.5,
+              filter: 'brightness(0.75)',
+              ease: 'power1.out',
+              scrollTrigger: {
+                trigger: nextDrawer,
+                start: 'top 70%',
+                end: 'top 10%',
+                scrub: true,
+                invalidateOnRefresh: true,
+              }
+            });
           }
+        });
+      },
+      "(max-width: 1080px)": function () {
+        // Clean reset for mobile & tablet screens
+        drawers.forEach((drawer) => {
+          const inner = drawer.querySelector('.drawer-inner') || drawer;
+          gsap.set(inner, { clearProps: 'transform,opacity,filter' });
         });
       }
     });

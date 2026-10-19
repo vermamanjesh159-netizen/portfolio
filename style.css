@@ -1453,8 +1453,7 @@ main { position: relative; z-index: 1; }
   box-shadow: none;
 }
 .project-drawer:last-child {
-  height: 90vh;
-  min-height: 580px;
+  margin-bottom: 2.5rem;
 }
 #project-1 { z-index: 10; }
 #project-2 { z-index: 20; }
@@ -2298,53 +2297,90 @@ main { position: relative; z-index: 1; }
 
 /* Responsive styles for drawer layout */
 @media (max-width: 1080px) {
+  .projects-drawer-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding-bottom: 2rem;
+    height: auto !important;
+  }
+
+  .project-drawer,
+  .project-drawer:last-child {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin-bottom: 2.5rem !important;
+    z-index: 1 !important;
+  }
+
   .drawer-inner {
     grid-template-columns: 1fr;
-    height: auto;
-    max-height: none;
-    overflow-y: visible;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
-  .project-drawer {
-    height: auto;
-    min-height: 100vh;
-    padding: 85px 1.25rem 2.5rem;
-  }
+
   .drawer-visual {
     border-left: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     padding: 2rem 1.75rem;
   }
+
   .drawer-content {
     padding: 2.25rem 1.75rem;
   }
-}
-@media (max-width: 768px) {
-  .project-drawer {
-    position: relative;
-    top: 0 !important;
-    height: auto;
-    min-height: auto;
-    margin-bottom: 2rem;
-    padding: 1rem 0;
+
+  .project-drawer-nav {
+    top: auto !important;
+    position: relative !important;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 8px 12px;
+    margin: 1rem 0 2rem;
+    max-width: 100%;
   }
+
+  .project-drawer-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .drawer-nav-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 768px) {
   .projects-drawer-stack {
     gap: 2rem;
+    height: auto !important;
+  }
+  .project-drawer,
+  .project-drawer:last-child {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin-bottom: 2rem !important;
+    padding: 0 !important;
   }
   .drawer-inner {
-    max-height: none;
+    max-height: none !important;
+    height: auto !important;
     border-radius: 16px;
   }
   .drawer-title {
-    font-size: 1.5rem;
-  }
-  .project-drawer-nav {
-    top: 65px;
-    gap: 6px;
-    padding: 6px 12px;
-  }
-  .drawer-nav-btn {
-    padding: 6px 12px;
-    font-size: 0.75rem;
+    font-size: 1.45rem;
   }
   .visual-floating-badge {
     position: static;
@@ -2355,20 +2391,34 @@ main { position: relative; z-index: 1; }
     display: none;
   }
 }
+
 @media (max-width: 480px) {
   .drawer-content {
-    padding: 1.5rem 1.25rem;
+    padding: 1.4rem 1.1rem;
   }
   .drawer-visual {
-    padding: 1.5rem 1.25rem;
+    padding: 1.25rem 1.1rem;
   }
   .drawer-actions {
     flex-direction: column;
     width: 100%;
+    gap: 8px;
   }
   .drawer-btn {
     width: 100%;
     justify-content: center;
+    padding: 10px 14px;
+    font-size: 0.82rem;
+  }
+  .status-items-mini-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .status-item-row {
+    padding: 6px 8px;
+  }
+  .interactive-preview-box {
+    padding: 8px 10px;
   }
 }
 
@@ -2743,7 +2793,7 @@ footer {
 }
 
 /* ===== SECTION 3D BACKGROUNDS ===== */
-#about, #experience, #skills, #ai-workflow, #certifications, #contact {
+#about, #experience, #skills, #ai-workflow, #certifications {
   position: relative;
   overflow: hidden;
   z-index: 1;
@@ -2751,7 +2801,13 @@ footer {
 #projects {
   position: relative;
   overflow: visible !important;
-  z-index: 1;
+  z-index: 2;
+}
+#contact {
+  position: relative;
+  overflow: hidden;
+  z-index: 5;
+  clear: both;
 }
 
 #about::before, #experience::before, #skills::before, #ai-workflow::before, #certifications::before, #projects::before, #contact::before {
