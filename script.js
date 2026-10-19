@@ -215,12 +215,12 @@
   if (!el) return;
 
   const commands = [
-    'npx create-portfolio@latest ./',
-    'pip install fastapi uvicorn',
-    'gcloud auth login',
-    'docker build -t my-app .',
-    'python -m pytest --cov',
-    'git push origin main',
+    'pip install fastapi uvicorn langchain pgvector',
+    'npm install @nestjs/core @supabase/supabase-js',
+    'docker compose up -d postgres supabase mongodb',
+    'gcloud run deploy rag-service --platform managed',
+    'python -m pytest tests/ --cov=98.5%',
+    'git push origin main'
   ];
 
   let cmdIdx = 0, charIdx = 0, isDeleting = false;
@@ -414,5 +414,232 @@ window.addEventListener('scroll', updateScrollProgress);
         console.error('Failed to copy text: ', err);
       });
     });
+  });
+})();
+
+// ===== GSAP SCROLLTRIGGER FEATURED PROJECTS STACKING =====
+(function initProjectDrawers() {
+  const navBtns = document.querySelectorAll('.drawer-nav-btn');
+  const dotBtns = document.querySelectorAll('.proj-dot');
+  const drawers = document.querySelectorAll('.project-drawer');
+  const progressDots = document.getElementById('projectsProgressDots');
+  if (!drawers.length) return;
+
+  // Click navigation for top quick-jump buttons
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = btn.getAttribute('data-drawer');
+      const targetDrawer = document.getElementById(targetId);
+      if (targetDrawer) {
+        targetDrawer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        navBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+    });
+  });
+
+  // Click navigation for vertical dot buttons
+  dotBtns.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = dot.getAttribute('data-drawer');
+      const targetDrawer = document.getElementById(targetId);
+      if (targetDrawer) {
+        targetDrawer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Setup GSAP ScrollTrigger scrub
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+
+    drawers.forEach((drawer, i) => {
+      if (i < drawers.length - 1) {
+        const nextDrawer = drawers[i + 1];
+        const inner = drawer.querySelector('.drawer-inner') || drawer;
+
+        // Card scales down to 0.96 and gently dims only as next card actually rises to overlap it
+        gsap.to(inner, {
+          scale: 0.96,
+          opacity: 0.5,
+          filter: 'brightness(0.75)',
+          ease: 'power1.out',
+          scrollTrigger: {
+            trigger: nextDrawer,
+            start: 'top 70%',     // only begins dimming when next card reaches 70% of viewport
+            end: 'top 10%',       // finishes dimming when next card reaches top
+            scrub: true,
+            invalidateOnRefresh: true,
+          }
+        });
+      }
+    });
+
+    // Toggle visibility of right-side progress indicator inside #projects
+    ScrollTrigger.create({
+      trigger: '#projects',
+      start: 'top 60%',
+      end: 'bottom 40%',
+      onToggle: (self) => {
+        if (progressDots) {
+          if (self.isActive) progressDots.classList.add('visible');
+          else progressDots.classList.remove('visible');
+        }
+      }
+    });
+
+    // Synchronize active indicators with scroll position
+    drawers.forEach((drawer) => {
+      ScrollTrigger.create({
+        trigger: drawer,
+        start: 'top 50%',
+        end: 'bottom 50%',
+        onToggle: (self) => {
+          if (self.isActive) {
+            const activeId = drawer.getAttribute('id');
+            navBtns.forEach(btn => {
+              if (btn.getAttribute('data-drawer') === activeId) btn.classList.add('active');
+              else btn.classList.remove('active');
+            });
+            dotBtns.forEach(dot => {
+              if (dot.getAttribute('data-drawer') === activeId) dot.classList.add('active');
+              else dot.classList.remove('active');
+            });
+          }
+        }
+      });
+    });
+
+    window.addEventListener('load', () => ScrollTrigger.refresh());
+  } else {
+    // Pure fallback if GSAP is unavailable
+    function updateActiveDrawer() {
+      let activeId = '';
+      for (let i = drawers.length - 1; i >= 0; i--) {
+        const drawer = drawers[i];
+        const rect = drawer.getBoundingClientRect();
+        if (rect.top <= 260 && rect.bottom > 180) {
+          activeId = drawer.getAttribute('id');
+          break;
+        }
+      }
+      if (activeId) {
+        navBtns.forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-drawer') === activeId);
+        });
+        dotBtns.forEach(dot => {
+          dot.classList.toggle('active', dot.getAttribute('data-drawer') === activeId);
+        });
+      }
+    }
+    window.addEventListener('scroll', updateActiveDrawer, { passive: true });
+    updateActiveDrawer();
+  }
+
+  // SocialEngage AI platform preview switcher
+  const platformTabs = document.querySelectorAll('.plat-tab');
+  const previewText = document.getElementById('socialengage-preview-text');
+  
+  const platformResponses = {
+    linkedin: '"Insightful breakdown on SaaS retention metrics! The distinction between onboarding velocity and expansion revenue is crucial for enterprise scale."',
+    twitter: '"Spot on! Scaling past $1M ARR is 80% customer retention and 20% rapid product iteration. Great thread 🧵🚀"',
+    youtube: '"Exceptional breakdown! Timestamp 04:15 on RAG chunking latency strategies answered exactly what we were debugging in prod."'
+  };
+
+  if (platformTabs.length && previewText) {
+    platformTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        platformTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const platform = tab.getAttribute('data-platform');
+        if (platformResponses[platform]) {
+          previewText.style.opacity = '0';
+          setTimeout(() => {
+            previewText.textContent = platformResponses[platform];
+            previewText.style.opacity = '1';
+          }, 150);
+        }
+      });
+    });
+    previewText.style.transition = 'opacity 0.2s ease';
+  }
+
+  // Interactive Project Preview Lightbox Modal
+  const lightboxModal = document.getElementById('projectLightboxModal');
+  const lightboxBackdrop = document.getElementById('lightboxBackdrop');
+  const lightboxCloseBtn = document.getElementById('lightboxCloseBtn');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxTitle = document.getElementById('lightboxTitle');
+  const lightboxBadge = document.getElementById('lightboxBadge');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+  const lightboxLiveDemoBtn = document.getElementById('lightboxLiveDemoBtn');
+
+  function openLightbox(opts) {
+    if (!lightboxModal || !lightboxImg) return;
+    lightboxImg.src = opts.imgSrc || '';
+    lightboxTitle.textContent = opts.title || 'Project Interface';
+    lightboxBadge.textContent = opts.badge || 'PROJECT PREVIEW';
+    lightboxCaption.textContent = opts.caption || 'Interface Showcase';
+    if (lightboxLiveDemoBtn) {
+      lightboxLiveDemoBtn.href = opts.demoUrl || '#';
+      lightboxLiveDemoBtn.style.display = opts.demoUrl ? 'inline-flex' : 'none';
+    }
+    lightboxModal.classList.add('active');
+    lightboxModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    if (!lightboxModal) return;
+    lightboxModal.classList.remove('active');
+    lightboxModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  if (lightboxModal) {
+    const previewContainers = document.querySelectorAll('.preview-image-container');
+    previewContainers.forEach(container => {
+      container.addEventListener('click', (e) => {
+        // If clicking the live demo link directly, let it open normally
+        if (e.target.closest('.overlay-demo-btn')) return;
+
+        e.preventDefault();
+        const opts = {
+          imgSrc: container.getAttribute('data-full-img'),
+          title: container.getAttribute('data-title'),
+          badge: container.getAttribute('data-badge'),
+          demoUrl: container.getAttribute('data-demo'),
+          caption: container.getAttribute('data-caption')
+        };
+        openLightbox(opts);
+      });
+    });
+
+    if (lightboxCloseBtn) {
+      lightboxCloseBtn.addEventListener('click', closeLightbox);
+    }
+    if (lightboxBackdrop) {
+      lightboxBackdrop.addEventListener('click', closeLightbox);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightboxModal.classList.contains('active')) {
+        closeLightbox();
+      }
+    });
+  }
+
+  // Refresh ScrollTrigger when images finish loading to ensure pin accuracy
+  const previewImgs = document.querySelectorAll('.project-preview-img');
+  previewImgs.forEach(img => {
+    if (img.complete) {
+      if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    } else {
+      img.addEventListener('load', () => {
+        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+      });
+    }
   });
 })();

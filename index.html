@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manjesh Verma — Python Developer</title>
-    <meta name="description" content="Portfolio of Manjesh Verma — Python Developer with 3+ years of experience in FastAPI, AI/ML, and Cloud Technologies. Building fast, scalable applications.">
-    <link rel="stylesheet" href="style.css?v=1.0.2">
+    <title>Portfolio</title>
+    <meta name="description"
+        content="Portfolio of Manjesh Verma — Python Developer with 3+ years of experience in FastAPI, NestJS, AI/ML RAG pipelines, and Cloud Technologies on Google Cloud Platform. Building fast, scalable, and high-performance applications.">
+    <link rel="stylesheet" href="style.css?v=1.0.8">
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
+
 <body>
 
     <!-- 3D Canvas Background -->
@@ -50,14 +57,22 @@
             <div class="side-nav-progress" id="sideNavProgress"></div>
         </div>
         <ul>
-            <li><a href="#hero" class="side-nav-link active" data-section="hero"><span class="dot"></span><span class="label">HOME</span></a></li>
-            <li><a href="#about" class="side-nav-link" data-section="about"><span class="dot"></span><span class="label">ABOUT</span></a></li>
-            <li><a href="#experience" class="side-nav-link" data-section="experience"><span class="dot"></span><span class="label">EXPERIENCE</span></a></li>
-            <li><a href="#skills" class="side-nav-link" data-section="skills"><span class="dot"></span><span class="label">SKILLS</span></a></li>
-            <li><a href="#ai-workflow" class="side-nav-link" data-section="ai-workflow"><span class="dot"></span><span class="label">AI WORKFLOWS</span></a></li>
-            <li><a href="#certifications" class="side-nav-link" data-section="certifications"><span class="dot"></span><span class="label">CERTS</span></a></li>
-            <li><a href="#projects" class="side-nav-link" data-section="projects"><span class="dot"></span><span class="label">PROJECTS</span></a></li>
-            <li><a href="#contact" class="side-nav-link" data-section="contact"><span class="dot"></span><span class="label">CONTACT</span></a></li>
+            <li><a href="#hero" class="side-nav-link active" data-section="hero"><span class="dot"></span><span
+                        class="label">HOME</span></a></li>
+            <li><a href="#about" class="side-nav-link" data-section="about"><span class="dot"></span><span
+                        class="label">ABOUT</span></a></li>
+            <li><a href="#experience" class="side-nav-link" data-section="experience"><span class="dot"></span><span
+                        class="label">EXPERIENCE</span></a></li>
+            <li><a href="#skills" class="side-nav-link" data-section="skills"><span class="dot"></span><span
+                        class="label">SKILLS</span></a></li>
+            <li><a href="#ai-workflow" class="side-nav-link" data-section="ai-workflow"><span class="dot"></span><span
+                        class="label">AI WORKFLOWS</span></a></li>
+            <li><a href="#certifications" class="side-nav-link" data-section="certifications"><span
+                        class="dot"></span><span class="label">CERTS</span></a></li>
+            <li><a href="#projects" class="side-nav-link" data-section="projects"><span class="dot"></span><span
+                        class="label">PROJECTS</span></a></li>
+            <li><a href="#contact" class="side-nav-link" data-section="contact"><span class="dot"></span><span
+                        class="label">CONTACT</span></a></li>
         </ul>
     </aside>
 
@@ -69,6 +84,9 @@
             </div>
             <div class="hero-content">
                 <div class="hero-tag">
+                    <span class="hero-tag-avatar">
+                        <img src="images/profile.jpg" alt="Manjesh Verma">
+                    </span>
                     <span class="tag-dot"></span>
                     <span>Available for opportunities</span>
                 </div>
@@ -81,6 +99,10 @@
                     <a href="#contact" class="btn btn-primary" id="heroContactBtn">
                         <span>Get in Touch</span>
                         <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#projects" class="btn btn-secondary" style="margin-left: 12px;">
+                        <span>View Projects</span>
+                        <i class="fas fa-code"></i>
                     </a>
                 </div>
                 <div class="hero-terminal">
@@ -103,61 +125,255 @@
         <section id="about" class="content-section">
             <div class="section-container">
                 <div class="section-header">
-                    <span class="section-tag">01</span>
+                    <span class="section-tag">01 // PROFILE</span>
                     <h2 class="section-title">About <span class="accent">Me</span></h2>
+                    <p class="section-subtitle">Architecting high-throughput backends, enterprise RAG intelligence, and
+                        scalable cloud systems.</p>
                 </div>
                 <div class="about-grid">
                     <div class="about-card glass-card">
                         <div class="about-text">
+                            <!-- Item 1: Core Backend -->
                             <div class="about-item">
-                                <span class="about-emoji"></span>
-                                <p>Passionate Python Developer with 3+ years of experience in building fast, scalable, and high-performance applications using FastAPI and NestJS.</p>
+                                <div class="about-icon-box"><i class="fas fa-layer-group"></i></div>
+                                <div class="about-item-content">
+                                    <h4>High-Performance Backend & APIs</h4>
+                                    <p>Passionate <strong>Python Developer with 3+ years of production
+                                            experience</strong> engineering fast, scalable, and high-performance
+                                        applications using <strong>FastAPI</strong> and <strong>NestJS</strong> for
+                                        mission-critical microservices.</p>
+                                </div>
                             </div>
+
+                            <!-- Item 2: Database & Architecture -->
                             <div class="about-item">
-                                <span class="about-emoji"></span>
-                                <p>I specialize in backend systems, API architecture, and database integrations, leveraging PostgreSQL, Supabase (BaaS), MongoDB, and MySQL for seamless data management.</p>
+                                <div class="about-icon-box"><i class="fas fa-database"></i></div>
+                                <div class="about-item-content">
+                                    <h4>Backend Architecture & Multi-Database Systems</h4>
+                                    <p>I specialize in backend systems, API architecture, and complex database
+                                        integrations, leveraging <strong>PostgreSQL, Supabase (BaaS), MongoDB, and
+                                            MySQL</strong> for seamless data management, indexing, and high-concurrency
+                                        throughput.</p>
+                                </div>
                             </div>
+
+                            <!-- Item 3: AI & RAG Pipelines -->
                             <div class="about-item">
-                                <span class="about-emoji"></span>
-                                <p>I have extensive experience building AI-driven software, deploying Retrieval-Augmented Generation (RAG) pipelines, and leveraging LangChain to build intelligent, context-aware applications.</p>
+                                <div class="about-icon-box"><i class="fas fa-brain"></i></div>
+                                <div class="about-item-content">
+                                    <h4>AI-Driven Software & RAG Pipelines</h4>
+                                    <p>Extensive experience building AI-driven software, deploying
+                                        <strong>Retrieval-Augmented Generation (RAG) pipelines</strong>, and leveraging
+                                        <strong>LangChain</strong> to build intelligent, context-aware, and
+                                        citation-grounded applications with pgvector similarity search.
+                                    </p>
+                                </div>
                             </div>
+
+                            <!-- Item 4: Cloud & DevOps -->
                             <div class="about-item">
-                                <span class="about-emoji"></span>
-                                <p>Skilled in modern cloud workflows & DevOps, I containerize environments using Docker, deploy applications via Netlify, and manage infrastructure on Google Cloud Platform.</p>
+                                <div class="about-icon-box"><i class="fas fa-cloud-upload-alt"></i></div>
+                                <div class="about-item-content">
+                                    <h4>Modern Cloud Workflows & DevOps</h4>
+                                    <p>Skilled in modern cloud workflows & DevOps: I containerize multi-stage
+                                        environments using <strong>Docker</strong>, deploy web applications via
+                                        <strong>Netlify</strong>, and manage scalable cloud infrastructure on
+                                        <strong>Google Cloud Platform (GCP)</strong>.
+                                    </p>
+                                </div>
                             </div>
-                            <div class="about-item">
-                                <span class="about-emoji"></span>
-                                <p>Always exploring new tech, I love creating impactful and efficient software solutions. Let's build something amazing together!</p>
+
+                            <!-- Item 5: Continuous Innovation & Collaboration -->
+                            <div class="about-item highlight-item">
+                                <div class="about-icon-box icon-rocket"><i class="fas fa-rocket"></i></div>
+                                <div class="about-item-content">
+                                    <h4>Continuous Innovation & Impact</h4>
+                                    <p>Always exploring new tech, I love creating impactful and efficient software
+                                        solutions. <strong>Let's build something amazing together!</strong></p>
+                                </div>
                             </div>
+                        </div>
+
+                        <!-- Core Capabilities Tech Strip -->
+                        <div class="about-pills-row">
+                            <span class="about-pill"><i class="fab fa-python"></i> Python</span>
+                            <span class="about-pill"><i class="fas fa-bolt"></i> FastAPI</span>
+                            <span class="about-pill"><i class="fab fa-node-js"></i> NestJS</span>
+                            <span class="about-pill"><i class="fas fa-brain"></i> RAG & LangChain</span>
+                            <span class="about-pill"><i class="fas fa-database"></i> PostgreSQL</span>
+                            <span class="about-pill"><i class="fas fa-bolt"></i> Supabase</span>
+                            <span class="about-pill"><i class="fas fa-leaf"></i> MongoDB</span>
+                            <span class="about-pill"><i class="fab fa-docker"></i> Docker</span>
+                            <span class="about-pill"><i class="fab fa-google"></i> Google Cloud</span>
                         </div>
                     </div>
-                    <div class="about-stats">
-                        <div class="stat-card glass-card">
-                            <div class="stat-value">
-                                <span class="stat-number" data-count="3">0</span>
-                                <span class="stat-suffix">+</span>
+
+                    <div class="about-aside-column">
+                        <!-- LinkedIn Profile Showcase Card -->
+                        <div class="linkedin-showcase-card glass-card">
+                            <div class="linkedin-card-glow"></div>
+
+                            <!-- Top Header Bar -->
+                            <div class="linkedin-card-topbar">
+                                <div class="linkedin-brand-badge">
+                                    <i class="fab fa-linkedin"></i>
+                                    <span>LINKEDIN PROFILE</span>
+                                </div>
+                                <a href="https://www.linkedin.com/in/manjesh-verma/" target="_blank"
+                                    rel="noopener noreferrer" class="linkedin-external-link"
+                                    title="Open full LinkedIn profile">
+                                    <span>linkedin.com/in/manjesh-verma</span>
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
                             </div>
-                            <span class="stat-label">Years Experience</span>
+
+                            <!-- LinkedIn Cover Banner -->
+                            <div class="linkedin-cover-banner">
+                                <img src="images/linkedin_banner_clean.jpg" alt="Manjesh Verma LinkedIn Cover"
+                                    class="linkedin-banner-img">
+                                <div class="linkedin-banner-overlay"></div>
+                            </div>
+
+                            <!-- Profile Body -->
+                            <div class="linkedin-body">
+                                <!-- Avatar & Main Actions Row -->
+                                <div class="linkedin-avatar-row">
+                                    <div class="linkedin-avatar-wrap">
+                                        <img src="images/profile.jpg" alt="Manjesh Verma" class="linkedin-avatar-img">
+                                        <span class="linkedin-status-indicator" title="Active & Open to Work"></span>
+                                    </div>
+                                    <div class="linkedin-action-pills">
+                                        <a href="https://www.linkedin.com/in/manjesh-verma/" target="_blank"
+                                            rel="noopener noreferrer" class="btn-linkedin-connect">
+                                            <i class="fab fa-linkedin-in"></i> Connect
+                                        </a>
+                                        <a href="mailto:manjeshverma124@gmail.com" class="btn-linkedin-msg">
+                                            <i class="fas fa-paper-plane"></i> Message
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Profile Meta Information -->
+                                <div class="linkedin-meta">
+                                    <div class="linkedin-name-row">
+                                        <h3 class="linkedin-name">Manjesh V.</h3>
+                                        <span class="linkedin-badge-shield" title="Verified LinkedIn Profile">
+                                            <i class="fas fa-shield-alt"></i>
+                                        </span>
+                                        <span class="linkedin-pronoun">He/Him</span>
+                                    </div>
+
+                                    <p class="linkedin-headline">
+                                        Software Developer <span class="linkedin-at">@Shanti Infosoft LLP</span> <span
+                                            class="linkedin-dot">•</span> Python Developer <span
+                                            class="linkedin-dot">•</span> Learner
+                                    </p>
+
+                                    <div class="linkedin-hashtags">
+                                        <span class="linkedin-talks-label">Talks about</span>
+                                        <span class="li-tag">#django</span>
+                                        <span class="li-tag">#nestjs</span>
+                                        <span class="li-tag">#python</span>
+                                        <span class="li-tag">#fastAPI</span>
+                                        <span class="li-tag">#quickbooks</span>
+                                    </div>
+
+                                    <div class="linkedin-location-row">
+                                        <span class="linkedin-loc">
+                                            <i class="fas fa-map-marker-alt"></i> Indore, Madhya Pradesh, India
+                                        </span>
+                                        <span class="linkedin-dot">•</span>
+                                        <a href="#contact" class="linkedin-contact-info-link">Contact info</a>
+                                    </div>
+
+                                    <!-- Social Proof: Followers & Connections -->
+                                    <div class="linkedin-stats-row">
+                                        <span class="linkedin-stat-item">
+                                            <strong class="stat-highlight">3,717</strong> followers
+                                        </span>
+                                        <span class="linkedin-dot">•</span>
+                                        <span class="linkedin-stat-item">
+                                            <strong class="stat-highlight">500+</strong> connections
+                                        </span>
+                                    </div>
+
+                                    <!-- Open To Work Box -->
+                                    <div class="linkedin-opentowork-box">
+                                        <div class="opentowork-header">
+                                            <div class="opentowork-title-wrap">
+                                                <span class="opentowork-pulse-dot"></span>
+                                                <span class="opentowork-title">Open to work</span>
+                                            </div>
+                                            <span class="opentowork-audience">Recruiters only</span>
+                                        </div>
+                                        <div class="opentowork-desc">
+                                            Indore &bull; On-site &bull; Hybrid &bull; Remote
+                                        </div>
+                                        <div class="opentowork-roles">
+                                            <span>Python Developer</span>
+                                            <span>Backend Engineer</span>
+                                            <span>FastAPI / NestJS</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Quick Social Links Strip -->
+                                    <div class="linkedin-footer-socials">
+                                        <span class="footer-socials-label">Direct Reach:</span>
+                                        <div class="profile-quick-links">
+                                            <a href="https://www.linkedin.com/in/manjesh-verma/" target="_blank"
+                                                rel="noopener noreferrer" class="profile-icon-btn" title="LinkedIn"
+                                                aria-label="LinkedIn">
+                                                <i class="fab fa-linkedin-in"></i>
+                                            </a>
+                                            <a href="https://github.com/manjeshverma" target="_blank"
+                                                rel="noopener noreferrer" class="profile-icon-btn" title="GitHub"
+                                                aria-label="GitHub">
+                                                <i class="fab fa-github"></i>
+                                            </a>
+                                            <a href="mailto:manjeshverma124@gmail.com" class="profile-icon-btn"
+                                                title="Email" aria-label="Email">
+                                                <i class="fas fa-envelope"></i>
+                                            </a>
+                                            <a href="https://wa.me/917400667713" target="_blank"
+                                                rel="noopener noreferrer" class="profile-icon-btn" title="WhatsApp"
+                                                aria-label="WhatsApp">
+                                                <i class="fab fa-whatsapp"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="stat-card glass-card">
-                            <div class="stat-value">
-                                <span class="stat-number" data-count="5">0</span>
-                                <span class="stat-suffix">+</span>
+
+                        <!-- 2x2 Stats Grid -->
+                        <div class="about-stats-grid">
+                            <div class="stat-card glass-card">
+                                <div class="stat-value">
+                                    <span class="stat-number" data-count="3">0</span>
+                                    <span class="stat-suffix">+</span>
+                                </div>
+                                <span class="stat-label">Years Experience</span>
                             </div>
-                            <span class="stat-label">Live Projects</span>
-                        </div>
-                        <div class="stat-card glass-card">
-                            <div class="stat-value">
-                                <span class="stat-number" data-count="3">0</span>
-                                <span class="stat-suffix">+</span>
+                            <div class="stat-card glass-card">
+                                <div class="stat-value">
+                                    <span class="stat-number" data-count="5">0</span>
+                                    <span class="stat-suffix">+</span>
+                                </div>
+                                <span class="stat-label">Live Projects</span>
                             </div>
-                            <span class="stat-label">Practice Projects</span>
-                        </div>
-                        <div class="stat-card glass-card">
-                            <div class="stat-value">
-                                <span class="stat-number" data-count="3">0</span>
+                            <div class="stat-card glass-card">
+                                <div class="stat-value">
+                                    <span class="stat-number" data-count="4">0</span>
+                                    <span class="stat-suffix">+</span>
+                                </div>
+                                <span class="stat-label">Databases</span>
                             </div>
-                            <span class="stat-label">Certifications</span>
+                            <div class="stat-card glass-card">
+                                <div class="stat-value">
+                                    <span class="stat-number" data-count="3">0</span>
+                                </div>
+                                <span class="stat-label">Certifications</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -178,7 +394,9 @@
                             <div class="experience-header">
                                 <div class="experience-title-group">
                                     <h3>Python Developer</h3>
-                                    <a href="https://shantiinfosoft.com/" target="_blank" class="company-name">Shanti Infosoft LLP <i class="fas fa-external-link-alt" style="font-size: 0.8rem; margin-left: 4px;"></i></a>
+                                    <a href="https://shantiinfosoft.com/" target="_blank" class="company-name">Shanti
+                                        Infosoft LLP <i class="fas fa-external-link-alt"
+                                            style="font-size: 0.8rem; margin-left: 4px;"></i></a>
                                 </div>
                                 <span class="experience-date date-present">Sep 2025 – Present</span>
                             </div>
@@ -191,7 +409,9 @@
                             <div class="experience-header">
                                 <div class="experience-title-group">
                                     <h3>Software Developer</h3>
-                                    <a href="https://fxbytes.com/" target="_blank" class="company-name">FxBytes Technologies Pvt. Ltd. <i class="fas fa-external-link-alt" style="font-size: 0.8rem; margin-left: 4px;"></i></a>
+                                    <a href="https://fxbytes.com/" target="_blank" class="company-name">FxBytes
+                                        Technologies Pvt. Ltd. <i class="fas fa-external-link-alt"
+                                            style="font-size: 0.8rem; margin-left: 4px;"></i></a>
                                 </div>
                                 <span class="experience-date">July 2023 – Aug 2025</span>
                             </div>
@@ -218,8 +438,9 @@
                             </div>
                             <h3>Backend & Languages</h3>
                         </div>
-                        <p class="category-desc">Designing robust backend logic, asynchronous workflows, and high-performance server architectures.</p>
-                        
+                        <p class="category-desc">Designing robust backend logic, asynchronous workflows, and
+                            high-performance server architectures.</p>
+
                         <div class="skills-list">
                             <div class="skill-item">
                                 <span class="skill-name">Python</span>
@@ -270,8 +491,9 @@
                             </div>
                             <h3>Artificial Intelligence (AI)</h3>
                         </div>
-                        <p class="category-desc">Designing and implementing intelligent systems, context-aware LLM applications, and predictive data pipelines.</p>
-                        
+                        <p class="category-desc">Designing and implementing intelligent systems, context-aware LLM
+                            applications, and predictive data pipelines.</p>
+
                         <div class="skills-list">
                             <div class="skill-item">
                                 <span class="skill-name">Retrieval-Augmented Generation (RAG)</span>
@@ -307,8 +529,10 @@
                             <h4>Key Strengths</h4>
                             <ul>
                                 <li>Building production-grade Retrieval-Augmented Generation (RAG) workspaces</li>
-                                <li>Developing advanced LLM agents and multi-step reasoning workflows with LangChain</li>
-                                <li>Designing interactive conversational systems with Groq API, DuckDuckGo Search, and multi-modal models</li>
+                                <li>Developing advanced LLM agents and multi-step reasoning workflows with LangChain
+                                </li>
+                                <li>Designing interactive conversational systems with Groq API, DuckDuckGo Search, and
+                                    multi-modal models</li>
                                 <li>Creating predictive algorithms and automated data-processing pipelines</li>
                             </ul>
                         </div>
@@ -322,8 +546,9 @@
                             </div>
                             <h3>Cloud & DevOps</h3>
                         </div>
-                        <p class="category-desc">Deploying scalable web applications, containerizing services, and configuring automated CI/CD deployment pipelines.</p>
-                        
+                        <p class="category-desc">Deploying scalable web applications, containerizing services, and
+                            configuring automated CI/CD deployment pipelines.</p>
+
                         <div class="skills-list">
                             <div class="skill-item">
                                 <span class="skill-name">Netlify</span>
@@ -348,7 +573,8 @@
                             <ul>
                                 <li>Creating production-ready containerized environments using Docker</li>
                                 <li>Deploying modern frontends and serverless edge functions on Netlify</li>
-                                <li>Managing cloud architectures, compute resources, and IAM security on Google Cloud</li>
+                                <li>Managing cloud architectures, compute resources, and IAM security on Google Cloud
+                                </li>
                                 <li>Setting up robust CI/CD workflows and secure environments via GitHub Actions</li>
                             </ul>
                         </div>
@@ -362,8 +588,9 @@
                             </div>
                             <h3>Databases & Architecture</h3>
                         </div>
-                        <p class="category-desc">Designing scalable database schemas, query optimization, and leveraging Backend-as-a-Service (BaaS) platforms.</p>
-                        
+                        <p class="category-desc">Designing scalable database schemas, query optimization, and leveraging
+                            Backend-as-a-Service (BaaS) platforms.</p>
+
                         <div class="skills-list">
                             <div class="skill-item">
                                 <span class="skill-name">PostgreSQL</span>
@@ -395,8 +622,10 @@
                             <h4>Key Strengths</h4>
                             <ul>
                                 <li>Relational and non-relational database design, query planning, and optimization</li>
-                                <li>Building real-time backends with Supabase, custom functions, and Row-Level Security (RLS)</li>
-                                <li>Implementing scalable document storage with MongoDB and building automated pipelines</li>
+                                <li>Building real-time backends with Supabase, custom functions, and Row-Level Security
+                                    (RLS)</li>
+                                <li>Implementing scalable document storage with MongoDB and building automated pipelines
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -409,9 +638,12 @@
             <div class="section-container">
                 <div class="section-header">
                     <span class="section-tag">04</span>
-                    <h2 class="section-title">AI-Powered Agentic Workflows <span class="accent">for Modern Software Development</span></h2>
+                    <h2 class="section-title">AI-Powered Agentic Workflows <span class="accent">for Modern Software
+                            Development</span></h2>
                 </div>
-                <p class="contact-subtitle" style="margin-top: -2rem; margin-bottom: 4rem; text-align: center;">Leveraging advanced AI systems and agentic coding workflows to accelerate development velocity and build robust software.</p>
+                <p class="contact-subtitle" style="margin-top: -2rem; margin-bottom: 4rem; text-align: center;">
+                    Leveraging advanced AI systems and agentic coding workflows to accelerate development velocity and
+                    build robust software.</p>
                 <div class="workflow-grid">
                     <!-- Tool 1: Antigravity -->
                     <div class="workflow-card glass-card" data-tilt>
@@ -459,7 +691,8 @@
                         </div>
                         <div class="cert-info">
                             <h3>Microsoft Azure Architect Technologies</h3>
-                            <a href="https://drive.google.com/file/d/1V1TbjSUPJiE_cEhfXwSFSwqnVkS6z0as/view" target="_blank" class="cert-issuer">
+                            <a href="https://drive.google.com/file/d/1V1TbjSUPJiE_cEhfXwSFSwqnVkS6z0as/view"
+                                target="_blank" class="cert-issuer">
                                 <i class="fas fa-external-link-alt"></i>
                                 Azure Web Apps
                             </a>
@@ -475,7 +708,8 @@
                         </div>
                         <div class="cert-info">
                             <h3>BI - Business Intelligence</h3>
-                            <a href="https://drive.google.com/file/d/1sRgHrfviNeWz4b7OkAiD36aAnMHJa0b0/view" target="_blank" class="cert-issuer">
+                            <a href="https://drive.google.com/file/d/1sRgHrfviNeWz4b7OkAiD36aAnMHJa0b0/view"
+                                target="_blank" class="cert-issuer">
                                 <i class="fas fa-external-link-alt"></i>
                                 Credential
                             </a>
@@ -491,7 +725,8 @@
                         </div>
                         <div class="cert-info">
                             <h3>Data Analysis With Python</h3>
-                            <a href="https://drive.google.com/file/d/1P1AcPjB4VUbeT4UPqOezEWU06SfUWh-n/view" target="_blank" class="cert-issuer">
+                            <a href="https://drive.google.com/file/d/1P1AcPjB4VUbeT4UPqOezEWU06SfUWh-n/view"
+                                target="_blank" class="cert-issuer">
                                 <i class="fas fa-external-link-alt"></i>
                                 Credential
                             </a>
@@ -504,133 +739,857 @@
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="content-section">
+        <section id="projects" class="content-section projects-section-wrapper">
             <div class="section-container">
                 <div class="section-header">
-                    <span class="section-tag">06</span>
+                    <span class="section-tag">06 // SHOWCASE</span>
                     <h2 class="section-title">Featured <span class="accent">Projects</span></h2>
+                    <p class="section-subtitle">High-performance AI platforms, RAG intelligence engines, social
+                        automation systems, and scalable full-stack applications built for production.</p>
                 </div>
-                <div class="projects-grid">
-                    <article class="project-card glass-card" data-tilt>
-                        <div class="project-icon">
-                            <i class="fas fa-desktop"></i>
+
+                <!-- Interactive Drawer Quick-Jump Bar -->
+                <nav class="project-drawer-nav" aria-label="Project Navigation">
+                    <button class="drawer-nav-btn active" data-drawer="project-1">
+                        <span class="nav-num">01</span> SmartDesk AI
+                    </button>
+                    <button class="drawer-nav-btn" data-drawer="project-2">
+                        <span class="nav-num">02</span> SocialEngage AI
+                    </button>
+                    <button class="drawer-nav-btn" data-drawer="project-3">
+                        <span class="nav-num">03</span> IntelliSearch
+                    </button>
+                    <button class="drawer-nav-btn" data-drawer="project-4">
+                        <span class="nav-num">04</span> AgriFeed
+                    </button>
+                    <button class="drawer-nav-btn" data-drawer="project-5">
+                        <span class="nav-num">05</span> RedStore
+                    </button>
+                </nav>
+
+                <!-- Thin Vertical Progress Indicator (Small Dots on Right) -->
+                <div class="projects-progress-dots" id="projectsProgressDots" aria-label="Projects Progress Indicator">
+                    <button class="proj-dot active" data-drawer="project-1" aria-label="Project 1: SmartDesk AI">
+                        <span class="dot-pip"></span>
+                        <span class="dot-label">01 SmartDesk AI</span>
+                    </button>
+                    <button class="proj-dot" data-drawer="project-2" aria-label="Project 2: SocialEngage AI">
+                        <span class="dot-pip"></span>
+                        <span class="dot-label">02 SocialEngage AI</span>
+                    </button>
+                    <button class="proj-dot" data-drawer="project-3" aria-label="Project 3: IntelliSearch">
+                        <span class="dot-pip"></span>
+                        <span class="dot-label">03 IntelliSearch</span>
+                    </button>
+                    <button class="proj-dot" data-drawer="project-4" aria-label="Project 4: AgriFeed">
+                        <span class="dot-pip"></span>
+                        <span class="dot-label">04 AgriFeed</span>
+                    </button>
+                    <button class="proj-dot" data-drawer="project-5" aria-label="Project 5: RedStore">
+                        <span class="dot-pip"></span>
+                        <span class="dot-label">05 RedStore</span>
+                    </button>
+                </div>
+
+                <!-- Drawer Stack Container -->
+                <div class="projects-drawer-stack">
+                    <!-- Project 01: SmartDesk AI -->
+                    <article class="project-drawer" id="project-1" style="--card-index: 1;">
+                        <div class="drawer-inner">
+                            <!-- Left Column: Content -->
+                            <div class="drawer-content">
+                                <div class="drawer-header-pill">
+                                    <span class="phase-tag">PROJECT 01</span>
+                                    <span class="phase-sep">•</span>
+                                    <span class="phase-label">MULTIMODAL AI & VISION</span>
+                                </div>
+                                <h3 class="drawer-title">SmartDesk AI – Image-to-Image & Conversational Hub</h3>
+                                <p class="drawer-desc">
+                                    SmartDesk AI is an enterprise productivity and visual reasoning workspace featuring
+                                    a dedicated <strong>Image-to-Image reasoning interface</strong>. Engineers can
+                                    upload architecture diagrams, UI wireframes, or flowcharts to perform automated
+                                    bounding box segmentation, visual component analysis, and code synthesis—accelerated
+                                    by Llama 4 Vision, Groq LPUs, and persistent multi-session memory.
+                                </p>
+
+                                <div class="drawer-features-list">
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span><strong>Image-to-Image Visual Interface:</strong> Upload diagrams for
+                                            structural segmentation & visual code synthesis</span>
+                                    </div>
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>Bounding box visual analysis & OCR token extraction powered by Llama 4
+                                            Vision</span>
+                                    </div>
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>Sub-150ms streaming inference pipeline running on Groq LPU API (185+
+                                            tokens/sec)</span>
+                                    </div>
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>Multi-turn conversational memory with persistent chat state & live web
+                                            search grounding</span>
+                                    </div>
+                                </div>
+
+                                <div class="drawer-tech-tags">
+                                    <span>Python</span>
+                                    <span>Streamlit</span>
+                                    <span>Llama 4 Vision</span>
+                                    <span>Image-to-Image</span>
+                                    <span>Groq API</span>
+                                    <span>Live Web Search</span>
+                                </div>
+
+                                <div class="drawer-actions">
+                                    <a href="https://smartdesk-ai-fbs9vawbzhw4qmjb4ek9fo.streamlit.app/" target="_blank"
+                                        rel="noopener noreferrer" class="drawer-btn drawer-btn-primary">
+                                        <i class="fas fa-external-link-alt"></i> Open Live Demo
+                                    </a>
+                                    <a href="https://github.com/vermamanjesh159-netizen/SmartDesk-AI" target="_blank"
+                                        rel="noopener noreferrer" class="drawer-btn drawer-btn-secondary">
+                                        <i class="fab fa-github"></i> View Code
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Visual Mockup Showcase -->
+                            <div class="drawer-visual">
+                                <!-- Floating Status Pill -->
+                                <div class="visual-floating-badge">
+                                    <span class="status-pulse-dot"></span>
+                                    <span class="badge-title">Image-to-Image Active</span>
+                                    <div class="badge-dots">
+                                        <span class="dot-fill"></span>
+                                        <span class="dot-fill"></span>
+                                        <span class="dot-fill"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Main Mockup Box -->
+                                <div class="visual-panel-card">
+                                    <!-- Browser Frame Bar -->
+                                    <div class="browser-frame-bar">
+                                        <div class="browser-dots">
+                                            <span class="b-dot b-red"></span>
+                                            <span class="b-dot b-yellow"></span>
+                                            <span class="b-dot b-green"></span>
+                                        </div>
+                                        <div class="browser-url-bar">
+                                            <i class="fas fa-lock"></i>
+                                            <span>smartdesk-ai.streamlit.app/image-to-image</span>
+                                        </div>
+                                        <span class="panel-status-pill"><span class="live-dot"></span> Vision
+                                            Active</span>
+                                    </div>
+
+                                    <!-- Project Image Showcase Container -->
+                                    <div class="preview-image-container" data-full-img="images/smartdesk_ai.jpg"
+                                        data-title="SmartDesk AI – Image-to-Image Reasoning Interface"
+                                        data-badge="PROJECT 01 • MULTIMODAL VISION"
+                                        data-demo="https://smartdesk-ai-fbs9vawbzhw4qmjb4ek9fo.streamlit.app/"
+                                        data-caption="Image-to-Image visual reasoning interface showcasing bounding box detection on architecture diagrams, OCR tokenization, and real-time Groq streaming inference.">
+                                        <img src="images/smartdesk_ai.jpg"
+                                            alt="SmartDesk AI Image-to-Image and Multimodal Reasoning Interface"
+                                            class="project-preview-img" loading="lazy">
+                                        <div class="preview-image-overlay">
+                                            <div class="overlay-badge">
+                                                <i class="fas fa-project-diagram"></i> Image-to-Image Reasoner
+                                            </div>
+                                            <div class="overlay-actions">
+                                                <button type="button" class="overlay-btn overlay-zoom-btn"
+                                                    title="Expand Interface">
+                                                    <i class="fas fa-search-plus"></i> View UI
+                                                </button>
+                                                <a href="https://smartdesk-ai-fbs9vawbzhw4qmjb4ek9fo.streamlit.app/"
+                                                    target="_blank" rel="noopener noreferrer"
+                                                    class="overlay-btn overlay-demo-btn" title="Open Live Demo">
+                                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Sub-Cards Mini Grid (2 Columns) -->
+                                    <div class="status-items-mini-grid">
+                                        <div class="status-item-row status-done">
+                                            <div class="status-icon-box"><i class="fas fa-eye"></i></div>
+                                            <div class="status-text-block">
+                                                <span class="item-name">Visual Segmentation</span>
+                                                <span class="item-sub">Bounding Boxes & OCR Active</span>
+                                            </div>
+                                            <span class="item-metric">100%</span>
+                                        </div>
+
+                                        <div class="status-item-row status-done">
+                                            <div class="status-icon-box"><i class="fas fa-bolt"></i></div>
+                                            <div class="status-text-block">
+                                                <span class="item-name">Groq Fast LPU</span>
+                                                <span class="item-sub">185 tokens/s • 142ms TTFT</span>
+                                            </div>
+                                            <span class="item-metric">142ms</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Interactive Prompt Preview Card -->
+                                    <div class="interactive-preview-box">
+                                        <div class="preview-box-header">
+                                            <span class="prompt-chip"><i class="fas fa-image"></i> Image-to-Image
+                                                Workflow</span>
+                                            <span class="speed-badge">Groq Accelerated</span>
+                                        </div>
+                                        <p class="preview-prompt-text">"[Diagram Input] Parse microservice boundaries &
+                                            synthesize async pub/sub queue topology"</p>
+                                        <div class="preview-response-line">
+                                            <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                                            <span>Detected <strong>5 microservices</strong> &bull; Emitted Mermaid
+                                                flowchart in <strong>142ms</strong>.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <h3>SmartDesk AI - Chat Assistant</h3>
-                        <p>SmartDesk AI is an AI-powered productivity workspace designed to provide a ChatGPT-like conversational experience with advanced capabilities including multi-chat management, live web search, image understanding, specialized AI task workflows, and real-time AI responses. The platform aims to serve as an all-in-one intelligent assistant for communication, research, content creation, coding, analysis, and visual reasoning through a clean, professional web interface powered by state-of-the-art language and vision models.</p>
-                        <div class="tech-tags">
-                            <span>Python</span>
-                            <span>Streamlit</span>
-                            <span>Groq API</span>
-                            <span>GPT OSS 120B</span>
-                            <span>Llama 4 Vision</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/vermamanjesh159-netizen/SmartDesk-AI" target="_blank" class="project-link">
-                                <i class="fab fa-github"></i> Code
-                            </a>
-                            <a href="https://smartdesk-ai-fbs9vawbzhw4qmjb4ek9fo.streamlit.app/" target="_blank" class="project-link">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
-                        </div>
-                        <div class="project-glow"></div>
                     </article>
-                    <article class="project-card glass-card" data-tilt>
-                        <div class="project-icon">
-                            <i class="fas fa-share-alt"></i>
+
+                    <!-- Project 02: SocialEngage AI -->
+                    <article class="project-drawer" id="project-2" style="--card-index: 2;">
+                        <div class="drawer-inner">
+                            <!-- Left Column: Content -->
+                            <div class="drawer-content">
+                                <div class="drawer-header-pill">
+                                    <span class="phase-tag">PROJECT 02</span>
+                                    <span class="phase-sep">•</span>
+                                    <span class="phase-label">SOCIAL AUTOMATION & MULTI-AGENT</span>
+                                </div>
+                                <h3 class="drawer-title">SocialEngage AI – Multi-Platform Reply Engine</h3>
+                                <p class="drawer-desc">
+                                    SocialEngage AI empowers creators, founders, agencies, and brands to automate
+                                    high-converting, human-like comment and reply generation across 7+ social platforms
+                                    while precisely maintaining custom brand voice and sentiment calibration.
+                                </p>
+
+                                <div class="drawer-features-list">
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>Cross-platform orchestration for LinkedIn, X (Twitter), YouTube, Instagram
+                                            & Threads</span>
+                                    </div>
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>Dynamic brand persona calibration with sentiment-aware tone matching
+                                            algorithms</span>
+                                    </div>
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>High-throughput asynchronous LLM pipelines powered by Groq & Ollama</span>
+                                    </div>
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>Containerized microservices architecture with FastAPI & Docker
+                                            deployment</span>
+                                    </div>
+                                </div>
+
+                                <div class="drawer-tech-tags">
+                                    <span>Next.js</span>
+                                    <span>FastAPI</span>
+                                    <span>Ollama</span>
+                                    <span>Groq Cloud API</span>
+                                    <span>Docker</span>
+                                </div>
+
+                                <div class="drawer-actions">
+                                    <a href="https://socialengage-ai.vercel.app/" target="_blank"
+                                        rel="noopener noreferrer" class="drawer-btn drawer-btn-primary">
+                                        <i class="fas fa-external-link-alt"></i> Open Live Demo
+                                    </a>
+                                    <a href="https://github.com/vermamanjesh159-netizen/socialengageAi" target="_blank"
+                                        rel="noopener noreferrer" class="drawer-btn drawer-btn-secondary">
+                                        <i class="fab fa-github"></i> View Code
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Visual Mockup Showcase -->
+                            <div class="drawer-visual">
+                                <!-- Floating Status Pill -->
+                                <div class="visual-floating-badge">
+                                    <span class="status-pulse-dot"></span>
+                                    <span class="badge-title">Platform Connectors</span>
+                                    <div class="badge-dots">
+                                        <span class="dot-fill"></span>
+                                        <span class="dot-fill"></span>
+                                        <span class="dot-fill"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Main Mockup Box -->
+                                <div class="visual-panel-card">
+                                    <!-- Browser Frame Bar -->
+                                    <div class="browser-frame-bar">
+                                        <div class="browser-dots">
+                                            <span class="b-dot b-red"></span>
+                                            <span class="b-dot b-yellow"></span>
+                                            <span class="b-dot b-green"></span>
+                                        </div>
+                                        <div class="browser-url-bar">
+                                            <i class="fas fa-lock"></i>
+                                            <span>socialengage-ai.vercel.app/orchestrator</span>
+                                        </div>
+                                        <span class="panel-status-pill"><span class="live-dot"></span> Active
+                                            Engine</span>
+                                    </div>
+
+                                    <!-- Project Image Showcase Container -->
+                                    <div class="preview-image-container" data-full-img="images/socialengage_ai.jpg"
+                                        data-title="SocialEngage AI – Multi-Platform Reply Engine"
+                                        data-badge="PROJECT 02 • SOCIAL AUTOMATION"
+                                        data-demo="https://socialengage-ai.vercel.app/"
+                                        data-caption="Multi-platform AI response generation dashboard across LinkedIn, X (Twitter), and YouTube with real-time tone and persona calibration.">
+                                        <img src="images/socialengage_ai.jpg"
+                                            alt="SocialEngage AI Multi-Platform Reply Dashboard"
+                                            class="project-preview-img" loading="lazy">
+                                        <div class="preview-image-overlay">
+                                            <div class="overlay-badge">
+                                                <i class="fas fa-comments"></i> Social Orchestrator
+                                            </div>
+                                            <div class="overlay-actions">
+                                                <button type="button" class="overlay-btn overlay-zoom-btn"
+                                                    title="Expand Interface">
+                                                    <i class="fas fa-search-plus"></i> View UI
+                                                </button>
+                                                <a href="https://socialengage-ai.vercel.app/" target="_blank"
+                                                    rel="noopener noreferrer" class="overlay-btn overlay-demo-btn"
+                                                    title="Open Live Demo">
+                                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Sub-Cards Mini Grid (2 Columns) -->
+                                    <div class="status-items-mini-grid">
+                                        <div class="status-item-row status-done">
+                                            <div class="status-icon-box"><i class="fas fa-network-wired"></i></div>
+                                            <div class="status-text-block">
+                                                <span class="item-name">Social Webhooks</span>
+                                                <span class="item-sub">LinkedIn, X, YouTube Synced</span>
+                                            </div>
+                                            <span class="item-metric">100%</span>
+                                        </div>
+
+                                        <div class="status-item-row status-done">
+                                            <div class="status-icon-box"><i class="fas fa-sliders-h"></i></div>
+                                            <div class="status-text-block">
+                                                <span class="item-name">Persona Tuning</span>
+                                                <span class="item-sub">Brand Voice Calibrated</span>
+                                            </div>
+                                            <span class="item-metric">98.7%</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Interactive Simulation Tabs -->
+                                    <div class="interactive-preview-box">
+                                        <div class="platform-mini-tabs">
+                                            <button class="plat-tab active" data-platform="linkedin"><i
+                                                    class="fab fa-linkedin"></i> LinkedIn</button>
+                                            <button class="plat-tab" data-platform="twitter"><i
+                                                    class="fab fa-twitter"></i> X / Twitter</button>
+                                            <button class="plat-tab" data-platform="youtube"><i
+                                                    class="fab fa-youtube"></i> YouTube</button>
+                                        </div>
+                                        <div class="platform-comment-preview" id="socialengage-preview-text">
+                                            "Insightful breakdown on SaaS retention metrics! The distinction between
+                                            onboarding velocity and expansion revenue is crucial for enterprise scale."
+                                        </div>
+                                        <div class="preview-response-line">
+                                            <i class="fas fa-sparkles" style="color: #6366f1;"></i>
+                                            <span>Tone: <strong>Thought Leadership</strong> • Match Score:
+                                                <strong>98.7%</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <h3>SocialEngage AI - Multi Platform Comment & Reply Automation Platform</h3>
-                        <p>SocialEngage AI helps creators, marketers, founders, agencies, and businesses generate authentic, human-like comments and replies across multiple social media platforms using advanced AI models.</p>
-                        <p>
-You're engaging on <strong>LinkedIn</strong>, <strong>X (Twitter)</strong>, <strong>Instagram</strong>, <strong>YouTube</strong>, <strong>Facebook</strong>, <strong>TikTok</strong>, <strong>Threads</strong>, or online communities, SocialEngage AI creates personalized responses that match your brand voice and audience.
-</p>
-                        <div class="tech-tags">
-                            <span>Next.js</span>
-                            <span>FastAPI</span>
-                            <span>Ollama</span>
-                            <span>Groq Cloud API</span>
-                            <span>Docker</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/vermamanjesh159-netizen/socialengageAi" target="_blank" class="project-link">
-                                <i class="fab fa-github"></i> Code
-                            </a>
-                            <a href="https://socialengage-ai.vercel.app/" target="_blank" class="project-link">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
-                        </div>
-                        <div class="project-glow"></div>
                     </article>
-                    <article class="project-card glass-card" data-tilt>
-                        <div class="project-icon">
-                            <i class="fas fa-brain"></i>
+
+                    <!-- Project 03: IntelliSearch -->
+                    <article class="project-drawer" id="project-3" style="--card-index: 3;">
+                        <div class="drawer-inner">
+                            <!-- Left Column: Content -->
+                            <div class="drawer-content">
+                                <div class="drawer-header-pill">
+                                    <span class="phase-tag">PROJECT 03</span>
+                                    <span class="phase-sep">•</span>
+                                    <span class="phase-label">ENTERPRISE RAG & VECTOR SEARCH</span>
+                                </div>
+                                <h3 class="drawer-title">IntelliSearch – Enterprise Document Intelligence</h3>
+                                <p class="drawer-desc">
+                                    IntelliSearch transforms unstructured enterprise documents into an intelligent
+                                    conversational knowledge ecosystem. It combines dense pgvector semantic retrieval,
+                                    LangChain orchestration, and Hugging Face embeddings for accurate,
+                                    hallucination-free decision making with verifiable source attribution.
+                                </p>
+
+                                <div class="drawer-features-list">
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>Dense semantic search powered by pgvector & Hugging Face 768-dim
+                                            embeddings</span>
+                                    </div>
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>LangChain RAG pipeline with multi-step contextual synthesis & query
+                                            re-ranking</span>
+                                    </div>
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>Multi-format ingestion supporting PDF, DOCX, CSV, and Markdown technical
+                                            files</span>
+                                    </div>
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>Grounded source attribution with page-level confidence scores & audit
+                                            trails</span>
+                                    </div>
+                                </div>
+
+                                <div class="drawer-tech-tags">
+                                    <span>Python</span>
+                                    <span>FastAPI</span>
+                                    <span>RAG</span>
+                                    <span>PostgreSQL</span>
+                                    <span>LangChain</span>
+                                    <span>Hugging Face</span>
+                                    <span>pgvector</span>
+                                </div>
+
+                                <div class="drawer-actions">
+                                    <a href="https://rag-document-reader.onrender.com/" target="_blank"
+                                        rel="noopener noreferrer" class="drawer-btn drawer-btn-primary">
+                                        <i class="fas fa-external-link-alt"></i> Open Live Demo
+                                    </a>
+                                    <a href="https://github.com/vermamanjesh159-netizen/rag-document-read"
+                                        target="_blank" rel="noopener noreferrer"
+                                        class="drawer-btn drawer-btn-secondary">
+                                        <i class="fab fa-github"></i> View Code
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Visual Mockup Showcase -->
+                            <div class="drawer-visual">
+                                <!-- Floating Status Pill -->
+                                <div class="visual-floating-badge">
+                                    <span class="status-pulse-dot"></span>
+                                    <span class="badge-title">Vector Database</span>
+                                    <div class="badge-dots">
+                                        <span class="dot-fill"></span>
+                                        <span class="dot-fill"></span>
+                                        <span class="dot-fill"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Main Mockup Box -->
+                                <div class="visual-panel-card">
+                                    <!-- Browser Frame Bar -->
+                                    <div class="browser-frame-bar">
+                                        <div class="browser-dots">
+                                            <span class="b-dot b-red"></span>
+                                            <span class="b-dot b-yellow"></span>
+                                            <span class="b-dot b-green"></span>
+                                        </div>
+                                        <div class="browser-url-bar">
+                                            <i class="fas fa-lock"></i>
+                                            <span>rag-document-reader.onrender.com/workspace</span>
+                                        </div>
+                                        <span class="panel-status-pill"><span class="live-dot"></span> 100%
+                                            Indexed</span>
+                                    </div>
+
+                                    <!-- Project Image Showcase Container -->
+                                    <div class="preview-image-container" data-full-img="images/intellisearch_ai.jpg"
+                                        data-title="IntelliSearch – Enterprise RAG Document Intelligence"
+                                        data-badge="PROJECT 03 • ENTERPRISE RAG"
+                                        data-demo="https://rag-document-reader.onrender.com/"
+                                        data-caption="Dense vector search and RAG knowledge reader with pgvector cosine similarity ranking, 3D embedding clusters, and page-level source citations.">
+                                        <img src="images/intellisearch_ai.jpg"
+                                            alt="IntelliSearch Enterprise RAG Interface" class="project-preview-img"
+                                            loading="lazy">
+                                        <div class="preview-image-overlay">
+                                            <div class="overlay-badge">
+                                                <i class="fas fa-database"></i> pgvector RAG Engine
+                                            </div>
+                                            <div class="overlay-actions">
+                                                <button type="button" class="overlay-btn overlay-zoom-btn"
+                                                    title="Expand Interface">
+                                                    <i class="fas fa-search-plus"></i> View UI
+                                                </button>
+                                                <a href="https://rag-document-reader.onrender.com/" target="_blank"
+                                                    rel="noopener noreferrer" class="overlay-btn overlay-demo-btn"
+                                                    title="Open Live Demo">
+                                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Sub-Cards Mini Grid (2 Columns) -->
+                                    <div class="status-items-mini-grid">
+                                        <div class="status-item-row status-done">
+                                            <div class="status-icon-box"><i class="fas fa-brain"></i></div>
+                                            <div class="status-text-block">
+                                                <span class="item-name">Hugging Face Vectors</span>
+                                                <span class="item-sub">768-dim Embeddings Synced</span>
+                                            </div>
+                                            <span class="item-metric">100%</span>
+                                        </div>
+
+                                        <div class="status-item-row status-done">
+                                            <div class="status-icon-box"><i class="fas fa-search"></i></div>
+                                            <div class="status-text-block">
+                                                <span class="item-name">pgvector Cosine Search</span>
+                                                <span class="item-sub">Top-K Ranked (0.04s Latency)</span>
+                                            </div>
+                                            <span class="item-metric">99.4%</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Interactive Query Citation Box -->
+                                    <div class="interactive-preview-box">
+                                        <div class="preview-box-header">
+                                            <span class="prompt-chip"><i class="fas fa-search"></i> Hybrid Semantic
+                                                Query</span>
+                                            <span class="speed-badge">0.04s Search</span>
+                                        </div>
+                                        <p class="preview-prompt-text">"What was the EBITDA margin in the Q3 Financial
+                                            Audit report?"</p>
+                                        <div class="citation-badge-line">
+                                            <i class="fas fa-file-pdf" style="color: #ef4444;"></i>
+                                            <span>Source: <strong>Q3_Financial_Audit.pdf</strong> &bull; Page 14 &bull;
+                                                Verified Grounding</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <h3>IntelliSearch – Enterprise Knowledge Intelligence Platform</h3>
-                        <p>IntelliSearch transforms static business documents into an intelligent, interactive knowledge ecosystem—helping organizations unlock the full value of their information assets, improve operational efficiency, and drive smarter business decisions through AI-powered knowledge discovery.</p>
-                        <p>An enterprise-grade AI Knowledge Intelligence Platform that enables organizations to transform unstructured documents into a searchable, conversational knowledge base, accelerating information discovery, operational efficiency, and data-driven decision-making.</p>
-                        <div class="tech-tags">
-                            <span>Python</span>
-                            <span>FastAPI</span>
-                            <span>RAG</span>
-                            <span>PostgreSQL</span>
-                            <span>LangChain</span>
-                            <span>Hugging Face Embeddings</span>
-                            <span>pgvector</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/vermamanjesh159-netizen/rag-document-read" target="_blank" class="project-link">
-                                <i class="fab fa-github"></i> Code
-                            </a>
-                            <a href="https://rag-document-reader.onrender.com/" target="_blank" class="project-link">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
-                        </div>
-                        <div class="project-glow"></div>
                     </article>
-                    <article class="project-card glass-card" data-tilt>
-                        <div class="project-icon">
-                            <i class="fas fa-leaf"></i>
+
+                    <!-- Project 04: AgriFeed -->
+                    <article class="project-drawer" id="project-4" style="--card-index: 4;">
+                        <div class="drawer-inner">
+                            <!-- Left Column: Content -->
+                            <div class="drawer-content">
+                                <div class="drawer-header-pill">
+                                    <span class="phase-tag">PROJECT 04</span>
+                                    <span class="phase-sep">•</span>
+                                    <span class="phase-label">AGRITECH DIGITAL COMMERCE</span>
+                                </div>
+                                <h3 class="drawer-title">AgriFeed – Agriculture Supply Chain Platform</h3>
+                                <p class="drawer-desc">
+                                    AgriFeed is a modern digital commerce and supply chain ecosystem that streamlines
+                                    the agricultural procurement lifecycle by linking farmers, livestock producers, and
+                                    feed suppliers through a unified marketplace with real-time inventory management.
+                                </p>
+
+                                <div class="drawer-features-list">
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>Unified marketplace for animal nutrition, feed & agricultural
+                                            supplements</span>
+                                    </div>
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>Real-time catalog, bulk ordering, and dynamic supplier inventory
+                                            synchronization</span>
+                                    </div>
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>High-throughput FastAPI backend architecture with PostgreSQL /
+                                            SQLite</span>
+                                    </div>
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>Responsive Next.js storefront with end-to-end order lifecycle
+                                            tracking</span>
+                                    </div>
+                                </div>
+
+                                <div class="drawer-tech-tags">
+                                    <span>Python</span>
+                                    <span>FastAPI</span>
+                                    <span>PostgreSQL / SQLite</span>
+                                    <span>Next.js</span>
+                                    <span>RESTful APIs</span>
+                                </div>
+
+                                <div class="drawer-actions">
+                                    <a href="https://agriculture-iota-two.vercel.app/" target="_blank"
+                                        rel="noopener noreferrer" class="drawer-btn drawer-btn-primary">
+                                        <i class="fas fa-external-link-alt"></i> Open Live Demo
+                                    </a>
+                                    <a href="https://github.com/vermamanjesh159-netizen/agriculture" target="_blank"
+                                        rel="noopener noreferrer" class="drawer-btn drawer-btn-secondary">
+                                        <i class="fab fa-github"></i> View Code
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Visual Mockup Showcase -->
+                            <div class="drawer-visual">
+                                <!-- Floating Status Pill -->
+                                <div class="visual-floating-badge">
+                                    <span class="status-pulse-dot"></span>
+                                    <span class="badge-title">Commerce Node</span>
+                                    <div class="badge-dots">
+                                        <span class="dot-fill"></span>
+                                        <span class="dot-fill"></span>
+                                        <span class="dot-fill"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Main Mockup Box -->
+                                <div class="visual-panel-card">
+                                    <!-- Browser Frame Bar -->
+                                    <div class="browser-frame-bar">
+                                        <div class="browser-dots">
+                                            <span class="b-dot b-red"></span>
+                                            <span class="b-dot b-yellow"></span>
+                                            <span class="b-dot b-green"></span>
+                                        </div>
+                                        <div class="browser-url-bar">
+                                            <i class="fas fa-lock"></i>
+                                            <span>agriculture-iota-two.vercel.app/marketplace</span>
+                                        </div>
+                                        <span class="panel-status-pill"><span class="live-dot"></span> Live
+                                            Operations</span>
+                                    </div>
+
+                                    <!-- Project Image Showcase Container -->
+                                    <div class="preview-image-container" data-full-img="images/agrifeed.jpg"
+                                        data-title="AgriFeed – Agricultural Supply Chain Platform"
+                                        data-badge="PROJECT 04 • AGRITECH COMMERCE"
+                                        data-demo="https://agriculture-iota-two.vercel.app/"
+                                        data-caption="Agricultural supply network marketplace with livestock feed catalog, automated supplier procurement routing, and real-time dispatch tracking.">
+                                        <img src="images/agrifeed.jpg" alt="AgriFeed Agricultural Supply Chain Platform"
+                                            class="project-preview-img" loading="lazy">
+                                        <div class="preview-image-overlay">
+                                            <div class="overlay-badge">
+                                                <i class="fas fa-tractor"></i> Supply Chain Hub
+                                            </div>
+                                            <div class="overlay-actions">
+                                                <button type="button" class="overlay-btn overlay-zoom-btn"
+                                                    title="Expand Interface">
+                                                    <i class="fas fa-search-plus"></i> View UI
+                                                </button>
+                                                <a href="https://agriculture-iota-two.vercel.app/" target="_blank"
+                                                    rel="noopener noreferrer" class="overlay-btn overlay-demo-btn"
+                                                    title="Open Live Demo">
+                                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Sub-Cards Mini Grid (2 Columns) -->
+                                    <div class="status-items-mini-grid">
+                                        <div class="status-item-row status-done">
+                                            <div class="status-icon-box"><i class="fas fa-boxes"></i></div>
+                                            <div class="status-text-block">
+                                                <span class="item-name">Catalog & Inventory</span>
+                                                <span class="item-sub">1,420+ SKUs Synchronized</span>
+                                            </div>
+                                            <span class="item-metric">100%</span>
+                                        </div>
+
+                                        <div class="status-item-row status-done">
+                                            <div class="status-icon-box"><i class="fas fa-truck-loading"></i></div>
+                                            <div class="status-text-block">
+                                                <span class="item-name">Logistics Gateway</span>
+                                                <span class="item-sub">Auto-Routing & Escrow</span>
+                                            </div>
+                                            <span class="item-metric">99.8%</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Interactive Logistics Card -->
+                                    <div class="interactive-preview-box">
+                                        <div class="preview-box-header">
+                                            <span class="prompt-chip"><i class="fas fa-truck"></i> Active Dispatch
+                                                #AF-8942</span>
+                                            <span class="speed-badge">99.8% On-Time</span>
+                                        </div>
+                                        <p class="preview-prompt-text">Batch: Premium Organic Aquaculture Feed (500kg)
+                                            &bull; Priority Route</p>
+                                        <div class="preview-response-line">
+                                            <i class="fas fa-shield-alt" style="color: #10b981;"></i>
+                                            <span>Escrow Settlement Verified &bull; Real-time GPS Telemetry
+                                                Active</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <h3>AgriFeed – Digital Agriculture Commerce Platform</h3>
-                        <p>AgriFeed is a comprehensive digital commerce platform designed to modernize the agricultural supply chain by connecting farmers, livestock producers, aquaculture businesses, and agricultural suppliers through a unified online marketplace.</p>
-                        <p>The platform streamlines the discovery, purchase, and management of premium animal nutrition products, feed solutions, and agricultural supplements while providing businesses with powerful tools to manage inventory, orders, customer relationships, and sales operations.</p>
-                        <div class="tech-tags">
-                            <span>Python</span>
-                            <span>FastAPI</span>
-                            <span>PostgreSQL / SQLite</span>
-                            <span>Next.js</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/vermamanjesh159-netizen/agriculture" target="_blank" class="project-link">
-                                <i class="fab fa-github"></i> Code
-                            </a>
-                            <a href="https://agriculture-ycth.vercel.app/" target="_blank" class="project-link">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
-                        </div>
-                        <div class="project-glow"></div>
                     </article>
-                    <article class="project-card glass-card" data-tilt>
-                        <div class="project-icon">
-                            <i class="fas fa-shopping-bag"></i>
+
+                    <!-- Project 05: RedStore -->
+                    <article class="project-drawer" id="project-5" style="--card-index: 5;">
+                        <div class="drawer-inner">
+                            <!-- Left Column: Content -->
+                            <div class="drawer-content">
+                                <div class="drawer-header-pill">
+                                    <span class="phase-tag">PROJECT 05</span>
+                                    <span class="phase-sep">•</span>
+                                    <span class="phase-label">SCALABLE FULL-STACK COMMERCE</span>
+                                </div>
+                                <h3 class="drawer-title">RedStore – Modern Scalable E-Commerce Platform</h3>
+                                <p class="drawer-desc">
+                                    RedStore is a production-grade e-commerce application developed with Python &
+                                    Django, featuring seamless Stripe payment processing, customer authentication,
+                                    inventory state management, and an admin operations center.
+                                </p>
+
+                                <div class="drawer-features-list">
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>Full-featured catalog with search, multi-category filtering & cart
+                                            workflows</span>
+                                    </div>
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>End-to-end Stripe payment gateway integration with webhook security &
+                                            3D-Secure</span>
+                                    </div>
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>Comprehensive Django admin suite for orders, users & dynamic stock
+                                            control</span>
+                                    </div>
+                                    <div class="drawer-feature-item">
+                                        <div class="feature-check"><i class="fas fa-check"></i></div>
+                                        <span>ACID-compliant PostgreSQL database schema with high-security session
+                                            handling</span>
+                                    </div>
+                                </div>
+
+                                <div class="drawer-tech-tags">
+                                    <span>Python</span>
+                                    <span>Django</span>
+                                    <span>Stripe</span>
+                                    <span>PostgreSQL</span>
+                                    <span>HTML5 / CSS3</span>
+                                </div>
+
+                                <div class="drawer-actions">
+                                    <a href="https://redstore-django.onrender.com/" target="_blank"
+                                        rel="noopener noreferrer" class="drawer-btn drawer-btn-primary">
+                                        <i class="fas fa-external-link-alt"></i> Open Live Demo
+                                    </a>
+                                    <a href="https://github.com/manjeshverma/RedStore_Python_Django_Project"
+                                        target="_blank" rel="noopener noreferrer"
+                                        class="drawer-btn drawer-btn-secondary">
+                                        <i class="fab fa-github"></i> View Code
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Visual Mockup Showcase -->
+                            <div class="drawer-visual">
+                                <!-- Floating Status Pill -->
+                                <div class="visual-floating-badge">
+                                    <span class="status-pulse-dot"></span>
+                                    <span class="badge-title">Payment Gateway</span>
+                                    <div class="badge-dots">
+                                        <span class="dot-fill"></span>
+                                        <span class="dot-fill"></span>
+                                        <span class="dot-fill"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Main Mockup Box -->
+                                <div class="visual-panel-card">
+                                    <!-- Browser Frame Bar -->
+                                    <div class="browser-frame-bar">
+                                        <div class="browser-dots">
+                                            <span class="b-dot b-red"></span>
+                                            <span class="b-dot b-yellow"></span>
+                                            <span class="b-dot b-green"></span>
+                                        </div>
+                                        <div class="browser-url-bar">
+                                            <i class="fas fa-lock"></i>
+                                            <span>redstore-django.onrender.com/store</span>
+                                        </div>
+                                        <span class="panel-status-pill"><span class="live-dot"></span> Production
+                                            Ready</span>
+                                    </div>
+
+                                    <!-- Project Image Showcase Container -->
+                                    <div class="preview-image-container" data-full-img="images/redstore.jpg"
+                                        data-title="RedStore – Scalable Django E-Commerce Platform"
+                                        data-badge="PROJECT 05 • FULL-STACK COMMERCE"
+                                        data-demo="https://redstore-django.onrender.com/"
+                                        data-caption="Modern Django e-commerce storefront with Stripe 3D-Secure payments, dynamic inventory management, and admin fulfillment suite.">
+                                        <img src="images/redstore.jpg" alt="RedStore Django E-Commerce Platform"
+                                            class="project-preview-img" loading="lazy">
+                                        <div class="preview-image-overlay">
+                                            <div class="overlay-badge">
+                                                <i class="fas fa-shopping-bag"></i> Django Storefront
+                                            </div>
+                                            <div class="overlay-actions">
+                                                <button type="button" class="overlay-btn overlay-zoom-btn"
+                                                    title="Expand Interface">
+                                                    <i class="fas fa-search-plus"></i> View UI
+                                                </button>
+                                                <a href="https://redstore-django.onrender.com/" target="_blank"
+                                                    rel="noopener noreferrer" class="overlay-btn overlay-demo-btn"
+                                                    title="Open Live Demo">
+                                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Sub-Cards Mini Grid (2 Columns) -->
+                                    <div class="status-items-mini-grid">
+                                        <div class="status-item-row status-done">
+                                            <div class="status-icon-box"><i class="fas fa-credit-card"></i></div>
+                                            <div class="status-text-block">
+                                                <span class="item-name">Stripe 3D-Secure 2.0</span>
+                                                <span class="item-sub">Webhook Listeners 200 OK</span>
+                                            </div>
+                                            <span class="item-metric">100%</span>
+                                        </div>
+
+                                        <div class="status-item-row status-done">
+                                            <div class="status-icon-box"><i class="fas fa-tasks"></i></div>
+                                            <div class="status-text-block">
+                                                <span class="item-name">Order Fulfillment</span>
+                                                <span class="item-sub">Auto-Invoice & Inventory</span>
+                                            </div>
+                                            <span class="item-metric">100%</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Interactive Payment Security Card -->
+                                    <div class="interactive-preview-box">
+                                        <div class="preview-box-header">
+                                            <span class="prompt-chip"><i class="fas fa-shield-alt"></i> Stripe Checkout
+                                                Verified</span>
+                                            <span class="speed-badge">0.18s Latency</span>
+                                        </div>
+                                        <p class="preview-prompt-text">PCI-DSS Level 1 Compliant &bull; 256-bit TLS
+                                            Encryption &bull; Webhook Signature Verified</p>
+                                        <div class="preview-response-line">
+                                            <i class="fas fa-check-double" style="color: #10b981;"></i>
+                                            <span>Charge Auth Successful &bull; Customer Notification Dispatched</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <h3>RedStore – Modern E-Commerce Platform</h3>
-                        <p>RedStore is a scalable and feature-rich e-commerce platform built to deliver a seamless online shopping experience for both customers and administrators. Designed with performance, security, and flexibility in mind, the platform enables businesses to manage product catalogs, process secure online payments, and streamline customer interactions through a modern web interface.</p>
-                        <p>The solution combines robust backend architecture with an intuitive shopping experience, allowing businesses to efficiently showcase products, manage inventory, and drive online sales through a secure and reliable digital storefront.</p>
-                        <div class="tech-tags">
-                            <span>Python</span>
-                            <span>Django</span>
-                            <span>Stripe</span>
-                            <span>PostgreSQL</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/manjeshverma/RedStore_Python_Django_Project" target="_blank" class="project-link">
-                                <i class="fab fa-github"></i> Code
-                            </a>
-                            <a href="https://redstore-django.onrender.com/" target="_blank" class="project-link">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
-                        </div>
-                        <div class="project-glow"></div>
                     </article>
                 </div>
             </div>
@@ -640,11 +1599,11 @@ You're engaging on <strong>LinkedIn</strong>, <strong>X (Twitter)</strong>, <str
         <section id="contact" class="content-section">
             <div class="section-container">
                 <div class="section-header">
-                    <span class="section-tag">07</span>
+                    <span class="section-tag">07 // CONNECT</span>
                     <h2 class="section-title">Let's <span class="accent">Connect</span></h2>
                 </div>
                 <p class="contact-subtitle">Have a project in mind? Let's build something amazing together.</p>
-                
+
                 <!-- Direct Contact Cards showing readable text -->
                 <div class="direct-contact-grid">
                     <div class="direct-contact-card glass-card" data-tilt>
@@ -653,14 +1612,15 @@ You're engaging on <strong>LinkedIn</strong>, <strong>X (Twitter)</strong>, <str
                         </div>
                         <div class="contact-info-block">
                             <span class="contact-label">Email Me</span>
-                            <a href="mailto:manjeshverma124@gmail.com" class="contact-value-link">manjeshverma124@gmail.com</a>
+                            <a href="mailto:manjeshverma124@gmail.com"
+                                class="contact-value-link">manjeshverma124@gmail.com</a>
                         </div>
                         <button class="copy-btn" data-copy="manjeshverma124@gmail.com" title="Copy Email">
                             <i class="far fa-copy"></i>
                         </button>
                         <div class="project-glow"></div>
                     </div>
-                    
+
                     <div class="direct-contact-card glass-card" data-tilt>
                         <div class="contact-icon-wrapper">
                             <i class="fas fa-phone-alt"></i>
@@ -678,13 +1638,16 @@ You're engaging on <strong>LinkedIn</strong>, <strong>X (Twitter)</strong>, <str
 
                 <!-- Circular Social Buttons matching requested design -->
                 <div class="social-links-row">
-                    <a href="https://www.linkedin.com/in/manjesh-verma/" target="_blank" class="social-circle-btn" title="LinkedIn">
+                    <a href="https://www.linkedin.com/in/manjesh-verma/" target="_blank" class="social-circle-btn"
+                        title="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="https://github.com/manjeshverma" target="_blank" class="social-circle-btn" title="GitHub (Primary)">
+                    <a href="https://github.com/manjeshverma" target="_blank" class="social-circle-btn"
+                        title="GitHub (Primary)">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://github.com/vermamanjesh159-netizen" target="_blank" class="social-circle-btn" title="GitHub (Secondary)">
+                    <a href="https://github.com/vermamanjesh159-netizen" target="_blank" class="social-circle-btn"
+                        title="GitHub (Secondary)">
                         <i class="fas fa-code-branch"></i>
                     </a>
                     <a href="https://wa.me/917400667713" target="_blank" class="social-circle-btn" title="WhatsApp">
@@ -694,6 +1657,39 @@ You're engaging on <strong>LinkedIn</strong>, <strong>X (Twitter)</strong>, <str
             </div>
         </section>
     </main>
+
+    <!-- Project Interface Preview Lightbox Modal -->
+    <div id="projectLightboxModal" class="project-lightbox-modal" aria-hidden="true" role="dialog"
+        aria-labelledby="lightboxTitle">
+        <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+        <div class="lightbox-dialog">
+            <div class="lightbox-header">
+                <div class="lightbox-title-wrap">
+                    <span class="lightbox-badge" id="lightboxBadge">PROJECT UI PREVIEW</span>
+                    <h4 class="lightbox-title" id="lightboxTitle">Project Interface</h4>
+                </div>
+                <div class="lightbox-actions">
+                    <a href="#" id="lightboxLiveDemoBtn" target="_blank" rel="noopener noreferrer"
+                        class="drawer-btn drawer-btn-primary">
+                        <i class="fas fa-external-link-alt"></i> Open Live Demo
+                    </a>
+                    <button type="button" class="lightbox-close-btn" id="lightboxCloseBtn" aria-label="Close Preview">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="lightbox-body">
+                <div class="lightbox-image-wrap">
+                    <img src="" id="lightboxImg" alt="Project Interface Preview" class="lightbox-image">
+                </div>
+            </div>
+            <div class="lightbox-footer">
+                <span class="lightbox-caption" id="lightboxCaption">Interactive Interface Showcase</span>
+                <span class="lightbox-hint"><i class="fas fa-info-circle"></i> Press ESC or click outside to
+                    dismiss</span>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -705,6 +1701,7 @@ You're engaging on <strong>LinkedIn</strong>, <strong>X (Twitter)</strong>, <str
         </div>
     </footer>
 
-    <script src="script.js?v=1.0.2"></script>
+    <script src="script.js?v=1.0.5"></script>
 </body>
+
 </html>
