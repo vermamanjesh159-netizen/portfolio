@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upwork Introduction Video Preview — Manjesh Verma</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-card: rgba(15, 23, 42, 0.75);
+            --border-color: rgba(56, 189, 248, 0.2);
+            --accent-cyan: #38bdf8;
+            --accent-emerald: #10b981;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 40px 24px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            color: var(--accent-cyan);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            margin-bottom: 16px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff 40%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        @media (max-width: 960px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .video-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .video-footer {
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(10, 15, 26, 0.6);
+        }
+
+        .tech-spec-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .spec-pill {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-cyan);
+            color: #041019;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(56, 189, 248, 0.35);
+        }
+
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(12px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .card-header i {
+            color: var(--accent-cyan);
+            font-size: 1.2rem;
+        }
+
+        .card-header h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .scene-item {
+            position: relative;
+            padding-left: 20px;
+            padding-bottom: 18px;
+            border-left: 2px solid rgba(56, 189, 248, 0.25);
+        }
+
+        .scene-item:last-child {
+            padding-bottom: 0;
+            border-left: 2px solid transparent;
+        }
+
+        .scene-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+        }
+
+        .scene-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--accent-cyan);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .scene-title {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .scene-script {
+            font-size: 0.86rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .upwork-tip-box {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .upwork-tip-box h4 {
+            color: var(--accent-emerald);
+            font-size: 0.92rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .upwork-tip-box p {
+            color: #94a3b8;
+            font-size: 0.84rem;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="badge">
+                <span class="badge-dot"></span> Full HD 1080p Video Production
+            </div>
+            <h1>Upwork Freelancer Introduction Video</h1>
+            <p class="subtitle">Custom-crafted for Manjesh Verma — Python Developer | Django | FastAPI | AI Applications</p>
+        </header>
+
+        <div class="main-grid">
+            <!-- Left Column: Video Player & Specs -->
+            <div class="video-box">
+                <div class="video-wrapper">
+                    <video id="player" controls playsinline preload="auto">
+                        <source src="upwork_intro_video_1080p.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="video-footer">
+                    <div class="tech-spec-pills">
+                        <span class="spec-pill"><i class="fas fa-clock"></i> 58.0s</span>
+                        <span class="spec-pill"><i class="fas fa-expand"></i> 1920 × 1080</span>
+                        <span class="spec-pill"><i class="fas fa-video"></i> H.264 / 30 fps</span>
+                        <span class="spec-pill"><i class="fas fa-volume-up"></i> 48kHz Stereo</span>
+                        <span class="spec-pill"><i class="fas fa-file-video"></i> 14.2 MB</span>
+                    </div>
+                    <a href="upwork_intro_video_1080p.mp4" download="Manjesh_Verma_Upwork_Intro.mp4" class="btn-download">
+                        <i class="fas fa-download"></i> Download MP4
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Column: Scene Timeline & Script -->
+            <div class="side-panel">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-film"></i>
+                        <h3>Scene Timeline & Voiceover</h3>
+                    </div>
+
+                    <div class="scene-item">
+                        <div class="scene-time">0:00 – 0:10 (10.0s)</div>
+                        <div class="scene-title">1. Introduction & Workstation</div>
+                        <div class="scene-script">"Hi, I'm Manjesh Verma. I'm a Python developer specializing in scalable backend systems, high-performance APIs, and practical AI applications."</div>
+                    </div>
+
+                    <div class="scene-item">
+                        <div class="scene-time">0:10 – 0:21 (11.2s)</div>
+                        <div class="scene-title">2. Backend Architecture (Django & FastAPI)</div>
+                        <div class="scene-script">"Whether you need an enterprise web platform with Django or high-speed asynchronous microservices with FastAPI, I engineer backends built for performance, security, and scalability."</div>
+                    </div>
+
+                    <div class="scene-item">
+                        <div class="scene-time">0:21 – 0:34 (12.8s)</div>
+                        <div class="scene-title">3. Database Architecture & Multi-DB Systems</div>
+                        <div class="scene-script">"Data integrity is core to my work. I design robust database architectures across PostgreSQL, Supabase, and MongoDB—optimizing complex queries and high-concurrency workloads."</div>
+                    </div>
+
+                    <div class="scene-item">
+                        <div class="scene-time">0:34 – 0:45 (11.2s)</div>
+                        <div class="scene-title">4. AI Applications & RAG Pipelines</div>
+                        <div class="scene-script">"I also build intelligent AI applications—deploying custom RAG pipelines, vector search with pgvector, and multi-modal vision workflows that solve real business problems."</div>
+                    </div>
+
+                    <div class="scene-item">
+                        <div class="scene-time">0:45 – 0:53 (7.8s)</div>
+                        <div class="scene-title">5. Production Reliability & Cloud Deployment</div>
+                        <div class="scene-script">"I focus on clean code, automated containerized deployments, and clear communication to deliver reliable software on time."</div>
+                    </div>
+
+                    <div class="scene-item">
+                        <div class="scene-time">0:53 – 0:58 (5.0s)</div>
+                        <div class="scene-title">6. Title Card & Call to Action</div>
+                        <div class="scene-script">"Let's work together."</div>
+                    </div>
+
+                    <div class="upwork-tip-box">
+                        <h4><i class="fas fa-check-circle"></i> Upwork Profile Ready</h4>
+                        <p>Upload to YouTube or Vimeo as <strong>Unlisted</strong>, then paste the URL into your Upwork Profile Settings under <em>Profile Overview &rarr; Video Introduction</em>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

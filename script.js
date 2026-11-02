@@ -578,7 +578,7 @@ window.addEventListener('scroll', updateScrollProgress);
     previewText.style.transition = 'opacity 0.2s ease';
   }
 
-  // Interactive Project Preview Lightbox Modal
+  // Interactive Project Preview Lightbox Modal with 2-Image Switcher (Showcase & Live)
   const lightboxModal = document.getElementById('projectLightboxModal');
   const lightboxBackdrop = document.getElementById('lightboxBackdrop');
   const lightboxCloseBtn = document.getElementById('lightboxCloseBtn');
@@ -587,13 +587,55 @@ window.addEventListener('scroll', updateScrollProgress);
   const lightboxBadge = document.getElementById('lightboxBadge');
   const lightboxCaption = document.getElementById('lightboxCaption');
   const lightboxLiveDemoBtn = document.getElementById('lightboxLiveDemoBtn');
+  const btnViewShowcase = document.getElementById('btnViewShowcase');
+  const btnViewLive = document.getElementById('btnViewLive');
+
+  let currentShowcaseUrl = '';
+  let currentLiveUrl = '';
+  let currentBaseBadge = '';
+
+  function setLightboxImage(view) {
+    if (!lightboxImg) return;
+    if (view === 'live' && currentLiveUrl) {
+      lightboxImg.style.opacity = '0.35';
+      lightboxImg.src = currentLiveUrl;
+      if (lightboxImg.complete) {
+        lightboxImg.style.opacity = '1';
+      } else {
+        lightboxImg.onload = () => { lightboxImg.style.opacity = '1'; };
+      }
+      if (btnViewShowcase) btnViewShowcase.classList.remove('active');
+      if (btnViewLive) btnViewLive.classList.add('active');
+      if (lightboxBadge) lightboxBadge.textContent = 'VERIFIED LIVE DEPLOYMENT';
+    } else {
+      lightboxImg.style.opacity = '0.35';
+      lightboxImg.src = currentShowcaseUrl;
+      if (lightboxImg.complete) {
+        lightboxImg.style.opacity = '1';
+      } else {
+        lightboxImg.onload = () => { lightboxImg.style.opacity = '1'; };
+      }
+      if (btnViewShowcase) btnViewShowcase.classList.add('active');
+      if (btnViewLive) btnViewLive.classList.remove('active');
+      if (lightboxBadge) lightboxBadge.textContent = currentBaseBadge || 'ARCHITECTURE UI SHOWCASE';
+    }
+  }
 
   function openLightbox(opts) {
     if (!lightboxModal || !lightboxImg) return;
-    lightboxImg.src = opts.imgSrc || '';
+    currentShowcaseUrl = opts.showcaseUrl || opts.imgSrc || '';
+    currentLiveUrl = opts.liveUrl || '';
+    currentBaseBadge = opts.badge || 'PROJECT PREVIEW';
+
     lightboxTitle.textContent = opts.title || 'Project Interface';
-    lightboxBadge.textContent = opts.badge || 'PROJECT PREVIEW';
     lightboxCaption.textContent = opts.caption || 'Interface Showcase';
+
+    if (btnViewLive) {
+      btnViewLive.style.display = currentLiveUrl ? 'inline-flex' : 'none';
+    }
+
+    setLightboxImage('showcase');
+
     if (lightboxLiveDemoBtn) {
       lightboxLiveDemoBtn.href = opts.demoUrl || '#';
       lightboxLiveDemoBtn.style.display = opts.demoUrl ? 'inline-flex' : 'none';
@@ -611,22 +653,40 @@ window.addEventListener('scroll', updateScrollProgress);
   }
 
   if (lightboxModal) {
+    if (btnViewShowcase) {
+      btnViewShowcase.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setLightboxImage('showcase');
+      });
+    }
+    if (btnViewLive) {
+      btnViewLive.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setLightboxImage('live');
+      });
+    }
+
     const previewContainers = document.querySelectorAll('.preview-image-container');
     previewContainers.forEach(container => {
-      container.addEventListener('click', (e) => {
-        // If clicking the live demo link directly, let it open normally
+      const handleOpen = (e) => {
         if (e.target.closest('.overlay-demo-btn')) return;
-
         e.preventDefault();
+        e.stopPropagation();
         const opts = {
           imgSrc: container.getAttribute('data-full-img'),
+          showcaseUrl: container.getAttribute('data-showcase') || container.getAttribute('data-full-img'),
+          liveUrl: container.getAttribute('data-live') || '',
           title: container.getAttribute('data-title'),
           badge: container.getAttribute('data-badge'),
           demoUrl: container.getAttribute('data-demo'),
           caption: container.getAttribute('data-caption')
         };
         openLightbox(opts);
-      });
+      };
+
+      container.addEventListener('click', handleOpen);
+      const zoomBtns = container.querySelectorAll('.overlay-zoom-btn');
+      zoomBtns.forEach(btn => btn.addEventListener('click', handleOpen));
     });
 
     if (lightboxCloseBtn) {
