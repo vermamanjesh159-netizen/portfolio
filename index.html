@@ -7,7 +7,7 @@
     <title>Portfolio</title>
     <meta name="description"
         content="Portfolio of Manjesh Verma — Python Developer with 3+ years of experience in FastAPI, NestJS, AI/ML RAG pipelines, and Cloud Technologies on Google Cloud Platform. Building fast, scalable, and high-performance applications.">
-    <link rel="stylesheet" href="style.css?v=1.2.2">
+    <link rel="stylesheet" href="style.css?v=1.5.0">
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -400,6 +400,17 @@
             </div>
         </section>
 
+        <!-- 3D Interactive Robot Experience (After About Me) -->
+        <section id="robot-companion" class="robot-companion-section">
+            <div class="robot-canvas-wrap" id="robotCanvasWrap">
+                <canvas id="robotCanvas"></canvas>
+                <div class="robot-hand-hint" id="robotHandHint">
+                    <span class="hand-hint-glow"></span>
+                    <span class="hand-hint-label"><i class="fas fa-hand-pointer"></i> Click Hand!</span>
+                </div>
+            </div>
+        </section>
+
         <!-- Experience Section -->
         <section id="experience" class="content-section">
             <div class="section-container">
@@ -472,6 +483,14 @@
                                 <span class="skill-level badge-advanced">Advanced</span>
                             </div>
                             <div class="skill-item">
+                                <span class="skill-name">PySpark</span>
+                                <span class="skill-level badge-advanced">Advanced</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Web Scraping & Crawling</span>
+                                <span class="skill-level badge-advanced">Advanced</span>
+                            </div>
+                            <div class="skill-item">
                                 <span class="skill-name">Streamlit</span>
                                 <span class="skill-level badge-advanced">Advanced</span>
                             </div>
@@ -497,7 +516,7 @@
                             <div class="category-icon icon-ai">
                                 <i class="fas fa-brain"></i>
                             </div>
-                            <h3>Artificial Intelligence (AI)</h3>
+                            <h3>AI & Automation</h3>
                         </div>
                         <div class="skills-list">
                             <div class="skill-item">
@@ -506,6 +525,10 @@
                             </div>
                             <div class="skill-item">
                                 <span class="skill-name">LangChain ecosystem</span>
+                                <span class="skill-level badge-advanced">Advanced</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">n8n Automation</span>
                                 <span class="skill-level badge-advanced">Advanced</span>
                             </div>
                             <div class="skill-item">
@@ -591,8 +614,8 @@
                                 <span class="skill-level badge-advanced">Advanced</span>
                             </div>
                             <div class="skill-item">
-                                <span class="skill-name">Redis Caching</span>
-                                <span class="skill-level badge-proficient">Proficient</span>
+                                <span class="skill-name">Redis</span>
+                                <span class="skill-level badge-advanced">Advanced</span>
                             </div>
                         </div>
 
@@ -1889,7 +1912,21 @@
         </div>
     </footer>
 
-    <script src="script.js?v=1.1.0"></script>
+    <!-- Floating Movable 3D Resume Robot Widget -->
+    <div class="floating-resume-bot" id="floatingResumeBot" role="region" aria-label="3D Resume Assistant Bot">
+        <div class="resume-bot-container" id="resumeBotContainer">
+            <canvas id="resumeBotCanvas" width="130" height="140"></canvas>
+            <a href="Manjesh_Verma_Resume.pdf" download="Manjesh_Verma_Resume.pdf" class="resume-bot-download" id="resumeBotDownload" title="Download Resume PDF">
+                <i class="fas fa-download"></i>
+            </a>
+            <div class="resume-bot-tooltip" id="resumeBotTooltip">
+                <span class="tooltip-badge">3D RESUME BOT</span>
+                <span class="tooltip-desc">Click to View Resume &bull; Drag Anywhere</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=1.4.0"></script>
 </body>
 
 </html>

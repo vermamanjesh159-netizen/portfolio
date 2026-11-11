@@ -3420,3 +3420,295 @@ footer {
     font-size: 1.1rem;
   }
 }
+
+/* ===== 3D ROBOT COMPANION SECTION (AFTER ABOUT ME) ===== */
+.robot-companion-section {
+  padding: 1rem 1.5rem 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+}
+
+/* Robot Canvas Wrapper - Pure Robot, No Box */
+.robot-canvas-wrap {
+  position: relative;
+  width: 440px;
+  height: 460px;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.robot-canvas-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+  outline: none;
+  cursor: grab;
+}
+
+.robot-canvas-wrap.is-pointing canvas {
+  cursor: pointer !important;
+}
+
+/* Hand Hint Holographic Indicator */
+.robot-hand-hint {
+  position: absolute;
+  bottom: 25%;
+  right: 18%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 100px;
+  background: rgba(34, 211, 238, 0.15);
+  border: 1px solid rgba(34, 211, 238, 0.45);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+  opacity: 0.88;
+  transition: all 0.3s ease;
+  animation: hintPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.2);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+  }
+}
+
+.hand-hint-glow {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent3);
+}
+
+.hand-hint-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--accent3);
+}
+
+.robot-canvas-wrap:hover .robot-hand-hint {
+  opacity: 1;
+  background: rgba(34, 211, 238, 0.25);
+  border-color: var(--accent3);
+}
+
+/* Skills Highlight Flash upon transition */
+@keyframes skillsSectionHighlight {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0);
+  }
+  30% {
+    box-shadow: 0 0 60px 15px rgba(34, 211, 238, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0);
+  }
+}
+
+.skills-highlight-flash {
+  animation: skillsSectionHighlight 1.5s ease-out;
+  border-radius: 24px;
+}
+
+@media (max-width: 768px) {
+  .hero-robot-stage {
+    width: 100%;
+    max-width: 320px;
+  }
+  .robot-canvas-wrap {
+    width: 290px;
+    height: 320px;
+  }
+  .robot-hand-hint {
+    bottom: 22%;
+    right: 12%;
+  }
+}
+
+/* ===== FLOATING 3D RESUME ROBOT WIDGET ===== */
+.floating-resume-bot {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9995;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  cursor: grab;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
+}
+
+.floating-resume-bot:active {
+  cursor: grabbing;
+}
+
+.floating-resume-bot.is-dragging {
+  cursor: grabbing !important;
+  transform: scale(1.08) translate3d(0, 0, 0) !important;
+  transition: none !important;
+  filter: drop-shadow(0 15px 30px rgba(34, 211, 238, 0.45)) !important;
+}
+
+.resume-bot-container {
+  position: relative;
+  width: 130px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 18px rgba(129, 140, 248, 0.25));
+  transition: filter 0.3s ease;
+}
+
+.floating-resume-bot:hover .resume-bot-container {
+  filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 25px rgba(34, 211, 238, 0.45));
+}
+
+.resume-bot-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  outline: none;
+  pointer-events: auto;
+}
+
+/* Download badge on top-right of the robot */
+.resume-bot-download {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(13, 17, 28, 0.88);
+  border: 1px solid rgba(34, 211, 238, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--accent3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 10px rgba(34, 211, 238, 0.2);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+  cursor: pointer;
+}
+
+.resume-bot-download:hover {
+  background: rgba(34, 211, 238, 0.25);
+  border-color: var(--accent3);
+  color: #fff;
+  transform: scale(1.18);
+  box-shadow: 0 6px 20px rgba(34, 211, 238, 0.45);
+}
+
+/* Tooltip */
+.resume-bot-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: 6px 12px;
+  background: rgba(10, 14, 24, 0.94);
+  border: 1px solid rgba(129, 140, 248, 0.35);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(129, 140, 248, 0.25);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 20;
+}
+
+.resume-bot-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: rgba(10, 14, 24, 0.94) transparent transparent transparent;
+}
+
+.tooltip-badge {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--accent3);
+  letter-spacing: 0.8px;
+}
+
+.tooltip-desc {
+  font-size: 0.72rem;
+  color: var(--text);
+  font-family: var(--font);
+}
+
+.floating-resume-bot:hover .resume-bot-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.floating-resume-bot.is-dragging .resume-bot-tooltip {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* When near top of screen, flip tooltip below */
+.floating-resume-bot.tooltip-bottom .resume-bot-tooltip {
+  bottom: auto;
+  top: calc(100% + 8px);
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.floating-resume-bot.tooltip-bottom .resume-bot-tooltip::after {
+  top: auto;
+  bottom: 100%;
+  border-color: transparent transparent rgba(10, 14, 24, 0.94) transparent;
+}
+
+.floating-resume-bot.tooltip-bottom:hover .resume-bot-tooltip {
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 768px) {
+  .floating-resume-bot {
+    bottom: 20px;
+    right: 20px;
+  }
+  .resume-bot-container {
+    width: 110px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-resume-bot {
+    bottom: 16px;
+    right: 16px;
+  }
+}
