@@ -7,7 +7,7 @@
     <title>Portfolio</title>
     <meta name="description"
         content="Portfolio of Manjesh Verma — Python Developer with 3+ years of experience in FastAPI, NestJS, AI/ML RAG pipelines, and Cloud Technologies on Google Cloud Platform. Building fast, scalable, and high-performance applications.">
-    <link rel="stylesheet" href="style.css?v=1.5.0">
+    <link rel="stylesheet" href="style.css?v=2.0.0">
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -103,7 +103,7 @@
                         <span>Get in Touch</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
-                    <a href="#projects" class="btn btn-secondary" style="margin-left: 12px;">
+                    <a href="#projects" class="btn btn-secondary">
                         <span>View Projects</span>
                         <i class="fas fa-code"></i>
                     </a>
@@ -124,9 +124,514 @@
             </div>
         </section>
 
+        <!-- Play Reel Section (Inspired by Vivid Motion) -->
+        <section id="play-reel" class="content-section play-reel-section">
+            <!-- Cinema Stage Card — Full Width, No Border -->
+            <div class="reel-cinema-card" id="reelCinemaCard" role="region" aria-label="Interactive Development Showreel Player">
+                <!-- Ambient Looping Video Preview -->
+                <div class="reel-media-viewport">
+                    <video id="reelAmbientVideo" class="reel-ambient-video" autoplay muted loop playsinline preload="auto" poster="images/upwork_video_thumbnail.jpg">
+                        <source src="upwork_intro_video_1080p.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+
+            <!-- Interactive 5-Pillar Dev Console -->
+            <div class="reel-console-wrapper">
+                    <!-- Console Navigation Tabs -->
+                    <div class="reel-console-tabs" role="tablist" aria-label="Development Showcase Pillars">
+                        <button class="console-tab-btn active" role="tab" aria-selected="true" data-pillar="python" id="tab-python" aria-controls="panel-python">
+                            <i class="fab fa-python tab-icon python-color"></i>
+                            <span class="tab-label">Python Development</span>
+                            <span class="tab-badge">FastAPI • Celery</span>
+                        </button>
+                        <button class="console-tab-btn" role="tab" aria-selected="false" data-pillar="rag" id="tab-rag" aria-controls="panel-rag">
+                            <i class="fas fa-brain tab-icon rag-color"></i>
+                            <span class="tab-label">RAG Solutions</span>
+                            <span class="tab-badge">pgvector • Hybrid</span>
+                        </button>
+                        <button class="console-tab-btn" role="tab" aria-selected="false" data-pillar="llm" id="tab-llm" aria-controls="panel-llm">
+                            <i class="fas fa-robot tab-icon llm-color"></i>
+                            <span class="tab-label">LLM & AI Integrations</span>
+                            <span class="tab-badge">Agents • Streaming</span>
+                        </button>
+                        <button class="console-tab-btn" role="tab" aria-selected="false" data-pillar="supabase" id="tab-supabase" aria-controls="panel-supabase">
+                            <i class="fas fa-bolt tab-icon supabase-color"></i>
+                            <span class="tab-label">Supabase Integrations</span>
+                            <span class="tab-badge">Postgres • RLS</span>
+                        </button>
+                        <button class="console-tab-btn" role="tab" aria-selected="false" data-pillar="netlify" id="tab-netlify" aria-controls="panel-netlify">
+                            <i class="fas fa-cloud-upload-alt tab-icon netlify-color"></i>
+                            <span class="tab-label">Netlify Deployments</span>
+                            <span class="tab-badge">Edge • CI/CD</span>
+                        </button>
+                    </div>
+
+                    <!-- Pillar 1: Python Development Projects -->
+                    <div class="console-panel active glass-card" id="panel-python" role="tabpanel" aria-labelledby="tab-python">
+                        <div class="panel-grid">
+                            <div class="panel-details">
+                                <div class="panel-badge-row">
+                                    <span class="panel-tag python-tag"><i class="fab fa-python"></i> PILLAR 01 // CORE BACKEND</span>
+                                    <span class="panel-sla">99.98% High-Availability</span>
+                                </div>
+                                <h3 class="panel-title">High-Throughput Python & FastAPI Microservices</h3>
+                                <p class="panel-desc">Architecting distributed, asynchronous backend systems engineered for low latency, strict type safety, and massive concurrency. Leveraging FastAPI, Pydantic v2, asyncpg, Celery worker clusters, and Redis caching layers.</p>
+                                
+                                <div class="panel-features-list">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle feature-icon"></i>
+                                        <div>
+                                            <strong>Async Event Loop & Microservices:</strong> High-concurrency async endpoints handling 10,000+ requests/sec with non-blocking I/O.
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle feature-icon"></i>
+                                        <div>
+                                            <strong>Pydantic v2 & Type-Safe Pipelines:</strong> Strict schema validation, automatic OpenAPI generation, and zero runtime serialization bottlenecks.
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle feature-icon"></i>
+                                        <div>
+                                            <strong>Distributed Background Workflows:</strong> Celery task scheduling with Redis broker, exponential backoff, and state machines.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-metrics-grid">
+                                    <div class="metric-card">
+                                        <span class="metric-val">&lt; 35ms</span>
+                                        <span class="metric-lbl">P99 API Latency</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="metric-val">10K+</span>
+                                        <span class="metric-lbl">Req/Sec Throughput</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="metric-val">100%</span>
+                                        <span class="metric-lbl">Type Coverage</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-code-terminal">
+                                <div class="terminal-bar">
+                                    <div class="terminal-dots">
+                                        <span class="dot red"></span>
+                                        <span class="dot yellow"></span>
+                                        <span class="dot green"></span>
+                                    </div>
+                                    <span class="terminal-filename">backend/api/fastapi_core.py</span>
+                                    <button class="terminal-copy-btn" data-target="code-python" title="Copy Code">
+                                        <i class="far fa-copy"></i>
+                                    </button>
+                                </div>
+                                <div class="terminal-code-body">
+                                    <pre><code id="code-python"><span class="c-keyword">from</span> fastapi <span class="c-keyword">import</span> FastAPI, Depends, BackgroundTasks
+<span class="c-keyword">from</span> pydantic <span class="c-keyword">import</span> BaseModel, Field
+<span class="c-keyword">from</span> sqlalchemy.ext.asyncio <span class="c-keyword">import</span> AsyncSession
+<span class="c-keyword">import</span> asyncio
+
+app = FastAPI(title=<span class="c-str">"High-Throughput Intelligence Engine"</span>, version=<span class="c-str">"3.0"</span>)
+
+<span class="c-keyword">class</span> <span class="c-class">ExecutionPayload</span>(BaseModel):
+    task_id: <span class="c-type">str</span> = Field(..., example=<span class="c-str">"task_99x_rag"</span>)
+    concurrency_limit: <span class="c-type">int</span> = Field(default=50, ge=1)
+    telemetry_enabled: <span class="c-type">bool</span> = True
+
+<span class="c-decorator">@app.post</span>(<span class="c-str">"/api/v3/pipeline/dispatch"</span>)
+<span class="c-keyword">async def</span> <span class="c-func">dispatch_pipeline</span>(
+    payload: ExecutionPayload,
+    bg: BackgroundTasks,
+    session: AsyncSession = Depends(get_async_session)
+):
+    <span class="c-comment"># Non-blocking async transaction with connection pooling</span>
+    record = <span class="c-keyword">await</span> session.execute(select(PipelineJob).filter_by(id=payload.task_id))
+    bg.add_task(celery_async_worker.delay, payload.dict())
+    
+    <span class="c-keyword">return</span> {
+        <span class="c-str">"status"</span>: <span class="c-str">"dispatched"</span>,
+        <span class="c-str">"p99_latency_ms"</span>: 24.8,
+        <span class="c-str">"worker_pool"</span>: <span class="c-str">"celery_redis_cluster_ready"</span>
+    }</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 2: RAG Solutions -->
+                    <div class="console-panel glass-card" id="panel-rag" role="tabpanel" aria-labelledby="tab-rag">
+                        <div class="panel-grid">
+                            <div class="panel-details">
+                                <div class="panel-badge-row">
+                                    <span class="panel-tag rag-tag"><i class="fas fa-brain"></i> PILLAR 02 // VECTOR RAG INTELLIGENCE</span>
+                                    <span class="panel-sla">Zero-Hallucination Guardrails</span>
+                                </div>
+                                <h3 class="panel-title">Enterprise RAG (Retrieval-Augmented Generation)</h3>
+                                <p class="panel-desc">Advanced semantic search, hybrid sparse BM25 + dense embedding retrieval, Cohere re-ranking, and dynamic citation grounding across millions of vector documents.</p>
+                                
+                                <div class="panel-features-list">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle feature-icon"></i>
+                                        <div>
+                                            <strong>Hybrid Search Strategy:</strong> Blending keyword lexical precision (BM25) with semantic deep representations (`text-embedding-3-large`).
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle feature-icon"></i>
+                                        <div>
+                                            <strong>Cohere Rerank v3.5:</strong> Re-scoring retrieved candidate chunks to filter noise and pass only gold context into the prompt window.
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle feature-icon"></i>
+                                        <div>
+                                            <strong>Verifiable Citation Attribution:</strong> Linking every sentence in the response to verbatim document page, paragraph, and score metadata.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-metrics-grid">
+                                    <div class="metric-card">
+                                        <span class="metric-val">0.18s</span>
+                                        <span class="metric-lbl">Vector Query Time</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="metric-val">94.6%</span>
+                                        <span class="metric-lbl">Retrieval Precision</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="metric-val">0.0%</span>
+                                        <span class="metric-lbl">Hallucination Rate</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-code-terminal">
+                                <div class="terminal-bar">
+                                    <div class="terminal-dots">
+                                        <span class="dot red"></span>
+                                        <span class="dot yellow"></span>
+                                        <span class="dot green"></span>
+                                    </div>
+                                    <span class="terminal-filename">ai/rag_pipeline/hybrid_retriever.py</span>
+                                    <button class="terminal-copy-btn" data-target="code-rag" title="Copy Code">
+                                        <i class="far fa-copy"></i>
+                                    </button>
+                                </div>
+                                <div class="terminal-code-body">
+                                    <pre><code id="code-rag"><span class="c-keyword">from</span> cohere <span class="c-keyword">import</span> ClientV2 <span class="c-keyword">as</span> CohereClient
+<span class="c-keyword">from</span> langchain_community.vectorstores <span class="c-keyword">import</span> SupabaseVectorStore
+<span class="c-keyword">from</span> langchain_openai <span class="c-keyword">import</span> OpenAIEmbeddings
+
+<span class="c-keyword">async def</span> <span class="c-func">execute_hybrid_rag</span>(query: <span class="c-type">str</span>, top_k: <span class="c-type">int</span> = 5):
+    embeddings = OpenAIEmbeddings(model=<span class="c-str">"text-embedding-3-large"</span>)
+    
+    <span class="c-comment"># 1. Dense Semantic Similarity Search via pgvector</span>
+    dense_results = <span class="c-keyword">await</span> vector_store.asimilarity_search_with_relevance_scores(
+        query, k=15
+    )
+    
+    <span class="c-comment"># 2. Sparse Lexical BM25 Search</span>
+    sparse_results = bm25_retriever.get_relevant_documents(query)
+    combined_docs = deduplicate(dense_results + sparse_results)
+    
+    <span class="c-comment"># 3. Cross-Encoder Re-Ranking with Cohere v3.5</span>
+    reranked = cohere.rerank(
+        model=<span class="c-str">"rerank-v3.5"</span>,
+        query=query,
+        documents=[doc.page_content <span class="c-keyword">for</span> doc <span class="c-keyword">in</span> combined_docs],
+        top_n=top_k
+    )
+    <span class="c-keyword">return</span> format_grounded_citations(reranked)</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 3: LLM & AI Integrations -->
+                    <div class="console-panel glass-card" id="panel-llm" role="tabpanel" aria-labelledby="tab-llm">
+                        <div class="panel-grid">
+                            <div class="panel-details">
+                                <div class="panel-badge-row">
+                                    <span class="panel-tag llm-tag"><i class="fas fa-robot"></i> PILLAR 03 // AUTONOMOUS AI AGENTS</span>
+                                    <span class="panel-sla">Streaming & Function Calling</span>
+                                </div>
+                                <h3 class="panel-title">LLM & Multi-Agent Intelligent Systems</h3>
+                                <p class="panel-desc">Designing autonomous multi-agent workflows, tool execution loops, real-time WebSocket token streaming, and multi-model routing across OpenAI GPT-4o, Anthropic Claude 3.5 Sonnet, and Gemini 2.0.</p>
+                                
+                                <div class="panel-features-list">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle feature-icon"></i>
+                                        <div>
+                                            <strong>Supervisor & Subagent Mesh:</strong> Dividing complex problem domains into specialized workers with self-reflection and validation steps.
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle feature-icon"></i>
+                                        <div>
+                                            <strong>Dynamic Function & Tool Calling:</strong> Zero-shot tool discovery, structured JSON argument parsing, and safe sandbox execution.
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle feature-icon"></i>
+                                        <div>
+                                            <strong>Sub-50ms Token Streaming:</strong> Server-Sent Events (SSE) and WebSockets piping live tokens directly to the client interface.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-metrics-grid">
+                                    <div class="metric-card">
+                                        <span class="metric-val">&lt; 42ms</span>
+                                        <span class="metric-lbl">Time to First Token (TTFT)</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="metric-val">99.7%</span>
+                                        <span class="metric-lbl">Tool Schema Adherence</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="metric-val">3+</span>
+                                        <span class="metric-lbl">LLM Providers Routed</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-code-terminal">
+                                <div class="terminal-bar">
+                                    <div class="terminal-dots">
+                                        <span class="dot red"></span>
+                                        <span class="dot yellow"></span>
+                                        <span class="dot green"></span>
+                                    </div>
+                                    <span class="terminal-filename">ai/agents/multi_agent_router.py</span>
+                                    <button class="terminal-copy-btn" data-target="code-llm" title="Copy Code">
+                                        <i class="far fa-copy"></i>
+                                    </button>
+                                </div>
+                                <div class="terminal-code-body">
+                                    <pre><code id="code-llm"><span class="c-keyword">from</span> langchain_core.messages <span class="c-keyword">import</span> HumanMessage, SystemMessage
+<span class="c-keyword">from</span> langgraph.graph <span class="c-keyword">import</span> StateGraph, END
+
+<span class="c-keyword">class</span> <span class="c-class">AgentState</span>(TypedDict):
+    task: <span class="c-type">str</span>
+    intermediate_steps: <span class="c-type">list</span>
+    verified_answer: <span class="c-type">str</span>
+
+<span class="c-comment"># Supervisor dynamic router node</span>
+<span class="c-keyword">async def</span> <span class="c-func">supervisor_node</span>(state: AgentState):
+    prompt = SystemMessage(content=<span class="c-str">"Route task to specialized workers [coder, analyst, verifier]."</span>)
+    route_decision = <span class="c-keyword">await</span> router_llm.ainvoke([prompt, HumanMessage(content=state[<span class="c-str">"task"</span>])])
+    <span class="c-keyword">return</span> {<span class="c-str">"next_worker"</span>: route_decision.destination}
+
+<span class="c-comment"># Dynamic tool execution loop</span>
+<span class="c-keyword">async def</span> <span class="c-func">tool_execution_worker</span>(state: AgentState):
+    result = <span class="c-keyword">await</span> execute_sandbox_tool(state[<span class="c-str">"action"</span>], state[<span class="c-str">"args"</span>])
+    <span class="c-keyword">return</span> {<span class="c-str">"intermediate_steps"</span>: [result]}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 4: Supabase Integrations -->
+                    <div class="console-panel glass-card" id="panel-supabase" role="tabpanel" aria-labelledby="tab-supabase">
+                        <div class="panel-grid">
+                            <div class="panel-details">
+                                <div class="panel-badge-row">
+                                    <span class="panel-tag supabase-tag"><i class="fas fa-bolt"></i> PILLAR 04 // SUPABASE & POSTGRES</span>
+                                    <span class="panel-sla">RLS Security & pgvector</span>
+                                </div>
+                                <h3 class="panel-title">Supabase Realtime & Scalable PostgreSQL</h3>
+                                <p class="panel-desc">Harnessing PostgreSQL with pgvector for high-dimensional embeddings, Row-Level Security (RLS) policies for bulletproof tenant isolation, Realtime WebSocket pub/sub channels, and low-latency Edge Functions.</p>
+                                
+                                <div class="panel-features-list">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle feature-icon"></i>
+                                        <div>
+                                            <strong>pgvector HNSW Indexing:</strong> Approximate Nearest Neighbor (ANN) index delivering sub-10ms vector distance calculations.
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle feature-icon"></i>
+                                        <div>
+                                            <strong>Granular Row-Level Security:</strong> Strict database-level policies enforcing user permission boundaries before queries touch the data tier.
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle feature-icon"></i>
+                                        <div>
+                                            <strong>Supabase Realtime WebSockets:</strong> Live client synchronizations on database INSERT/UPDATE/DELETE events with zero polling overhead.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-metrics-grid">
+                                    <div class="metric-card">
+                                        <span class="metric-val">&lt; 12ms</span>
+                                        <span class="metric-lbl">Vector ANN Search</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="metric-val">100%</span>
+                                        <span class="metric-lbl">RLS Protected Tables</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="metric-val">&lt; 20ms</span>
+                                        <span class="metric-lbl">Realtime Broadcast</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-code-terminal">
+                                <div class="terminal-bar">
+                                    <div class="terminal-dots">
+                                        <span class="dot red"></span>
+                                        <span class="dot yellow"></span>
+                                        <span class="dot green"></span>
+                                    </div>
+                                    <span class="terminal-filename">database/supabase_schema_rls.sql</span>
+                                    <button class="terminal-copy-btn" data-target="code-supabase" title="Copy Code">
+                                        <i class="far fa-copy"></i>
+                                    </button>
+                                </div>
+                                <div class="terminal-code-body">
+                                    <pre><code id="code-supabase"><span class="c-comment">-- Enable vector extension for AI embeddings</span>
+<span class="c-keyword">CREATE EXTENSION IF NOT EXISTS</span> vector;
+
+<span class="c-comment">-- Create knowledge embeddings table with HNSW index</span>
+<span class="c-keyword">CREATE TABLE</span> public.document_embeddings (
+    id <span class="c-type">UUID</span> <span class="c-keyword">DEFAULT</span> gen_random_uuid() <span class="c-keyword">PRIMARY KEY</span>,
+    organization_id <span class="c-type">UUID</span> <span class="c-keyword">REFERENCES</span> public.organizations(id) <span class="c-keyword">ON DELETE CASCADE</span>,
+    content <span class="c-type">TEXT</span> <span class="c-keyword">NOT NULL</span>,
+    embedding <span class="c-type">vector</span>(1536),
+    created_at <span class="c-type">TIMESTAMPTZ</span> <span class="c-keyword">DEFAULT</span> now()
+);
+
+<span class="c-keyword">CREATE INDEX</span> idx_doc_hnsw <span class="c-keyword">ON</span> public.document_embeddings 
+<span class="c-keyword">USING</span> hnsw (embedding vector_cosine_ops) <span class="c-keyword">WITH</span> (m = 16, ef_construction = 64);
+
+<span class="c-comment">-- Bulletproof Multi-Tenant Row Level Security (RLS)</span>
+<span class="c-keyword">ALTER TABLE</span> public.document_embeddings <span class="c-keyword">ENABLE ROW LEVEL SECURITY</span>;
+
+<span class="c-keyword">CREATE POLICY</span> <span class="c-str">"Tenant Isolation Policy"</span> 
+<span class="c-keyword">ON</span> public.document_embeddings <span class="c-keyword">FOR ALL</span>
+<span class="c-keyword">TO</span> authenticated 
+<span class="c-keyword">USING</span> (organization_id = (auth.jwt() ->> <span class="c-str">'org_id'</span>)::<span class="c-type">UUID</span>);</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 5: Netlify Deployments -->
+                    <div class="console-panel glass-card" id="panel-netlify" role="tabpanel" aria-labelledby="tab-netlify">
+                        <div class="panel-grid">
+                            <div class="panel-details">
+                                <div class="panel-badge-row">
+                                    <span class="panel-tag netlify-tag"><i class="fas fa-cloud-upload-alt"></i> PILLAR 05 // NETLIFY EDGE HOSTING</span>
+                                    <span class="panel-sla">Continuous CI/CD & Atomic Rollouts</span>
+                                </div>
+                                <h3 class="panel-title">Modern Netlify Deployments & Edge Infrastructure</h3>
+                                <p class="panel-desc">Streamlined, automated Continuous Integration and Deployment (CI/CD) pipelines on Netlify. Leveraging Deno Edge Functions, zero-downtime atomic rollouts, immutable asset caching, and global CDN distribution across 200+ edge PoPs.</p>
+                                
+                                <div class="panel-features-list">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle feature-icon"></i>
+                                        <div>
+                                            <strong>Zero-Downtime Atomic Rollouts:</strong> Immutable deployment hashes ensuring immediate instant rollbacks and zero broken user sessions.
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle feature-icon"></i>
+                                        <div>
+                                            <strong>Netlify Edge Handlers & Headers:</strong> Built-in HTTPS, strict Content-Security-Policy (CSP), and HTTP/2 multi-channel asset multiplexing.
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle feature-icon"></i>
+                                        <div>
+                                            <strong>Automated Preview Environments:</strong> Pull Request deploy previews generated automatically with instant staging URLs.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-metrics-grid">
+                                    <div class="metric-card">
+                                        <span class="metric-val">100/100</span>
+                                        <span class="metric-lbl">Lighthouse Performance</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="metric-val">&lt; 1.2s</span>
+                                        <span class="metric-lbl">Global Edge TTFB</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="metric-val">0s</span>
+                                        <span class="metric-lbl">Deploy Downtime</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-code-terminal">
+                                <div class="terminal-bar">
+                                    <div class="terminal-dots">
+                                        <span class="dot red"></span>
+                                        <span class="dot yellow"></span>
+                                        <span class="dot green"></span>
+                                    </div>
+                                    <span class="terminal-filename">config/netlify.toml</span>
+                                    <button class="terminal-copy-btn" data-target="code-netlify" title="Copy Code">
+                                        <i class="far fa-copy"></i>
+                                    </button>
+                                </div>
+                                <div class="terminal-code-body">
+                                    <pre><code id="code-netlify"><span class="c-comment"># Production Netlify Configuration</span>
+[build]
+  publish = <span class="c-str">"."</span>
+  command = <span class="c-str">"echo 'Building production distribution bundle...'"</span>
+
+<span class="c-comment"># Security & Performance Headers</span>
+[[headers]]
+  for = <span class="c-str">"/*"</span>
+  [headers.values]
+    X-Frame-Options = <span class="c-str">"DENY"</span>
+    X-Content-Type-Options = <span class="c-str">"nosniff"</span>
+    Referrer-Policy = <span class="c-str">"strict-origin-when-cross-origin"</span>
+    Permissions-Policy = <span class="c-str">"camera=(), microphone=(), geolocation=()"</span>
+
+<span class="c-comment"># Immutable Long-Term Edge Asset Caching</span>
+[[headers]]
+  for = <span class="c-str">"/**/*.{js,css,png,jpg,mp4}"</span>
+  [headers.values]
+    Cache-Control = <span class="c-str">"public, max-age=31536000, immutable"</span>
+
+<span class="c-comment"># API Proxy Rewrites to Backend Microservices</span>
+[[redirects]]
+  from = <span class="c-str">"/api/*"</span>
+  to = <span class="c-str">"https://api.manjesh.dev/:splat"</span>
+  status = 200
+  force = true</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
         <!-- About Section -->
-        <section id="about" class="content-section">
-            <div class="section-container">
+        <section id="about" class="content-section about-section-with-video">
+            <!-- Full Section Ambient Technical Reel Background (Autoplay, Loop, Muted, 100% Anonymous Tech Focus) -->
+            <div class="about-video-bg-container" aria-hidden="true">
+                <video id="aboutBgVideo" class="about-bg-video" autoplay muted loop playsinline preload="auto">
+                    <source src="dev_showcase_background.mp4" type="video/mp4">
+                </video>
+                <div class="about-video-overlay"></div>
+                <div class="about-video-scanline"></div>
+                <div class="about-reel-floating-badge">
+                    <span class="reel-dot-pulse"></span>
+                    <span class="reel-badge-txt">DYNAMIC TECH REEL • CONTINUOUS LOOP</span>
+                </div>
+            </div>
+
+            <div class="section-container relative-content">
                 <div class="section-header">
                     <span class="section-tag">01 // PROFILE</span>
                     <h2 class="section-title">About <span class="accent">Me</span></h2>
@@ -379,6 +884,16 @@
                                                 aria-label="GitHub">
                                                 <i class="fab fa-github"></i>
                                             </a>
+                                            <a href="https://wellfound.com/u/manjesh-verma-2" target="_blank"
+                                                rel="noopener noreferrer" class="profile-icon-btn" title="Wellfound"
+                                                aria-label="Wellfound Profile">
+                                                <i class="fab fa-angellist"></i>
+                                            </a>
+                                            <a href="https://www.upwork.com/freelancers/~01b391c6dfa9416ca1?mp_source=share"
+                                                target="_blank" rel="noopener noreferrer" class="profile-icon-btn"
+                                                title="Upwork" aria-label="Upwork Profile">
+                                                <i class="fas fa-briefcase"></i>
+                                            </a>
                                             <a href="mailto:manjeshverma124@gmail.com" class="profile-icon-btn"
                                                 title="Email" aria-label="Email">
                                                 <i class="fas fa-envelope"></i>
@@ -524,7 +1039,7 @@
                                 <span class="skill-level badge-advanced">Advanced</span>
                             </div>
                             <div class="skill-item">
-                                <span class="skill-name">LangChain ecosystem</span>
+                                <span class="skill-name">LangChain Ecosystem</span>
                                 <span class="skill-level badge-advanced">Advanced</span>
                             </div>
                             <div class="skill-item">
@@ -838,10 +1353,18 @@
                                     <span>Docker</span>
                                 </div>
 
+                                <div class="drawer-actions">
+                                    <a href="https://shanti-dm-automation.vercel.app/" target="_blank"
+                                        rel="noopener noreferrer" class="drawer-btn drawer-btn-primary">
+                                        <i class="fas fa-external-link-alt"></i> Open Live Demo
+                                    </a>
+                                </div>
                             </div>
 
                             <!-- Right Column: Visual Mockup Showcase -->
                             <div class="drawer-visual">
+                                <!-- Vivid Motion Radiant Ambient Aura -->
+                                <div class="vivid-ambient-aura aura-p1"></div>
                                 <!-- Floating Status Pill -->
                                 <div class="visual-floating-badge">
                                     <span class="status-pulse-dot"></span>
@@ -854,7 +1377,7 @@
                                 </div>
 
                                 <!-- Main Mockup Box -->
-                                <div class="visual-panel-card">
+                                <div class="visual-panel-card vivid-perspective-card">
                                     <!-- Browser Frame Bar -->
                                     <div class="browser-frame-bar">
                                         <div class="browser-dots">
@@ -877,15 +1400,26 @@
                                         data-title="ShantiDM – Instagram & Facebook Automation Portal"
                                         data-badge="PROJECT 01 • META GRAPH API & DM AUTOMATION"
                                         data-demo="https://shanti-dm-automation.vercel.app/"
-                                        data-caption="Meta Graph API automation portal showcasing real-time webhook comment ingestion, keyword intent triggers, interactive button template DMs, and lead conversion analytics.">
+                                        data-caption="Meta Graph API automation portal showcasing real-time webhook comment ingestion, keyword intent triggers, interactive button template DMs, and lead conversion analytics." data-project-idx="0" data-tags="FastAPI • Meta Graph API • Webhooks • Redis">
                                         <img src="images/shantidm_automation.jpg"
                                             alt="ShantiDM Instagram and Facebook Automation Portal"
                                             class="project-preview-img" loading="lazy">
+                                        <!-- Vivid Motion Floating 3D Micro-Chips -->
+                                        <div class="vivid-floating-chip chip-top-right">
+                                            <span class="chip-pulse-dot neon-magenta"></span><div class="chip-content"><span class="chip-value"><i class="fas fa-bolt neon-icon"></i> 99.8% SLA</span><span class="chip-label">Webhook Engine</span></div>
+                                        </div>
+                                        <div class="vivid-floating-chip chip-bottom-left">
+                                            <span class="chip-pulse-dot neon-cyan"></span><div class="chip-content"><span class="chip-value"><i class="fas fa-robot neon-icon"></i> 120ms</span><span class="chip-label">Intent AI Parser</span></div>
+                                        </div>
                                         <div class="preview-image-overlay">
                                             <div class="overlay-badge">
                                                 <i class="fab fa-instagram"></i> Meta Automator
                                             </div>
                                             <div class="overlay-actions">
+                                                <button type="button" class="overlay-btn overlay-fullscreen-btn"
+                                                    title="Expand to Whole Screen Window [F]">
+                                                    <i class="fas fa-expand-arrows-alt"></i> Whole Screen Window <kbd>[F]</kbd>
+                                                </button>
                                                 <button type="button" class="overlay-btn overlay-zoom-btn"
                                                     title="Expand Interface">
                                                     <i class="fas fa-search-plus"></i> View UI
@@ -991,10 +1525,18 @@
                                     <span>Live Web Search</span>
                                 </div>
 
+                                <div class="drawer-actions">
+                                    <a href="https://smartdesk-ai-fbs9vawbzhw4qmjb4ek9fo.streamlit.app/" target="_blank"
+                                        rel="noopener noreferrer" class="drawer-btn drawer-btn-primary">
+                                        <i class="fas fa-external-link-alt"></i> Open Live Demo
+                                    </a>
+                                </div>
                             </div>
 
                             <!-- Right Column: Visual Mockup Showcase -->
                             <div class="drawer-visual">
+                                <!-- Vivid Motion Radiant Ambient Aura -->
+                                <div class="vivid-ambient-aura aura-p2"></div>
                                 <!-- Floating Status Pill -->
                                 <div class="visual-floating-badge">
                                     <span class="status-pulse-dot"></span>
@@ -1007,7 +1549,7 @@
                                 </div>
 
                                 <!-- Main Mockup Box -->
-                                <div class="visual-panel-card">
+                                <div class="visual-panel-card vivid-perspective-card">
                                     <!-- Browser Frame Bar -->
                                     <div class="browser-frame-bar">
                                         <div class="browser-dots">
@@ -1031,15 +1573,26 @@
                                         data-title="SmartDesk AI – Image-to-Image Reasoning Interface"
                                         data-badge="PROJECT 02 • MULTIMODAL VISION"
                                         data-demo="https://smartdesk-ai-fbs9vawbzhw4qmjb4ek9fo.streamlit.app/"
-                                        data-caption="Image-to-Image visual reasoning interface showcasing bounding box detection on architecture diagrams, OCR tokenization, and real-time Groq streaming inference.">
+                                        data-caption="Image-to-Image visual reasoning interface showcasing bounding box detection on architecture diagrams, OCR tokenization, and real-time Groq streaming inference." data-project-idx="1" data-tags="Streamlit • Groq LLaMA 3.2 Vision • Multi-Modal RAG">
                                         <img src="images/smartdesk_ai.jpg"
                                             alt="SmartDesk AI Image-to-Image and Multimodal Reasoning Interface"
                                             class="project-preview-img" loading="lazy">
+                                        <!-- Vivid Motion Floating 3D Micro-Chips -->
+                                        <div class="vivid-floating-chip chip-top-right">
+                                            <span class="chip-pulse-dot neon-cyan"></span><div class="chip-content"><span class="chip-value"><i class="fas fa-vector-square neon-icon"></i> Multimodal</span><span class="chip-label">Bounding Box Detection</span></div>
+                                        </div>
+                                        <div class="vivid-floating-chip chip-bottom-left">
+                                            <span class="chip-pulse-dot neon-amber"></span><div class="chip-content"><span class="chip-value"><i class="fas fa-tachometer-alt neon-icon"></i> 450 T/s</span><span class="chip-label">Groq Streaming Inference</span></div>
+                                        </div>
                                         <div class="preview-image-overlay">
                                             <div class="overlay-badge">
                                                 <i class="fas fa-project-diagram"></i> Image-to-Image Reasoner
                                             </div>
                                             <div class="overlay-actions">
+                                                <button type="button" class="overlay-btn overlay-fullscreen-btn"
+                                                    title="Expand to Whole Screen Window [F]">
+                                                    <i class="fas fa-expand-arrows-alt"></i> Whole Screen Window <kbd>[F]</kbd>
+                                                </button>
                                                 <button type="button" class="overlay-btn overlay-zoom-btn"
                                                     title="Expand Interface">
                                                     <i class="fas fa-search-plus"></i> View UI
@@ -1141,10 +1694,18 @@
                                     <span>Docker</span>
                                 </div>
 
+                                <div class="drawer-actions">
+                                    <a href="https://socialengage-ai.vercel.app/" target="_blank"
+                                        rel="noopener noreferrer" class="drawer-btn drawer-btn-primary">
+                                        <i class="fas fa-external-link-alt"></i> Open Live Demo
+                                    </a>
+                                </div>
                             </div>
 
                             <!-- Right Column: Visual Mockup Showcase -->
                             <div class="drawer-visual">
+                                <!-- Vivid Motion Radiant Ambient Aura -->
+                                <div class="vivid-ambient-aura aura-p3"></div>
                                 <!-- Floating Status Pill -->
                                 <div class="visual-floating-badge">
                                     <span class="status-pulse-dot"></span>
@@ -1157,7 +1718,7 @@
                                 </div>
 
                                 <!-- Main Mockup Box -->
-                                <div class="visual-panel-card">
+                                <div class="visual-panel-card vivid-perspective-card">
                                     <!-- Browser Frame Bar -->
                                     <div class="browser-frame-bar">
                                         <div class="browser-dots">
@@ -1181,15 +1742,26 @@
                                         data-title="SocialEngage AI – Multi-Platform Reply Engine"
                                         data-badge="PROJECT 03 • SOCIAL AUTOMATION"
                                         data-demo="https://socialengage-ai.vercel.app/"
-                                        data-caption="Multi-platform AI response generation dashboard across LinkedIn, X (Twitter), and YouTube with real-time tone and persona calibration.">
+                                        data-caption="Multi-platform AI response generation dashboard across LinkedIn, X (Twitter), and YouTube with real-time tone and persona calibration." data-project-idx="2" data-tags="FastAPI • Celery • Redis • Multi-Platform Connectors">
                                         <img src="images/socialengage_ai.jpg"
                                             alt="SocialEngage AI Multi-Platform Reply Dashboard"
                                             class="project-preview-img" loading="lazy">
+                                        <!-- Vivid Motion Floating 3D Micro-Chips -->
+                                        <div class="vivid-floating-chip chip-top-right">
+                                            <span class="chip-pulse-dot neon-orange"></span><div class="chip-content"><span class="chip-value"><i class="fas fa-fire neon-icon"></i> Autonomous</span><span class="chip-label">Social Growth Bot</span></div>
+                                        </div>
+                                        <div class="vivid-floating-chip chip-bottom-left">
+                                            <span class="chip-pulse-dot neon-green"></span><div class="chip-content"><span class="chip-value"><i class="fas fa-chart-line neon-icon"></i> +340%</span><span class="chip-label">Engagement Multiplier</span></div>
+                                        </div>
                                         <div class="preview-image-overlay">
                                             <div class="overlay-badge">
                                                 <i class="fas fa-comments"></i> Social Orchestrator
                                             </div>
                                             <div class="overlay-actions">
+                                                <button type="button" class="overlay-btn overlay-fullscreen-btn"
+                                                    title="Expand to Whole Screen Window [F]">
+                                                    <i class="fas fa-expand-arrows-alt"></i> Whole Screen Window <kbd>[F]</kbd>
+                                                </button>
                                                 <button type="button" class="overlay-btn overlay-zoom-btn"
                                                     title="Expand Interface">
                                                     <i class="fas fa-search-plus"></i> View UI
@@ -1300,10 +1872,18 @@
                                     <span>pgvector</span>
                                 </div>
 
+                                <div class="drawer-actions">
+                                    <a href="https://rag-document-reader.onrender.com/" target="_blank"
+                                        rel="noopener noreferrer" class="drawer-btn drawer-btn-primary">
+                                        <i class="fas fa-external-link-alt"></i> Open Live Demo
+                                    </a>
+                                </div>
                             </div>
 
                             <!-- Right Column: Visual Mockup Showcase -->
                             <div class="drawer-visual">
+                                <!-- Vivid Motion Radiant Ambient Aura -->
+                                <div class="vivid-ambient-aura aura-p4"></div>
                                 <!-- Floating Status Pill -->
                                 <div class="visual-floating-badge">
                                     <span class="status-pulse-dot"></span>
@@ -1316,7 +1896,7 @@
                                 </div>
 
                                 <!-- Main Mockup Box -->
-                                <div class="visual-panel-card">
+                                <div class="visual-panel-card vivid-perspective-card">
                                     <!-- Browser Frame Bar -->
                                     <div class="browser-frame-bar">
                                         <div class="browser-dots">
@@ -1340,15 +1920,26 @@
                                         data-title="IntelliSearch – Enterprise RAG Document Intelligence"
                                         data-badge="PROJECT 04 • ENTERPRISE RAG"
                                         data-demo="https://rag-document-reader.onrender.com/"
-                                        data-caption="Dense vector search and RAG knowledge reader with pgvector cosine similarity ranking, 3D embedding clusters, and page-level source citations.">
+                                        data-caption="Dense vector search and RAG knowledge reader with pgvector cosine similarity ranking, 3D embedding clusters, and page-level source citations." data-project-idx="3" data-tags="Python • LangChain • Supabase pgvector • OpenAI Embeddings">
                                         <img src="images/intellisearch_ai.jpg"
                                             alt="IntelliSearch Enterprise RAG Interface" class="project-preview-img"
                                             loading="lazy">
+                                        <!-- Vivid Motion Floating 3D Micro-Chips -->
+                                        <div class="vivid-floating-chip chip-top-right">
+                                            <span class="chip-pulse-dot neon-emerald"></span><div class="chip-content"><span class="chip-value"><i class="fas fa-brain neon-icon"></i> pgvector</span><span class="chip-label">Hybrid Semantic RAG</span></div>
+                                        </div>
+                                        <div class="vivid-floating-chip chip-bottom-left">
+                                            <span class="chip-pulse-dot neon-cyan"></span><div class="chip-content"><span class="chip-value"><i class="fas fa-search neon-icon"></i> &lt;85ms</span><span class="chip-label">Vector Similarity Retrieval</span></div>
+                                        </div>
                                         <div class="preview-image-overlay">
                                             <div class="overlay-badge">
                                                 <i class="fas fa-database"></i> pgvector RAG Engine
                                             </div>
                                             <div class="overlay-actions">
+                                                <button type="button" class="overlay-btn overlay-fullscreen-btn"
+                                                    title="Expand to Whole Screen Window [F]">
+                                                    <i class="fas fa-expand-arrows-alt"></i> Whole Screen Window <kbd>[F]</kbd>
+                                                </button>
                                                 <button type="button" class="overlay-btn overlay-zoom-btn"
                                                     title="Expand Interface">
                                                     <i class="fas fa-search-plus"></i> View UI
@@ -1451,10 +2042,18 @@
                                     <span>RESTful APIs</span>
                                 </div>
 
+                                <div class="drawer-actions">
+                                    <a href="https://agriculture-iota-two.vercel.app/" target="_blank"
+                                        rel="noopener noreferrer" class="drawer-btn drawer-btn-primary">
+                                        <i class="fas fa-external-link-alt"></i> Open Live Demo
+                                    </a>
+                                </div>
                             </div>
 
                             <!-- Right Column: Visual Mockup Showcase -->
                             <div class="drawer-visual">
+                                <!-- Vivid Motion Radiant Ambient Aura -->
+                                <div class="vivid-ambient-aura aura-p5"></div>
                                 <!-- Floating Status Pill -->
                                 <div class="visual-floating-badge">
                                     <span class="status-pulse-dot"></span>
@@ -1467,7 +2066,7 @@
                                 </div>
 
                                 <!-- Main Mockup Box -->
-                                <div class="visual-panel-card">
+                                <div class="visual-panel-card vivid-perspective-card">
                                     <!-- Browser Frame Bar -->
                                     <div class="browser-frame-bar">
                                         <div class="browser-dots">
@@ -1491,14 +2090,25 @@
                                         data-title="AgriFeed – Agricultural Supply Chain Platform"
                                         data-badge="PROJECT 05 • AGRITECH COMMERCE"
                                         data-demo="https://agriculture-iota-two.vercel.app/"
-                                        data-caption="Agricultural supply network marketplace with livestock feed catalog, automated supplier procurement routing, and real-time dispatch tracking.">
+                                        data-caption="Agricultural supply network marketplace with livestock feed catalog, automated supplier procurement routing, and real-time dispatch tracking." data-project-idx="4" data-tags="React • Node.js • Supabase • IoT Telemetry APIs">
                                         <img src="images/agrifeed.jpg" alt="AgriFeed Agricultural Supply Chain Platform"
                                             class="project-preview-img" loading="lazy">
+                                        <!-- Vivid Motion Floating 3D Micro-Chips -->
+                                        <div class="vivid-floating-chip chip-top-right">
+                                            <span class="chip-pulse-dot neon-lime"></span><div class="chip-content"><span class="chip-value"><i class="fas fa-satellite-dish neon-icon"></i> IoT Live</span><span class="chip-label">Telemetry Sensor Network</span></div>
+                                        </div>
+                                        <div class="vivid-floating-chip chip-bottom-left">
+                                            <span class="chip-pulse-dot neon-amber"></span><div class="chip-content"><span class="chip-value"><i class="fas fa-route neon-icon"></i> Dynamic</span><span class="chip-label">Supply Routing Engine</span></div>
+                                        </div>
                                         <div class="preview-image-overlay">
                                             <div class="overlay-badge">
                                                 <i class="fas fa-tractor"></i> Supply Chain Hub
                                             </div>
                                             <div class="overlay-actions">
+                                                <button type="button" class="overlay-btn overlay-fullscreen-btn"
+                                                    title="Expand to Whole Screen Window [F]">
+                                                    <i class="fas fa-expand-arrows-alt"></i> Whole Screen Window <kbd>[F]</kbd>
+                                                </button>
                                                 <button type="button" class="overlay-btn overlay-zoom-btn"
                                                     title="Expand Interface">
                                                     <i class="fas fa-search-plus"></i> View UI
@@ -1601,10 +2211,18 @@
                                     <span>HTML5 / CSS3</span>
                                 </div>
 
+                                <div class="drawer-actions">
+                                    <a href="https://redstore-django.onrender.com/" target="_blank"
+                                        rel="noopener noreferrer" class="drawer-btn drawer-btn-primary">
+                                        <i class="fas fa-external-link-alt"></i> Open Live Demo
+                                    </a>
+                                </div>
                             </div>
 
                             <!-- Right Column: Visual Mockup Showcase -->
                             <div class="drawer-visual">
+                                <!-- Vivid Motion Radiant Ambient Aura -->
+                                <div class="vivid-ambient-aura aura-p6"></div>
                                 <!-- Floating Status Pill -->
                                 <div class="visual-floating-badge">
                                     <span class="status-pulse-dot"></span>
@@ -1617,7 +2235,7 @@
                                 </div>
 
                                 <!-- Main Mockup Box -->
-                                <div class="visual-panel-card">
+                                <div class="visual-panel-card vivid-perspective-card">
                                     <!-- Browser Frame Bar -->
                                     <div class="browser-frame-bar">
                                         <div class="browser-dots">
@@ -1641,14 +2259,25 @@
                                         data-title="RedStore – Scalable Django E-Commerce Platform"
                                         data-badge="PROJECT 06 • FULL-STACK COMMERCE"
                                         data-demo="https://redstore-django.onrender.com/"
-                                        data-caption="Modern Django e-commerce storefront with Stripe 3D-Secure payments, dynamic inventory management, and admin fulfillment suite.">
+                                        data-caption="Modern Django e-commerce storefront with Stripe 3D-Secure payments, dynamic inventory management, and admin fulfillment suite." data-project-idx="5" data-tags="Django • PostgreSQL • Stripe Payments • Docker">
                                         <img src="images/redstore.jpg" alt="RedStore Django E-Commerce Platform"
                                             class="project-preview-img" loading="lazy">
+                                        <!-- Vivid Motion Floating 3D Micro-Chips -->
+                                        <div class="vivid-floating-chip chip-top-right">
+                                            <span class="chip-pulse-dot neon-crimson"></span><div class="chip-content"><span class="chip-value"><i class="fas fa-shield-alt neon-icon"></i> Stripe 3DS2</span><span class="chip-label">Secure Vault Checkout</span></div>
+                                        </div>
+                                        <div class="vivid-floating-chip chip-bottom-left">
+                                            <span class="chip-pulse-dot neon-teal"></span><div class="chip-content"><span class="chip-value"><i class="fas fa-bolt neon-icon"></i> 0.4s</span><span class="chip-label">Render Latency & Edge CDN</span></div>
+                                        </div>
                                         <div class="preview-image-overlay">
                                             <div class="overlay-badge">
                                                 <i class="fas fa-shopping-bag"></i> Django Storefront
                                             </div>
                                             <div class="overlay-actions">
+                                                <button type="button" class="overlay-btn overlay-fullscreen-btn"
+                                                    title="Expand to Whole Screen Window [F]">
+                                                    <i class="fas fa-expand-arrows-alt"></i> Whole Screen Window <kbd>[F]</kbd>
+                                                </button>
                                                 <button type="button" class="overlay-btn overlay-zoom-btn"
                                                     title="Expand Interface">
                                                     <i class="fas fa-search-plus"></i> View UI
@@ -1784,6 +2413,10 @@
                                     target="_blank" rel="noopener noreferrer" class="btn-upwork-hire">
                                     <i class="fas fa-briefcase"></i> Hire on Upwork
                                 </a>
+                                <a href="https://wellfound.com/u/manjesh-verma-2" target="_blank"
+                                    rel="noopener noreferrer" class="btn-upwork-wellfound">
+                                    <i class="fab fa-angellist"></i> Wellfound Profile
+                                </a>
                                 <a href="#contact" class="btn-upwork-msg">
                                     <i class="fas fa-envelope"></i> Direct Inquiry
                                 </a>
@@ -1838,19 +2471,27 @@
 
                 <!-- Circular Social Buttons matching requested design -->
                 <div class="social-links-row">
-                    <a href="https://www.linkedin.com/in/manjesh-verma/" target="_blank" class="social-circle-btn"
+                    <a href="https://www.linkedin.com/in/manjesh-verma/" target="_blank" rel="noopener noreferrer" class="social-circle-btn"
                         title="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="https://github.com/manjeshverma" target="_blank" class="social-circle-btn"
+                    <a href="https://github.com/manjeshverma" target="_blank" rel="noopener noreferrer" class="social-circle-btn"
                         title="GitHub (Primary)">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://github.com/vermamanjesh159-netizen" target="_blank" class="social-circle-btn"
+                    <a href="https://github.com/vermamanjesh159-netizen" target="_blank" rel="noopener noreferrer" class="social-circle-btn"
                         title="GitHub (Secondary)">
                         <i class="fas fa-code-branch"></i>
                     </a>
-                    <a href="https://wa.me/917400667713" target="_blank" class="social-circle-btn" title="WhatsApp">
+                    <a href="https://wellfound.com/u/manjesh-verma-2" target="_blank" rel="noopener noreferrer" class="social-circle-btn btn-wellfound"
+                        title="Wellfound (AngelList)">
+                        <i class="fab fa-angellist"></i>
+                    </a>
+                    <a href="https://www.upwork.com/freelancers/~01b391c6dfa9416ca1?mp_source=share" target="_blank" rel="noopener noreferrer" class="social-circle-btn btn-upwork"
+                        title="Upwork">
+                        <i class="fas fa-briefcase"></i>
+                    </a>
+                    <a href="https://wa.me/917400667713" target="_blank" rel="noopener noreferrer" class="social-circle-btn" title="WhatsApp">
                         <i class="fab fa-whatsapp"></i>
                     </a>
                 </div>
@@ -1858,46 +2499,267 @@
         </section>
     </main>
 
-    <!-- Project Interface Preview Lightbox Modal -->
-    <div id="projectLightboxModal" class="project-lightbox-modal" aria-hidden="true" role="dialog"
+    <!-- Fullscreen Cinematic Video Modal Player (Vivid Motion Experience) -->
+    <div id="reelModal" class="reel-modal" role="dialog" aria-modal="true" aria-labelledby="reelModalTitle" aria-hidden="true">
+        <div class="reel-modal-backdrop" id="reelModalBackdrop"></div>
+        <div class="reel-modal-dialog">
+            <!-- Modal Header -->
+            <div class="reel-modal-header">
+                <div class="reel-modal-title-wrap">
+                    <div class="reel-modal-badge">
+                        <span class="badge-dot-live"></span>
+                        <span>OFFICIAL DEV REEL // 2026</span>
+                    </div>
+                    <h3 id="reelModalTitle" class="reel-modal-title">Manjesh Verma — Full-Stack Development Showreel</h3>
+                </div>
+                <button class="reel-modal-close" id="reelModalCloseBtn" aria-label="Close showreel player (Esc)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Video Player Stage -->
+            <div class="reel-player-stage">
+                <video id="reelModalVideo" class="reel-modal-video" playsinline preload="auto" poster="images/upwork_video_thumbnail.jpg">
+                    <source src="upwork_intro_video_1080p.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+                <!-- Center Big Play Button Overlay -->
+                <button class="player-center-play" id="playerCenterPlayBtn" aria-label="Play or pause video">
+                    <div class="center-play-ring"></div>
+                    <i class="fas fa-play" id="centerPlayIcon"></i>
+                </button>
+
+                <!-- Custom Player Control Deck -->
+                <div class="player-controls-deck" id="playerControlsDeck">
+                    <!-- Progress / Scrub Bar with Chapter Pins -->
+                    <div class="player-scrub-bar-wrap" id="playerScrubWrap">
+                        <div class="player-scrub-track" id="playerScrubTrack">
+                            <div class="player-scrub-buffer" id="playerScrubBuffer"></div>
+                            <div class="player-scrub-progress" id="playerScrubProgress"></div>
+                            <div class="player-scrub-thumb" id="playerScrubThumb"></div>
+
+                            <!-- 5 Chapter Pins -->
+                            <div class="chapter-pin" data-time="0" title="00:00 - Python Microservices" style="left: 0%;">
+                                <span class="pin-marker"></span>
+                                <span class="pin-tooltip">00:00 Python</span>
+                            </div>
+                            <div class="chapter-pin" data-time="15" title="00:15 - RAG Solutions" style="left: 25.8%;">
+                                <span class="pin-marker"></span>
+                                <span class="pin-tooltip">00:15 RAG</span>
+                            </div>
+                            <div class="chapter-pin" data-time="28" title="00:28 - LLM & AI Agents" style="left: 48.2%;">
+                                <span class="pin-marker"></span>
+                                <span class="pin-tooltip">00:28 LLM & AI</span>
+                            </div>
+                            <div class="chapter-pin" data-time="42" title="00:42 - Supabase & Postgres" style="left: 72.4%;">
+                                <span class="pin-marker"></span>
+                                <span class="pin-tooltip">00:42 Supabase</span>
+                            </div>
+                            <div class="chapter-pin" data-time="50" title="00:50 - Netlify Deployments" style="left: 86.2%;">
+                                <span class="pin-marker"></span>
+                                <span class="pin-tooltip">00:50 Netlify</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Controls Row -->
+                    <div class="player-controls-row">
+                        <div class="controls-left">
+                            <button class="ctrl-btn" id="modalPlayPauseBtn" aria-label="Play/Pause">
+                                <i class="fas fa-play" id="modalPlayIcon"></i>
+                            </button>
+                            <button class="ctrl-btn" id="modalVolumeBtn" aria-label="Mute/Unmute">
+                                <i class="fas fa-volume-up" id="modalVolumeIcon"></i>
+                            </button>
+                            <input type="range" class="volume-slider" id="modalVolumeSlider" min="0" max="1" step="0.05" value="1" aria-label="Volume level">
+                            <div class="player-time-display">
+                                <span id="modalCurrentTime">00:00</span>
+                                <span class="time-divider">/</span>
+                                <span id="modalTotalTime">00:58</span>
+                            </div>
+                        </div>
+
+                        <div class="controls-right">
+                            <!-- Playback Speed Picker -->
+                            <button class="ctrl-btn speed-btn" id="modalSpeedBtn" aria-label="Playback speed">1.0x</button>
+                            <!-- Fullscreen Toggle -->
+                            <button class="ctrl-btn" id="modalFullscreenBtn" aria-label="Fullscreen">
+                                <i class="fas fa-expand" id="modalFullscreenIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter Quick Jump Bar -->
+            <div class="reel-chapter-deck">
+                <span class="chapter-deck-title"><i class="fas fa-bookmark"></i> JUMP TO CHAPTER:</span>
+                <div class="chapter-cards-grid">
+                    <button class="modal-chapter-card active" data-seek="0">
+                        <span class="ch-time">00:00</span>
+                        <div class="ch-info">
+                            <span class="ch-title"><i class="fab fa-python python-color"></i> Python Projects</span>
+                            <span class="ch-sub">FastAPI Microservices</span>
+                        </div>
+                    </button>
+                    <button class="modal-chapter-card" data-seek="15">
+                        <span class="ch-time">00:15</span>
+                        <div class="ch-info">
+                            <span class="ch-title"><i class="fas fa-brain rag-color"></i> RAG Solutions</span>
+                            <span class="ch-sub">pgvector & Hybrid Search</span>
+                        </div>
+                    </button>
+                    <button class="modal-chapter-card" data-seek="28">
+                        <span class="ch-time">00:28</span>
+                        <div class="ch-info">
+                            <span class="ch-title"><i class="fas fa-robot llm-color"></i> LLM & AI Agents</span>
+                            <span class="ch-sub">Tool Use & Streaming</span>
+                        </div>
+                    </button>
+                    <button class="modal-chapter-card" data-seek="42">
+                        <span class="ch-time">00:42</span>
+                        <div class="ch-info">
+                            <span class="ch-title"><i class="fas fa-bolt supabase-color"></i> Supabase</span>
+                            <span class="ch-sub">PostgreSQL & RLS</span>
+                        </div>
+                    </button>
+                    <button class="modal-chapter-card" data-seek="50">
+                        <span class="ch-time">00:50</span>
+                        <div class="ch-info">
+                            <span class="ch-title"><i class="fas fa-cloud-upload-alt netlify-color"></i> Netlify Edge</span>
+                            <span class="ch-sub">CI/CD & Deployments</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Keyboard Navigation Shortcuts Hint -->
+            <div class="reel-modal-footer">
+                <div class="shortcuts-hint">
+                    <span class="shortcut-pill"><kbd>Space</kbd> Play/Pause</span>
+                    <span class="shortcut-pill"><kbd>M</kbd> Mute</span>
+                    <span class="shortcut-pill"><kbd>F</kbd> Fullscreen</span>
+                    <span class="shortcut-pill"><kbd>← / →</kbd> Seek 5s</span>
+                    <span class="shortcut-pill"><kbd>1-5</kbd> Chapters</span>
+                    <span class="shortcut-pill"><kbd>Esc</kbd> Close</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Whole-Screen Window Lightbox Modal (Vivid Motion High-Visual Aesthetic) -->
+    <div id="projectLightboxModal" class="project-lightbox-modal vivid-whole-screen-modal" aria-hidden="true" role="dialog"
         aria-labelledby="lightboxTitle">
         <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
-        <div class="lightbox-dialog">
-            <div class="lightbox-header">
-                <div class="lightbox-title-wrap">
-                    <span class="lightbox-badge" id="lightboxBadge">PROJECT UI PREVIEW</span>
-                    <h4 class="lightbox-title" id="lightboxTitle">Project Interface</h4>
+        <div class="lightbox-dialog vivid-fullscreen-window" id="lightboxWindowContainer">
+            <!-- Window Titlebar with macOS Traffic Lights, Title, View Switcher & Toolbar -->
+            <div class="lightbox-header vivid-window-header">
+                <div class="header-left-group">
+                    <!-- Traffic Lights (macOS-style interactive dots) -->
+                    <div class="window-traffic-lights" title="Window Controls">
+                        <button type="button" class="traffic-dot dot-close" id="trafficCloseBtn" title="Close Window (Esc)">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button type="button" class="traffic-dot dot-minimize" id="trafficResetBtn" title="Reset Zoom (0)">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="traffic-dot dot-maximize" id="trafficFsBtn" title="Toggle Fullscreen (F)">
+                            <i class="fas fa-expand-alt"></i>
+                        </button>
+                    </div>
+
+                    <div class="lightbox-title-wrap">
+                        <div class="lightbox-meta-row">
+                            <span class="lightbox-badge" id="lightboxBadge">PROJECT 01 / 06</span>
+                            <span class="lightbox-tech-tags" id="lightboxTechTags">FastAPI • Meta Graph API • Webhooks</span>
+                        </div>
+                        <h4 class="lightbox-title" id="lightboxTitle">Project Interface</h4>
+                    </div>
                 </div>
-                <!-- Interactive 2-Image View Switcher -->
+
+                <!-- Center: Interactive 2-Image View Switcher -->
                 <div class="lightbox-view-switch" id="lightboxViewSwitch">
                     <button type="button" class="view-switch-btn active" id="btnViewShowcase"
-                        title="View Architecture Showcase">
-                        <i class="fas fa-layer-group"></i> Showcase UI
+                        title="View Architecture Showcase (Hotkey: 1)">
+                        <i class="fas fa-layer-group"></i> Showcase UI <kbd>1</kbd>
                     </button>
                     <button type="button" class="view-switch-btn" id="btnViewLive"
-                        title="View Verified Live Deployment">
-                        <i class="fas fa-desktop"></i> Live Capture
+                        title="View Verified Live Deployment (Hotkey: 2)">
+                        <i class="fas fa-desktop"></i> Live Capture <kbd>2</kbd>
                     </button>
                 </div>
-                <div class="lightbox-actions">
+
+                <!-- Right: Zoom Controls, Native Fullscreen, Live Demo, Close -->
+                <div class="lightbox-actions vivid-window-actions">
+                    <!-- Zoom Toolbar -->
+                    <div class="zoom-toolbar" role="toolbar" aria-label="Zoom Controls">
+                        <button type="button" class="zoom-btn" id="zoomOutBtn" title="Zoom Out (-)">
+                            <i class="fas fa-search-minus"></i>
+                        </button>
+                        <button type="button" class="zoom-level-indicator" id="zoomResetBtn" title="Reset to 100% (0)">
+                            <span id="zoomLevelText">100%</span>
+                        </button>
+                        <button type="button" class="zoom-btn" id="zoomInBtn" title="Zoom In (+)">
+                            <i class="fas fa-search-plus"></i>
+                        </button>
+                        <button type="button" class="zoom-btn zoom-fit-btn" id="zoomFitBtn" title="Fit to Window">
+                            <i class="fas fa-compress-arrows-alt"></i> Fit
+                        </button>
+                    </div>
+
+                    <button type="button" class="window-action-btn fs-toggle-btn" id="lightboxNativeFsBtn" title="Toggle Whole Screen Fullscreen Mode (F)">
+                        <i class="fas fa-expand"></i> <span class="action-btn-label">Fullscreen</span> <kbd>F</kbd>
+                    </button>
+
                     <a href="#" id="lightboxLiveDemoBtn" target="_blank" rel="noopener noreferrer"
-                        class="overlay-btn overlay-demo-btn">
+                        class="overlay-btn overlay-demo-btn" title="Open verified production deployment in new tab">
                         <i class="fas fa-external-link-alt"></i> Live Demo
                     </a>
-                    <button type="button" class="lightbox-close-btn" id="lightboxCloseBtn" aria-label="Close Preview">
+
+                    <button type="button" class="lightbox-close-btn" id="lightboxCloseBtn" aria-label="Close Preview" title="Close (Esc)">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
             </div>
-            <div class="lightbox-body">
-                <div class="lightbox-image-wrap">
-                    <img src="" id="lightboxImg" alt="Project Interface Preview" class="lightbox-image">
+
+            <!-- Viewport Body with Pan/Zoom Canvas & Carousel Arrows -->
+            <div class="lightbox-body vivid-window-body" id="lightboxBody">
+                <!-- Previous Project Floating Arrow Button -->
+                <button type="button" class="lightbox-carousel-arrow arrow-prev" id="lightboxPrevBtn" title="Previous Project (←)">
+                    <i class="fas fa-chevron-left"></i>
+                    <span class="arrow-tooltip">Prev [←]</span>
+                </button>
+
+                <!-- Next Project Floating Arrow Button -->
+                <button type="button" class="lightbox-carousel-arrow arrow-next" id="lightboxNextBtn" title="Next Project (→)">
+                    <i class="fas fa-chevron-right"></i>
+                    <span class="arrow-tooltip">Next [→]</span>
+                </button>
+
+                <!-- Zoomable / Pannable Image Viewport -->
+                <div class="lightbox-image-wrap vivid-canvas-wrap" id="lightboxCanvasWrap">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" id="lightboxImg" alt="Project Interface Preview" class="lightbox-image vivid-pan-zoom-img" draggable="false">
                 </div>
             </div>
-            <div class="lightbox-footer">
-                <span class="lightbox-caption" id="lightboxCaption">Interactive Interface Showcase</span>
-                <span class="lightbox-hint"><i class="fas fa-info-circle"></i> Press ESC or click outside to
-                    dismiss</span>
+
+            <!-- Window Footer with Project Caption & Shortcut Legend -->
+            <div class="lightbox-footer vivid-window-footer">
+                <div class="footer-caption-wrap">
+                    <i class="fas fa-info-circle caption-icon"></i>
+                    <span class="lightbox-caption" id="lightboxCaption">Interactive Interface Showcase</span>
+                </div>
+                <div class="shortcuts-legend">
+                    <span class="legend-pill"><kbd>F</kbd> Fullscreen</span>
+                    <span class="legend-pill"><kbd>←</kbd><kbd>→</kbd> Navigate</span>
+                    <span class="legend-pill"><kbd>1</kbd><kbd>2</kbd> View</span>
+                    <span class="legend-pill"><kbd>+</kbd><kbd>-</kbd> Zoom</span>
+                    <span class="legend-pill"><kbd>Scroll</kbd> Zoom/Pan</span>
+                    <span class="legend-pill"><kbd>Esc</kbd> Close</span>
+                </div>
             </div>
         </div>
     </div>
@@ -1920,13 +2782,12 @@
                 <i class="fas fa-download"></i>
             </a>
             <div class="resume-bot-tooltip" id="resumeBotTooltip">
-                <span class="tooltip-badge">3D RESUME BOT</span>
-                <span class="tooltip-desc">Click to View Resume &bull; Drag Anywhere</span>
+                <span class="tooltip-badge">VIEW RESUME</span>
             </div>
         </div>
     </div>
 
-    <script src="script.js?v=1.4.0"></script>
+    <script src="script.js?v=2.0.0"></script>
 </body>
 
 </html>

@@ -580,130 +580,365 @@ window.addEventListener('scroll', updateScrollProgress);
     previewText.style.transition = 'opacity 0.2s ease';
   }
 
-  // Interactive Project Preview Lightbox Modal with 2-Image Switcher (Showcase & Live)
+  // ===== VIVID MOTION 3D PERSPECTIVE TILT =====
+  const perspectiveCards = document.querySelectorAll('.vivid-perspective-card');
+  perspectiveCards.forEach(card => {
+    let ticking = false;
+
+    const onMouseMove = (e) => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -8;
+        const rotateY = ((x - centerX) / centerX) * 8;
+        card.style.transform = `perspective(1200px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+        ticking = false;
+      });
+    };
+
+    const onMouseLeave = () => {
+      card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    };
+
+    card.addEventListener('mousemove', onMouseMove);
+    card.addEventListener('mouseleave', onMouseLeave);
+  });
+
+  // ===== VIVID MOTION WHOLE-SCREEN WINDOW LIGHTBOX CONTROLLER =====
   const lightboxModal = document.getElementById('projectLightboxModal');
+  const lightboxWindowContainer = document.getElementById('lightboxWindowContainer');
   const lightboxBackdrop = document.getElementById('lightboxBackdrop');
   const lightboxCloseBtn = document.getElementById('lightboxCloseBtn');
+  const trafficCloseBtn = document.getElementById('trafficCloseBtn');
+  const trafficResetBtn = document.getElementById('trafficResetBtn');
+  const trafficFsBtn = document.getElementById('trafficFsBtn');
   const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCanvasWrap = document.getElementById('lightboxCanvasWrap');
+  const lightboxBody = document.getElementById('lightboxBody');
   const lightboxTitle = document.getElementById('lightboxTitle');
   const lightboxBadge = document.getElementById('lightboxBadge');
+  const lightboxTechTags = document.getElementById('lightboxTechTags');
   const lightboxCaption = document.getElementById('lightboxCaption');
   const lightboxLiveDemoBtn = document.getElementById('lightboxLiveDemoBtn');
   const btnViewShowcase = document.getElementById('btnViewShowcase');
   const btnViewLive = document.getElementById('btnViewLive');
+  const zoomOutBtn = document.getElementById('zoomOutBtn');
+  const zoomInBtn = document.getElementById('zoomInBtn');
+  const zoomResetBtn = document.getElementById('zoomResetBtn');
+  const zoomFitBtn = document.getElementById('zoomFitBtn');
+  const zoomLevelText = document.getElementById('zoomLevelText');
+  const lightboxNativeFsBtn = document.getElementById('lightboxNativeFsBtn');
+  const lightboxPrevBtn = document.getElementById('lightboxPrevBtn');
+  const lightboxNextBtn = document.getElementById('lightboxNextBtn');
 
-  let currentShowcaseUrl = '';
-  let currentLiveUrl = '';
-  let currentBaseBadge = '';
+  // Multi-project dataset extracted from preview containers
+  const previewContainers = Array.from(document.querySelectorAll('.preview-image-container'));
+  const projectsData = previewContainers.map((container, idx) => {
+    return {
+      index: parseInt(container.getAttribute('data-project-idx') || idx, 10),
+      imgSrc: container.getAttribute('data-full-img') || '',
+      showcaseUrl: container.getAttribute('data-showcase') || container.getAttribute('data-full-img') || '',
+      liveUrl: container.getAttribute('data-live') || '',
+      title: container.getAttribute('data-title') || 'Project Interface',
+      badge: container.getAttribute('data-badge') || `PROJECT 0${idx + 1} / 06`,
+      tags: container.getAttribute('data-tags') || '',
+      demoUrl: container.getAttribute('data-demo') || '#',
+      caption: container.getAttribute('data-caption') || 'Interactive Project Showcase'
+    };
+  });
 
-  function setLightboxImage(view) {
+  let currentProjectIdx = 0;
+  let currentViewMode = 'showcase';
+  let zoomLevel = 1.0;
+  let panX = 0;
+  let panY = 0;
+  let isPanning = false;
+  let dragStartX = 0;
+  let dragStartY = 0;
+  let panOriginX = 0;
+  let panOriginY = 0;
+
+  function updateTransform() {
     if (!lightboxImg) return;
-    if (view === 'live' && currentLiveUrl) {
-      lightboxImg.style.opacity = '0.35';
-      lightboxImg.src = currentLiveUrl;
-      if (lightboxImg.complete) {
-        lightboxImg.style.opacity = '1';
+    lightboxImg.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+    if (zoomLevelText) {
+      zoomLevelText.textContent = `${Math.round(zoomLevel * 100)}%`;
+    }
+    if (lightboxCanvasWrap) {
+      if (zoomLevel > 1.05) {
+        lightboxCanvasWrap.classList.add('is-zoomed');
       } else {
-        lightboxImg.onload = () => { lightboxImg.style.opacity = '1'; };
+        lightboxCanvasWrap.classList.remove('is-zoomed');
       }
-      if (btnViewShowcase) btnViewShowcase.classList.remove('active');
-      if (btnViewLive) btnViewLive.classList.add('active');
-      if (lightboxBadge) lightboxBadge.textContent = 'VERIFIED LIVE DEPLOYMENT';
-    } else {
-      lightboxImg.style.opacity = '0.35';
-      lightboxImg.src = currentShowcaseUrl;
-      if (lightboxImg.complete) {
-        lightboxImg.style.opacity = '1';
-      } else {
-        lightboxImg.onload = () => { lightboxImg.style.opacity = '1'; };
-      }
-      if (btnViewShowcase) btnViewShowcase.classList.add('active');
-      if (btnViewLive) btnViewLive.classList.remove('active');
-      if (lightboxBadge) lightboxBadge.textContent = currentBaseBadge || 'ARCHITECTURE UI SHOWCASE';
     }
   }
 
-  function openLightbox(opts) {
-    if (!lightboxModal || !lightboxImg) return;
-    currentShowcaseUrl = opts.showcaseUrl || opts.imgSrc || '';
-    currentLiveUrl = opts.liveUrl || '';
-    currentBaseBadge = opts.badge || 'PROJECT PREVIEW';
+  function setZoom(val, resetPan = false) {
+    zoomLevel = Math.max(0.5, Math.min(3.0, val));
+    if (resetPan || zoomLevel <= 1.05) {
+      panX = 0;
+      panY = 0;
+    }
+    updateTransform();
+  }
 
-    lightboxTitle.textContent = opts.title || 'Project Interface';
-    lightboxCaption.textContent = opts.caption || 'Interface Showcase';
+  function resetZoom() {
+    setZoom(1.0, true);
+  }
+
+  function fitZoom() {
+    setZoom(1.0, true);
+  }
+
+  function zoomIn() {
+    setZoom(zoomLevel * 1.25);
+  }
+
+  function zoomOut() {
+    setZoom(zoomLevel / 1.25);
+  }
+
+  function renderCurrentProject() {
+    if (!projectsData.length || !lightboxImg) return;
+    const proj = projectsData[currentProjectIdx];
+    if (!proj) return;
+
+    if (lightboxTitle) lightboxTitle.textContent = proj.title;
+    if (lightboxBadge) lightboxBadge.textContent = proj.badge;
+    if (lightboxTechTags) {
+      lightboxTechTags.textContent = proj.tags;
+      lightboxTechTags.style.display = proj.tags ? 'inline' : 'none';
+    }
+    if (lightboxCaption) lightboxCaption.textContent = proj.caption;
+    if (lightboxLiveDemoBtn) {
+      lightboxLiveDemoBtn.href = proj.demoUrl;
+      lightboxLiveDemoBtn.style.display = (proj.demoUrl && proj.demoUrl !== '#') ? 'inline-flex' : 'none';
+    }
 
     if (btnViewLive) {
-      btnViewLive.style.display = currentLiveUrl ? 'inline-flex' : 'none';
+      btnViewLive.style.display = proj.liveUrl ? 'inline-flex' : 'none';
     }
 
-    setLightboxImage('showcase');
-
-    if (lightboxLiveDemoBtn) {
-      lightboxLiveDemoBtn.href = opts.demoUrl || '#';
-      lightboxLiveDemoBtn.style.display = opts.demoUrl ? 'inline-flex' : 'none';
+    const targetUrl = (currentViewMode === 'live' && proj.liveUrl) ? proj.liveUrl : proj.showcaseUrl;
+    lightboxImg.style.opacity = '0.35';
+    lightboxImg.src = targetUrl;
+    if (lightboxImg.complete) {
+      lightboxImg.style.opacity = '1';
+    } else {
+      lightboxImg.onload = () => { lightboxImg.style.opacity = '1'; };
     }
+
+    if (currentViewMode === 'live' && proj.liveUrl) {
+      if (btnViewShowcase) btnViewShowcase.classList.remove('active');
+      if (btnViewLive) btnViewLive.classList.add('active');
+    } else {
+      currentViewMode = 'showcase';
+      if (btnViewShowcase) btnViewShowcase.classList.add('active');
+      if (btnViewLive) btnViewLive.classList.remove('active');
+    }
+
+    resetZoom();
+  }
+
+  function setViewMode(mode) {
+    const proj = projectsData[currentProjectIdx];
+    if (mode === 'live' && proj && !proj.liveUrl) return;
+    currentViewMode = mode;
+    renderCurrentProject();
+  }
+
+  function prevProject() {
+    if (!projectsData.length) return;
+    currentProjectIdx = (currentProjectIdx - 1 + projectsData.length) % projectsData.length;
+    renderCurrentProject();
+  }
+
+  function nextProject() {
+    if (!projectsData.length) return;
+    currentProjectIdx = (currentProjectIdx + 1) % projectsData.length;
+    renderCurrentProject();
+  }
+
+  function openLightboxWindow(index = 0) {
+    if (!lightboxModal) return;
+    currentProjectIdx = Math.max(0, Math.min(projectsData.length - 1, index));
+    currentViewMode = 'showcase';
+    renderCurrentProject();
     lightboxModal.classList.add('active');
     lightboxModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   }
 
-  function closeLightbox() {
+  function closeLightboxWindow() {
     if (!lightboxModal) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    }
     lightboxModal.classList.remove('active');
     lightboxModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    resetZoom();
   }
 
-  if (lightboxModal) {
-    if (btnViewShowcase) {
-      btnViewShowcase.addEventListener('click', (e) => {
-        e.stopPropagation();
-        setLightboxImage('showcase');
-      });
-    }
-    if (btnViewLive) {
-      btnViewLive.addEventListener('click', (e) => {
-        e.stopPropagation();
-        setLightboxImage('live');
-      });
-    }
-
-    const previewContainers = document.querySelectorAll('.preview-image-container');
-    previewContainers.forEach(container => {
-      const handleOpen = (e) => {
-        if (e.target.closest('.overlay-demo-btn')) return;
-        e.preventDefault();
-        e.stopPropagation();
-        const opts = {
-          imgSrc: container.getAttribute('data-full-img'),
-          showcaseUrl: container.getAttribute('data-showcase') || container.getAttribute('data-full-img'),
-          liveUrl: container.getAttribute('data-live') || '',
-          title: container.getAttribute('data-title'),
-          badge: container.getAttribute('data-badge'),
-          demoUrl: container.getAttribute('data-demo'),
-          caption: container.getAttribute('data-caption')
-        };
-        openLightbox(opts);
-      };
-
-      container.addEventListener('click', handleOpen);
-      const zoomBtns = container.querySelectorAll('.overlay-zoom-btn');
-      zoomBtns.forEach(btn => btn.addEventListener('click', handleOpen));
-    });
-
-    if (lightboxCloseBtn) {
-      lightboxCloseBtn.addEventListener('click', closeLightbox);
-    }
-    if (lightboxBackdrop) {
-      lightboxBackdrop.addEventListener('click', closeLightbox);
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && lightboxModal.classList.contains('active')) {
-        closeLightbox();
+  function toggleNativeFullscreen() {
+    const target = lightboxModal;
+    if (!target) return;
+    if (!document.fullscreenElement) {
+      if (target.requestFullscreen) {
+        target.requestFullscreen();
+      } else if (target.webkitRequestFullscreen) {
+        target.webkitRequestFullscreen();
+      } else if (target.msRequestFullscreen) {
+        target.msRequestFullscreen();
       }
-    });
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    }
   }
+
+  document.addEventListener('fullscreenchange', () => {
+    const isFs = Boolean(document.fullscreenElement);
+    if (lightboxWindowContainer) {
+      lightboxWindowContainer.classList.toggle('is-native-fullscreen', isFs);
+    }
+    if (lightboxNativeFsBtn) {
+      const label = lightboxNativeFsBtn.querySelector('.action-btn-label');
+      const icon = lightboxNativeFsBtn.querySelector('i');
+      if (isFs) {
+        if (label) label.textContent = 'Exit';
+        if (icon) icon.className = 'fas fa-compress';
+      } else {
+        if (label) label.textContent = 'Fullscreen';
+        if (icon) icon.className = 'fas fa-expand';
+      }
+    }
+  });
+
+  previewContainers.forEach((container, idx) => {
+    const handleOpen = (e) => {
+      if (e.target.closest('.overlay-demo-btn')) return;
+      e.preventDefault();
+      e.stopPropagation();
+      openLightboxWindow(idx);
+    };
+
+    container.addEventListener('click', handleOpen);
+    const zoomBtns = container.querySelectorAll('.overlay-zoom-btn, .overlay-fullscreen-btn');
+    zoomBtns.forEach(btn => btn.addEventListener('click', handleOpen));
+  });
+
+  if (btnViewShowcase) btnViewShowcase.addEventListener('click', (e) => { e.stopPropagation(); setViewMode('showcase'); });
+  if (btnViewLive) btnViewLive.addEventListener('click', (e) => { e.stopPropagation(); setViewMode('live'); });
+  if (lightboxPrevBtn) lightboxPrevBtn.addEventListener('click', (e) => { e.stopPropagation(); prevProject(); });
+  if (lightboxNextBtn) lightboxNextBtn.addEventListener('click', (e) => { e.stopPropagation(); nextProject(); });
+
+  if (zoomInBtn) zoomInBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomIn(); });
+  if (zoomOutBtn) zoomOutBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomOut(); });
+  if (zoomResetBtn) zoomResetBtn.addEventListener('click', (e) => { e.stopPropagation(); resetZoom(); });
+  if (zoomFitBtn) zoomFitBtn.addEventListener('click', (e) => { e.stopPropagation(); fitZoom(); });
+
+  if (lightboxNativeFsBtn) lightboxNativeFsBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleNativeFullscreen(); });
+  if (trafficFsBtn) trafficFsBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleNativeFullscreen(); });
+  if (trafficResetBtn) trafficResetBtn.addEventListener('click', (e) => { e.stopPropagation(); resetZoom(); });
+  if (trafficCloseBtn) trafficCloseBtn.addEventListener('click', (e) => { e.stopPropagation(); closeLightboxWindow(); });
+  if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeLightboxWindow);
+  if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closeLightboxWindow);
+
+  if (lightboxBody) {
+    lightboxBody.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const zoomFactor = e.deltaY < 0 ? 1.15 : 0.88;
+      setZoom(zoomLevel * zoomFactor);
+    }, { passive: false });
+  }
+
+  if (lightboxCanvasWrap) {
+    const startDrag = (clientX, clientY) => {
+      if (zoomLevel <= 1.05) return;
+      isPanning = true;
+      dragStartX = clientX;
+      dragStartY = clientY;
+      panOriginX = panX;
+      panOriginY = panY;
+      lightboxCanvasWrap.classList.add('is-dragging');
+    };
+
+    const doDrag = (clientX, clientY) => {
+      if (!isPanning) return;
+      panX = panOriginX + (clientX - dragStartX);
+      panY = panOriginY + (clientY - dragStartY);
+      updateTransform();
+    };
+
+    const endDrag = () => {
+      if (!isPanning) return;
+      isPanning = false;
+      lightboxCanvasWrap.classList.remove('is-dragging');
+    };
+
+    lightboxCanvasWrap.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
+      startDrag(e.clientX, e.clientY);
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (isPanning) doDrag(e.clientX, e.clientY);
+    });
+    window.addEventListener('mouseup', endDrag);
+
+    lightboxCanvasWrap.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        startDrag(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: true });
+    window.addEventListener('touchmove', (e) => {
+      if (isPanning && e.touches.length === 1) {
+        doDrag(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: true });
+    window.addEventListener('touchend', endDrag);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightboxModal || !lightboxModal.classList.contains('active')) return;
+    if (e.target && ['input', 'textarea'].includes(e.target.tagName.toLowerCase())) return;
+
+    if (e.key === 'Escape') {
+      closeLightboxWindow();
+    } else if (e.key === 'f' || e.key === 'F') {
+      e.preventDefault();
+      toggleNativeFullscreen();
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      prevProject();
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      nextProject();
+    } else if (e.key === '1') {
+      e.preventDefault();
+      setViewMode('showcase');
+    } else if (e.key === '2') {
+      e.preventDefault();
+      setViewMode('live');
+    } else if (e.key === '+' || e.key === '=') {
+      e.preventDefault();
+      zoomIn();
+    } else if (e.key === '-' || e.key === '_') {
+      e.preventDefault();
+      zoomOut();
+    } else if (e.key === '0') {
+      e.preventDefault();
+      resetZoom();
+    }
+  });
 
   // Refresh ScrollTrigger when images finish loading to ensure pin accuracy
   const previewImgs = document.querySelectorAll('.project-preview-img');
@@ -716,6 +951,7 @@ window.addEventListener('scroll', updateScrollProgress);
       });
     }
   });
+})();
 
   // ===== 3D INTERACTIVE ROBOT COMPANION (BYTE) =====
   (function initRobotCompanion() {
@@ -2005,4 +2241,677 @@ window.addEventListener('scroll', updateScrollProgress);
 
     animate();
   })();
+
+
+// ==========================================================================
+// VIVID MOTION-INSPIRED "PLAY REEL" SHOWCASE & CINEMATIC MODAL PLAYER
+// ==========================================================================
+(function initPlayReelSystem() {
+  const cinemaCard = document.getElementById('reelCinemaCard');
+  const ambientVideo = document.getElementById('reelAmbientVideo');
+  const magneticBadge = document.getElementById('reelMagneticBadge');
+  const quickMuteBtn = document.getElementById('reelQuickMuteBtn');
+  const muteIcon = document.getElementById('reelMuteIcon');
+
+  // Modal elements
+  const modal = document.getElementById('reelModal');
+  const modalBackdrop = document.getElementById('reelModalBackdrop');
+  const modalCloseBtn = document.getElementById('reelModalCloseBtn');
+  const modalVideo = document.getElementById('reelModalVideo');
+  const playerStage = modal ? modal.querySelector('.reel-player-stage') : null;
+  const centerPlayBtn = document.getElementById('playerCenterPlayBtn');
+  const centerPlayIcon = document.getElementById('centerPlayIcon');
+  const modalPlayPauseBtn = document.getElementById('modalPlayPauseBtn');
+  const modalPlayIcon = document.getElementById('modalPlayIcon');
+  const modalVolumeBtn = document.getElementById('modalVolumeBtn');
+  const modalVolumeIcon = document.getElementById('modalVolumeIcon');
+  const modalVolumeSlider = document.getElementById('modalVolumeSlider');
+  const modalCurrentTime = document.getElementById('modalCurrentTime');
+  const modalTotalTime = document.getElementById('modalTotalTime');
+  const modalSpeedBtn = document.getElementById('modalSpeedBtn');
+  const modalFullscreenBtn = document.getElementById('modalFullscreenBtn');
+  const modalFullscreenIcon = document.getElementById('modalFullscreenIcon');
+  const scrubWrap = document.getElementById('playerScrubWrap');
+  const scrubTrack = document.getElementById('playerScrubTrack');
+  const scrubProgress = document.getElementById('playerScrubProgress');
+  const scrubThumb = document.getElementById('playerScrubThumb');
+  const scrubBuffer = document.getElementById('playerScrubBuffer');
+  const modalChapterCards = modal ? modal.querySelectorAll('.modal-chapter-card') : [];
+  const timelinePins = modal ? modal.querySelectorAll('.chapter-pin') : [];
+
+  // Console tabs elements
+  const consoleTabBtns = document.querySelectorAll('.console-tab-btn');
+  const consolePanels = document.querySelectorAll('.console-panel');
+  const copyButtons = document.querySelectorAll('.terminal-copy-btn');
+
+  if (!cinemaCard && !modal) return;
+
+  // Set fast playback speed on ambient reel video
+  if (ambientVideo) {
+    const applyReelSpeed = () => {
+      try {
+        ambientVideo.playbackRate = 2.0;
+        ambientVideo.defaultPlaybackRate = 2.0;
+      } catch (_) {}
+    };
+    ambientVideo.addEventListener('loadedmetadata', applyReelSpeed);
+    ambientVideo.addEventListener('canplay', applyReelSpeed);
+    applyReelSpeed();
+  }
+
+  // ------------------------------------------------------------------------
+  // 1. Magnetic Follow-CTA Cursor Physics (Vivid Motion Signature Interaction)
+  // ------------------------------------------------------------------------
+  if (cinemaCard && magneticBadge && window.matchMedia('(pointer: fine)').matches) {
+    let cardRect = cinemaCard.getBoundingClientRect();
+    let currentX = cardRect.width / 2;
+    let currentY = cardRect.height / 2;
+    let targetX = currentX;
+    let targetY = currentY;
+    let isHovering = false;
+    let rafId = null;
+
+    function updateCardRect() {
+      cardRect = cinemaCard.getBoundingClientRect();
+    }
+    window.addEventListener('resize', updateCardRect);
+    window.addEventListener('scroll', updateCardRect, { passive: true });
+
+    function lerpCursor() {
+      // Linear interpolation with smooth spring easing
+      currentX += (targetX - currentX) * 0.14;
+      currentY += (targetY - currentY) * 0.14;
+
+      magneticBadge.style.left = `${currentX}px`;
+      magneticBadge.style.top = `${currentY}px`;
+
+      if (isHovering || Math.abs(targetX - currentX) > 0.5 || Math.abs(targetY - currentY) > 0.5) {
+        rafId = requestAnimationFrame(lerpCursor);
+      } else {
+        rafId = null;
+      }
+    }
+
+    cinemaCard.addEventListener('pointerenter', (e) => {
+      isHovering = true;
+      updateCardRect();
+      targetX = e.clientX - cardRect.left;
+      targetY = e.clientY - cardRect.top;
+      if (!rafId) rafId = requestAnimationFrame(lerpCursor);
+    });
+
+    cinemaCard.addEventListener('pointermove', (e) => {
+      if (!isHovering) isHovering = true;
+      targetX = e.clientX - cardRect.left;
+      targetY = e.clientY - cardRect.top;
+
+      // Keep within card bounds with safe padding
+      const padX = 70;
+      const padY = 40;
+      targetX = Math.max(padX, Math.min(cardRect.width - padX, targetX));
+      targetY = Math.max(padY, Math.min(cardRect.height - padY, targetY));
+
+      if (!rafId) rafId = requestAnimationFrame(lerpCursor);
+    });
+
+    cinemaCard.addEventListener('pointerleave', () => {
+      isHovering = false;
+      // Return gracefully to card center
+      targetX = cardRect.width / 2;
+      targetY = cardRect.height / 2;
+      if (!rafId) rafId = requestAnimationFrame(lerpCursor);
+    });
+  }
+
+  // ------------------------------------------------------------------------
+  // 2. Ambient Video Quick Mute Button
+  // ------------------------------------------------------------------------
+  if (quickMuteBtn && ambientVideo && muteIcon) {
+    quickMuteBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Do not trigger card click (open modal)
+      ambientVideo.muted = !ambientVideo.muted;
+      if (ambientVideo.muted) {
+        muteIcon.className = 'fas fa-volume-mute';
+        quickMuteBtn.setAttribute('aria-label', 'Unmute preview audio');
+      } else {
+        muteIcon.className = 'fas fa-volume-up';
+        quickMuteBtn.setAttribute('aria-label', 'Mute preview audio');
+        ambientVideo.play().catch(() => {});
+      }
+    });
+  }
+
+  // ------------------------------------------------------------------------
+  // 3. 5-Pillar Dev Console (Tabs & Code Snippets)
+  // ------------------------------------------------------------------------
+  consoleTabBtns.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const pillar = tab.getAttribute('data-pillar');
+
+      // Update tabs
+      consoleTabBtns.forEach((t) => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      // Update panels
+      consolePanels.forEach((panel) => {
+        panel.classList.remove('active');
+      });
+      const activePanel = document.getElementById(`panel-${pillar}`);
+      if (activePanel) {
+        activePanel.classList.add('active');
+      }
+    });
+  });
+
+  // Terminal Copy Code Action
+  copyButtons.forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const targetId = btn.getAttribute('data-target');
+      const codeEl = document.getElementById(targetId);
+      if (!codeEl) return;
+
+      const codeText = codeEl.innerText || codeEl.textContent;
+      try {
+        await navigator.clipboard.writeText(codeText);
+        const origHtml = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check" style="color:#10b981;"></i>';
+        setTimeout(() => {
+          btn.innerHTML = origHtml;
+        }, 2000);
+      } catch (err) {
+        console.warn('Clipboard write failed', err);
+      }
+    });
+  });
+
+  // ------------------------------------------------------------------------
+  // 4. Cinematic Fullscreen Modal Video Player (Vivid Motion Experience)
+  // ------------------------------------------------------------------------
+  let isDraggingScrub = false;
+  let controlsTimeout = null;
+  const speedOptions = [1.0, 1.25, 1.5, 2.0];
+  let currentSpeedIdx = 0;
+
+  function formatTime(seconds) {
+    if (isNaN(seconds) || seconds < 0) return '00:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  }
+
+  function openModal(seekTime = null) {
+    if (!modal || !modalVideo) return;
+
+    // Pause ambient background video to save GPU/CPU
+    if (ambientVideo) {
+      ambientVideo.pause();
+    }
+
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden'; // Lock background scroll
+
+    if (seekTime !== null && !isNaN(seekTime)) {
+      modalVideo.currentTime = seekTime;
+    }
+
+    modalVideo.play().then(() => {
+      updatePlayIcons(true);
+    }).catch(() => {
+      updatePlayIcons(false);
+    });
+
+    resetControlsTimer();
+  }
+
+  function closeModal() {
+    if (!modal || !modalVideo) return;
+
+    modalVideo.pause();
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+
+    // Resume ambient video
+    if (ambientVideo) {
+      ambientVideo.play().catch(() => {});
+    }
+
+    if (playerStage) {
+      playerStage.classList.remove('controls-hidden');
+    }
+    clearTimeout(controlsTimeout);
+  }
+
+  function togglePlayPause() {
+    if (!modalVideo) return;
+    if (modalVideo.paused || modalVideo.ended) {
+      modalVideo.play();
+      updatePlayIcons(true);
+    } else {
+      modalVideo.pause();
+      updatePlayIcons(false);
+    }
+  }
+
+  function updatePlayIcons(isPlaying) {
+    if (!playerStage) return;
+    if (isPlaying) {
+      playerStage.classList.add('is-playing');
+      if (modalPlayIcon) modalPlayIcon.className = 'fas fa-pause';
+      if (centerPlayIcon) centerPlayIcon.className = 'fas fa-pause';
+    } else {
+      playerStage.classList.remove('is-playing');
+      if (modalPlayIcon) modalPlayIcon.className = 'fas fa-play';
+      if (centerPlayIcon) centerPlayIcon.className = 'fas fa-play';
+    }
+  }
+
+  function updateActiveChapterCard(currentTime) {
+    // 5 Chapters:
+    // 01: 0 - 14.9s (Python)
+    // 02: 15 - 27.9s (RAG)
+    // 03: 28 - 41.9s (LLM)
+    // 04: 42 - 49.9s (Supabase)
+    // 05: 50+ s (Netlify)
+    let activeSeek = 0;
+    if (currentTime >= 50) activeSeek = 50;
+    else if (currentTime >= 42) activeSeek = 42;
+    else if (currentTime >= 28) activeSeek = 28;
+    else if (currentTime >= 15) activeSeek = 15;
+    else activeSeek = 0;
+
+    modalChapterCards.forEach((card) => {
+      const cardSeek = parseFloat(card.getAttribute('data-seek'));
+      if (cardSeek === activeSeek) {
+        card.classList.add('active');
+      } else {
+        card.classList.remove('active');
+      }
+    });
+  }
+
+  function resetControlsTimer() {
+    if (!playerStage || !modalVideo || modalVideo.paused) {
+      if (playerStage) playerStage.classList.remove('controls-hidden');
+      clearTimeout(controlsTimeout);
+      return;
+    }
+
+    playerStage.classList.remove('controls-hidden');
+    clearTimeout(controlsTimeout);
+    controlsTimeout = setTimeout(() => {
+      if (!modalVideo.paused && !isDraggingScrub) {
+        playerStage.classList.add('controls-hidden');
+      }
+    }, 2800);
+  }
+
+  // Hook Modal Open/Close Triggers
+  if (cinemaCard) {
+    cinemaCard.addEventListener('click', (e) => {
+      if (e.target.closest('#reelQuickMuteBtn')) return;
+      openModal();
+    });
+  }
+
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener('click', closeModal);
+  }
+
+  if (modalBackdrop) {
+    modalBackdrop.addEventListener('click', closeModal);
+  }
+
+  // Video Time Update & Scrub Progress
+  if (modalVideo) {
+    modalVideo.addEventListener('timeupdate', () => {
+      if (isDraggingScrub) return;
+
+      const current = modalVideo.currentTime;
+      const duration = modalVideo.duration || 58;
+      const pct = (current / duration) * 100;
+
+      if (scrubProgress) scrubProgress.style.width = `${pct}%`;
+      if (scrubThumb) scrubThumb.style.left = `${pct}%`;
+      if (modalCurrentTime) modalCurrentTime.textContent = formatTime(current);
+
+      updateActiveChapterCard(current);
+    });
+
+    modalVideo.addEventListener('progress', () => {
+      if (modalVideo.buffered.length > 0 && scrubBuffer && modalVideo.duration) {
+        const bufferedEnd = modalVideo.buffered.end(modalVideo.buffered.length - 1);
+        const bufferPct = (bufferedEnd / modalVideo.duration) * 100;
+        scrubBuffer.style.width = `${bufferPct}%`;
+      }
+    });
+
+    modalVideo.addEventListener('loadedmetadata', () => {
+      if (modalTotalTime) modalTotalTime.textContent = formatTime(modalVideo.duration);
+    });
+
+    modalVideo.addEventListener('play', () => updatePlayIcons(true));
+    modalVideo.addEventListener('pause', () => updatePlayIcons(false));
+    modalVideo.addEventListener('ended', () => {
+      updatePlayIcons(false);
+      if (playerStage) playerStage.classList.remove('controls-hidden');
+    });
+  }
+
+  if (centerPlayBtn) {
+    centerPlayBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      togglePlayPause();
+    });
+  }
+
+  if (modalPlayPauseBtn) {
+    modalPlayPauseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      togglePlayPause();
+    });
+  }
+
+  if (playerStage) {
+    playerStage.addEventListener('click', (e) => {
+      if (e.target.closest('.player-controls-deck') || e.target.closest('.player-center-play')) return;
+      togglePlayPause();
+    });
+    playerStage.addEventListener('pointermove', resetControlsTimer);
+    playerStage.addEventListener('pointerleave', () => {
+      if (!modalVideo.paused) {
+        playerStage.classList.add('controls-hidden');
+      }
+    });
+  }
+
+  // Scrubbing & Seeking
+  function seekToPosition(e) {
+    if (!scrubTrack || !modalVideo || !modalVideo.duration) return;
+    const rect = scrubTrack.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const pct = Math.max(0, Math.min(1, clickX / rect.width));
+    modalVideo.currentTime = pct * modalVideo.duration;
+
+    if (scrubProgress) scrubProgress.style.width = `${pct * 100}%`;
+    if (scrubThumb) scrubThumb.style.left = `${pct * 100}%`;
+    if (modalCurrentTime) modalCurrentTime.textContent = formatTime(modalVideo.currentTime);
+  }
+
+  if (scrubWrap) {
+    scrubWrap.addEventListener('pointerdown', (e) => {
+      isDraggingScrub = true;
+      seekToPosition(e);
+      window.addEventListener('pointermove', onPointerMoveScrub);
+      window.addEventListener('pointerup', onPointerUpScrub);
+    });
+
+    function onPointerMoveScrub(e) {
+      if (!isDraggingScrub) return;
+      seekToPosition(e);
+    }
+
+    function onPointerUpScrub() {
+      if (isDraggingScrub) {
+        isDraggingScrub = false;
+        window.removeEventListener('pointermove', onPointerMoveScrub);
+        window.removeEventListener('pointerup', onPointerUpScrub);
+      }
+    }
+  }
+
+  // Chapter Timeline Pins Click
+  timelinePins.forEach((pin) => {
+    pin.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const targetTime = parseFloat(pin.getAttribute('data-time')) || 0;
+      if (modalVideo) {
+        modalVideo.currentTime = targetTime;
+        modalVideo.play().catch(() => {});
+      }
+    });
+  });
+
+  // Modal Chapter Deck Buttons Click
+  modalChapterCards.forEach((card) => {
+    card.addEventListener('click', () => {
+      const seek = parseFloat(card.getAttribute('data-seek')) || 0;
+      if (modalVideo) {
+        modalVideo.currentTime = seek;
+        modalVideo.play().catch(() => {});
+      }
+    });
+  });
+
+  // Volume & Mute Controls
+  if (modalVolumeSlider && modalVideo) {
+    modalVolumeSlider.addEventListener('input', (e) => {
+      const val = parseFloat(e.target.value);
+      modalVideo.volume = val;
+      modalVideo.muted = val === 0;
+      updateVolumeIcon(val);
+    });
+  }
+
+  if (modalVolumeBtn && modalVideo) {
+    modalVolumeBtn.addEventListener('click', () => {
+      modalVideo.muted = !modalVideo.muted;
+      if (modalVideo.muted) {
+        if (modalVolumeSlider) modalVolumeSlider.value = 0;
+        updateVolumeIcon(0);
+      } else {
+        const targetVol = modalVideo.volume || 1;
+        if (modalVolumeSlider) modalVolumeSlider.value = targetVol;
+        updateVolumeIcon(targetVol);
+      }
+    });
+  }
+
+  function updateVolumeIcon(vol) {
+    if (!modalVolumeIcon) return;
+    if (modalVideo && modalVideo.muted || vol === 0) {
+      modalVolumeIcon.className = 'fas fa-volume-mute';
+    } else if (vol < 0.5) {
+      modalVolumeIcon.className = 'fas fa-volume-down';
+    } else {
+      modalVolumeIcon.className = 'fas fa-volume-up';
+    }
+  }
+
+  // Speed Toggle
+  if (modalSpeedBtn && modalVideo) {
+    modalSpeedBtn.addEventListener('click', () => {
+      currentSpeedIdx = (currentSpeedIdx + 1) % speedOptions.length;
+      const speed = speedOptions[currentSpeedIdx];
+      modalVideo.playbackRate = speed;
+      modalSpeedBtn.textContent = `${speed.toFixed(1)}x`;
+    });
+  }
+
+  // Fullscreen Toggle
+  if (modalFullscreenBtn && playerStage) {
+    modalFullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        if (playerStage.requestFullscreen) {
+          playerStage.requestFullscreen();
+        } else if (playerStage.webkitRequestFullscreen) {
+          playerStage.webkitRequestFullscreen();
+        }
+        if (modalFullscreenIcon) modalFullscreenIcon.className = 'fas fa-compress';
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+        if (modalFullscreenIcon) modalFullscreenIcon.className = 'fas fa-expand';
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      if (!modalFullscreenIcon) return;
+      if (document.fullscreenElement) {
+        modalFullscreenIcon.className = 'fas fa-compress';
+      } else {
+        modalFullscreenIcon.className = 'fas fa-expand';
+      }
+    });
+  }
+
+  // ------------------------------------------------------------------------
+  // 5. Global Keyboard Shortcuts
+  // ------------------------------------------------------------------------
+  document.addEventListener('keydown', (e) => {
+    // Ignore keyboard shortcuts if user is typing into input, textarea, or contenteditable
+    const tag = e.target.tagName.toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return;
+
+    // Modal-specific hotkeys (only when modal is open)
+    if (modal && modal.classList.contains('active')) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeModal();
+      } else if (e.code === 'Space') {
+        e.preventDefault();
+        togglePlayPause();
+      } else if (e.key === 'm' || e.key === 'M') {
+        e.preventDefault();
+        if (modalVolumeBtn) modalVolumeBtn.click();
+      } else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        if (modalFullscreenBtn) modalFullscreenBtn.click();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        if (modalVideo) modalVideo.currentTime = Math.max(0, modalVideo.currentTime - 5);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        if (modalVideo) modalVideo.currentTime = Math.min(modalVideo.duration || 58, modalVideo.currentTime + 5);
+      } else if (['1', '2', '3', '4', '5'].includes(e.key)) {
+        e.preventDefault();
+        const chapterSeeks = { '1': 0, '2': 15, '3': 28, '4': 42, '5': 50 };
+        const seek = chapterSeeks[e.key];
+        if (modalVideo && seek !== undefined) {
+          modalVideo.currentTime = seek;
+          modalVideo.play().catch(() => {});
+        }
+      }
+      return;
+    }
+
+    // Lightbox modal keys are handled by their own listener; do not interfere
+    const lbModal = document.getElementById('projectLightboxModal');
+    if (lbModal && lbModal.classList.contains('active')) return;
+
+    // Hotkey 'R' or 'r': open showreel modal or scroll to section
+    if ((e.key === 'r' || e.key === 'R') && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      e.preventDefault();
+      if (modal && !modal.classList.contains('active')) {
+        openModal();
+      } else {
+        const reelSection = document.getElementById('play-reel');
+        if (reelSection) reelSection.scrollIntoView({ behavior: 'smooth' });
+      }
+      return;
+    }
+
+    // Global Navigation Hotkeys [A], [E], [S], [I], [C], [P], [U], [X]
+    if (!e.ctrlKey && !e.metaKey && !e.altKey) {
+      const keyUpper = e.key.toUpperCase();
+      const navLink = document.querySelector(`.nav-links a[data-key="${keyUpper}"]`);
+      if (navLink) {
+        e.preventDefault();
+        const targetId = navLink.getAttribute('href');
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+        }
+        return;
+      }
+    }
+  });
+
+  // ------------------------------------------------------------------------
+  // 6. About Me Background Video Autoplay & Dynamic Loop Controller
+  // ------------------------------------------------------------------------
+  const initAboutBackgroundVideo = () => {
+    const video = document.getElementById('aboutBgVideo');
+    if (!video) return;
+
+    // Strict attributes for mobile & cross-browser autoplay compliance
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.loop = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('loop', '');
+    video.setAttribute('autoplay', '');
+
+    // Set accelerated playback speed for dynamic, fast-paced technology showcase
+    const applyPlaybackRate = () => {
+      try {
+        video.playbackRate = 1.25;
+        video.defaultPlaybackRate = 1.25;
+      } catch (_) {}
+    };
+
+    video.addEventListener('loadedmetadata', applyPlaybackRate);
+    video.addEventListener('canplay', applyPlaybackRate);
+    applyPlaybackRate();
+
+    const tryPlay = () => {
+      applyPlaybackRate();
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // If browser policy deferred, ensure muted and retry
+          video.muted = true;
+          video.defaultMuted = true;
+          video.play().then(applyPlaybackRate).catch(() => {});
+        });
+      }
+    };
+
+    // Immediate attempt on initialization
+    tryPlay();
+
+    // IntersectionObserver: Ensure continuous playback while in view, pause when offscreen to conserve resources
+    if ('IntersectionObserver' in window) {
+      const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tryPlay();
+          } else {
+            video.pause();
+          }
+        });
+      }, { threshold: 0.05 });
+
+      const aboutSection = document.getElementById('about');
+      if (aboutSection) {
+        videoObserver.observe(aboutSection);
+      }
+    }
+
+    // Auto-restart seamless loop listener
+    video.addEventListener('ended', () => {
+      video.currentTime = 0;
+      tryPlay();
+    });
+
+    // Cross-browser user gesture trigger fallback
+    const gestureEvents = ['scroll', 'touchstart', 'click', 'mousemove'];
+    const onUserGesture = () => {
+      if (video.paused) {
+        tryPlay();
+      }
+      gestureEvents.forEach(evt => window.removeEventListener(evt, onUserGesture));
+    };
+    gestureEvents.forEach(evt => window.addEventListener(evt, onUserGesture, { once: true, passive: true }));
+  };
+
+  initAboutBackgroundVideo();
 })();
