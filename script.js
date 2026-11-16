@@ -2551,13 +2551,9 @@ window.addEventListener('scroll', updateScrollProgress);
     }, 2800);
   }
 
-  // Hook Modal Open/Close Triggers
-  if (cinemaCard) {
-    cinemaCard.addEventListener('click', (e) => {
-      if (e.target.closest('#reelQuickMuteBtn')) return;
-      openModal();
-    });
-  }
+
+  // Modal open on click disabled per user request
+
 
   if (modalCloseBtn) {
     modalCloseBtn.addEventListener('click', closeModal);
@@ -2805,15 +2801,11 @@ window.addEventListener('scroll', updateScrollProgress);
     const lbModal = document.getElementById('projectLightboxModal');
     if (lbModal && lbModal.classList.contains('active')) return;
 
-    // Hotkey 'R' or 'r': open showreel modal or scroll to section
+    // Hotkey 'R' or 'r': scroll to reel section (modal disabled)
     if ((e.key === 'r' || e.key === 'R') && !e.ctrlKey && !e.metaKey && !e.altKey) {
       e.preventDefault();
-      if (modal && !modal.classList.contains('active')) {
-        openModal();
-      } else {
-        const reelSection = document.getElementById('play-reel');
-        if (reelSection) reelSection.scrollIntoView({ behavior: 'smooth' });
-      }
+      const reelSection = document.getElementById('play-reel');
+      if (reelSection) reelSection.scrollIntoView({ behavior: 'smooth' });
       return;
     }
 
