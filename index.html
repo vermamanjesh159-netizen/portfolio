@@ -321,8 +321,28 @@
                 width: 260px !important;
                 height: 325px !important;
                 margin: 0 auto !important;
+                position: relative !important;
             }
-            .reel-chip { display: none !important; }
+            .reel-chip {
+                display: flex !important;
+                padding: 7px 11px !important;
+                border-radius: 12px !important;
+                font-size: 0.74rem !important;
+                gap: 8px !important;
+            }
+            .reel-chip-icon {
+                width: 26px !important;
+                height: 26px !important;
+                border-radius: 6px !important;
+                font-size: 0.8rem !important;
+            }
+            .reel-chip-sub {
+                font-size: 0.60rem !important;
+            }
+            .reel-chip-tl { top: 18px !important; left: -55px !important; }
+            .reel-chip-tr { top: 38px !important; right: -60px !important; }
+            .reel-chip-bl { bottom: 48px !important; left: -50px !important; }
+            .reel-chip-br { bottom: 22px !important; right: -55px !important; }
             .reel-hero-section {
                 padding: 100px 24px 45px !important;
                 min-height: auto !important;
@@ -396,10 +416,57 @@
                 margin: 0 auto !important;
             }
             .reel-photo-wrap {
-                width: 190px !important;
-                height: 240px !important;
+                width: 205px !important;
+                height: 255px !important;
                 max-width: 65vw !important;
-                margin: 0 auto !important;
+                margin: 0 auto 10px auto !important;
+                position: relative !important;
+            }
+            .reel-chip {
+                display: flex !important;
+                padding: 5px 9px !important;
+                border-radius: 10px !important;
+                font-size: 0.63rem !important;
+                font-weight: 700 !important;
+                gap: 6px !important;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+                backdrop-filter: blur(12px) !important;
+                -webkit-backdrop-filter: blur(12px) !important;
+                background: rgba(8, 12, 24, 0.94) !important;
+                border: 1px solid rgba(255, 255, 255, 0.16) !important;
+                z-index: 10 !important;
+            }
+            .reel-chip-icon {
+                width: 22px !important;
+                height: 22px !important;
+                border-radius: 6px !important;
+                font-size: 0.68rem !important;
+            }
+            .reel-chip-sub {
+                font-size: 0.52rem !important;
+                color: #94a3b8 !important;
+                display: block !important;
+                margin-top: 1px !important;
+            }
+            .reel-chip-tl {
+                top: 15px !important;
+                left: -42px !important;
+                animation: chipA 4s ease-in-out infinite !important;
+            }
+            .reel-chip-tr {
+                top: 32px !important;
+                right: -44px !important;
+                animation: chipB 5s ease-in-out infinite !important;
+            }
+            .reel-chip-bl {
+                bottom: 38px !important;
+                left: -38px !important;
+                animation: chipC 4.5s ease-in-out infinite !important;
+            }
+            .reel-chip-br {
+                bottom: 18px !important;
+                right: -42px !important;
+                animation: chipD 3.8s ease-in-out infinite !important;
             }
             .reel-hero-badge {
                 font-size: 0.68rem !important;
@@ -508,9 +575,27 @@
                 font-size: 1.65rem !important;
             }
             .reel-photo-wrap {
-                width: 170px !important;
-                height: 215px !important;
+                width: 175px !important;
+                height: 220px !important;
             }
+            .reel-chip {
+                padding: 4px 7px !important;
+                font-size: 0.58rem !important;
+                gap: 5px !important;
+                border-radius: 8px !important;
+            }
+            .reel-chip-icon {
+                width: 18px !important;
+                height: 18px !important;
+                font-size: 0.60rem !important;
+            }
+            .reel-chip-sub {
+                font-size: 0.48rem !important;
+            }
+            .reel-chip-tl { top: 10px !important; left: -28px !important; }
+            .reel-chip-tr { top: 25px !important; right: -30px !important; }
+            .reel-chip-bl { bottom: 30px !important; left: -25px !important; }
+            .reel-chip-br { bottom: 12px !important; right: -28px !important; }
             .reel-hero-stats {
                 gap: 4px !important;
             }
