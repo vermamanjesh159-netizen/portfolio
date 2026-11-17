@@ -12,12 +12,605 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        /* ============================================================
+           REEL HERO UPGRADE — Photo + Chips + Mesh Background
+        ============================================================ */
+
+        /* Animated mesh orbs */
+        .reel-mesh-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .reel-mesh-bg::before {
+            content: ''; position: absolute;
+            width: 70vw; height: 70vw; top: -20%; left: -15%;
+            background: radial-gradient(circle, rgba(124,58,237,0.13) 0%, transparent 70%);
+            animation: reelDrift1 18s ease-in-out infinite alternate;
+        }
+        .reel-mesh-bg::after {
+            content: ''; position: absolute;
+            width: 60vw; height: 60vw; bottom: -15%; right: -10%;
+            background: radial-gradient(circle, rgba(6,182,212,0.10) 0%, transparent 70%);
+            animation: reelDrift2 22s ease-in-out infinite alternate;
+        }
+        @keyframes reelDrift1 { from{transform:translate(0,0) scale(1)} to{transform:translate(5%,8%) scale(1.15)} }
+        @keyframes reelDrift2 { from{transform:translate(0,0) scale(1)} to{transform:translate(-6%,-5%) scale(1.1)} }
+
+        /* Floating particles */
+        .reel-particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+        .reel-particle {
+            position: absolute; border-radius: 50%; opacity: 0;
+            animation: reelFloatUp linear infinite;
+        }
+        @keyframes reelFloatUp {
+            0%{transform:translateY(100vh) scale(0);opacity:0}
+            10%{opacity:0.8} 90%{opacity:0.3}
+            100%{transform:translateY(-10vh) scale(1);opacity:0}
+        }
+
+        /* NEW hero layout */
+        .reel-hero-section {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            padding: 120px 60px 80px;
+            position: relative; z-index: 1;
+            overflow: hidden;
+        }
+        .reel-hero-inner {
+            max-width: 1280px; margin: 0 auto; width: 100%;
+            display: grid; grid-template-columns: 1.1fr 0.9fr;
+            gap: 80px; align-items: center;
+            position: relative; z-index: 2;
+        }
+
+        /* Left text */
+        .reel-hero-left { animation: reelSlideLeft 0.9s cubic-bezier(0.16,1,0.3,1) both; }
+        @keyframes reelSlideLeft { from{opacity:0;transform:translateX(-60px)} to{opacity:1;transform:translateX(0)} }
+
+        .reel-hero-badge {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: rgba(124,58,237,0.12);
+            border: 1px solid rgba(124,58,237,0.3);
+            border-radius: 50px; padding: 8px 18px;
+            font-size: 0.78rem; font-weight: 600; color: #a78bfa;
+            margin-bottom: 28px; letter-spacing: 0.06em; text-transform: uppercase;
+        }
+        .reel-badge-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #22c55e; box-shadow: 0 0 8px #22c55e;
+            animation: reelPulse 2s infinite;
+        }
+        @keyframes reelPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.75)} }
+
+        .reel-hero-name {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(3.5rem, 7.5vw, 7rem);
+            font-weight: 900; line-height: 0.9;
+            letter-spacing: -0.04em; margin-bottom: 24px;
+        }
+        .reel-hero-name .n1 { display: block; color: #f1f5f9; }
+        .reel-hero-name .n2 {
+            display: block;
+            background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+
+        .reel-hero-role {
+            font-size: 1rem; color: #94a3b8; line-height: 1.8;
+            max-width: 480px; margin-bottom: 36px;
+        }
+        .reel-hero-role strong { color: #f1f5f9; font-weight: 600; }
+
+        .reel-hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 52px; }
+        .reel-btn-primary {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 14px 30px; border-radius: 50px;
+            background: #7c3aed; color: #fff; font-size: 0.9rem; font-weight: 700;
+            text-decoration: none; border: none; cursor: pointer;
+            box-shadow: 0 8px 32px rgba(124,58,237,0.4);
+            transition: all 0.3s ease;
+        }
+        .reel-btn-primary:hover { background: #6d28d9; transform: translateY(-2px); box-shadow: 0 14px 40px rgba(124,58,237,0.5); }
+        .reel-btn-outline {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 14px 28px; border-radius: 50px;
+            background: transparent; color: #f1f5f9; font-size: 0.9rem; font-weight: 600;
+            text-decoration: none; border: 1px solid rgba(255,255,255,0.15); cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .reel-btn-outline:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.3); transform: translateY(-2px); }
+
+        .reel-hero-stats { display: flex; gap: 40px; flex-wrap: wrap; }
+        .reel-stat-num {
+            font-size: 2rem; font-weight: 900; line-height: 1;
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .reel-stat-lbl { font-size: 0.72rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+        /* Right photo */
+        .reel-hero-right {
+            display: flex; justify-content: center; align-items: center;
+            animation: reelSlideRight 0.9s cubic-bezier(0.16,1,0.3,1) both;
+        }
+        @keyframes reelSlideRight { from{opacity:0;transform:translateX(60px)} to{opacity:1;transform:translateX(0)} }
+
+        .reel-photo-wrap { position: relative; width: 400px; height: 490px; }
+
+        .reel-photo-ring {
+            position: absolute; inset: -4px;
+            border-radius: 40px 40px 100px 100px;
+            background: conic-gradient(from 0deg, #7c3aed, #06b6d4, #f59e0b, #7c3aed);
+            animation: reelSpinRing 7s linear infinite; z-index: 0;
+        }
+        @keyframes reelSpinRing { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+        .reel-photo-ring-inner {
+            position: absolute; inset: 3px;
+            border-radius: 38px 38px 97px 97px;
+            background: #060811; z-index: 1;
+        }
+        .reel-hero-photo {
+            position: relative; z-index: 2;
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: center top;
+            border-radius: 36px 36px 95px 95px;
+        }
+
+        /* Floating chips */
+        .reel-chip {
+            position: absolute; z-index: 10;
+            background: rgba(10,15,30,0.92);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 14px; padding: 10px 14px;
+            display: flex; align-items: center; gap: 10px;
+            font-size: 0.8rem; font-weight: 600; color: #f1f5f9;
+            white-space: nowrap; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+        .reel-chip-icon {
+            width: 32px; height: 32px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0;
+        }
+        .reel-chip-sub { font-size: 0.68rem; color: #94a3b8; display: block; margin-top: 1px; }
+        .reel-chip-tl { top: 20px; left: -130px; animation: chipA 4s ease-in-out infinite; }
+        .reel-chip-tr { top: 55px; right: -140px; animation: chipB 5s ease-in-out infinite; }
+        .reel-chip-bl { bottom: 70px; left: -120px; animation: chipC 4.5s ease-in-out infinite; }
+        .reel-chip-br { bottom: 30px; right: -130px; animation: chipD 3.8s ease-in-out infinite; }
+        @keyframes chipA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+        @keyframes chipB { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
+        @keyframes chipC { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+        @keyframes chipD { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+        /* Scroll hint */
+        .reel-scroll-hint {
+            position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            color: #334155; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; z-index: 1;
+        }
+        .reel-scroll-line {
+            width: 1px; height: 48px;
+            background: linear-gradient(to bottom, #7c3aed, transparent);
+            animation: reelScrollHint 2s ease-in-out infinite;
+        }
+        @keyframes reelScrollHint { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+        /* Marquee ticker — Card Length, High-Impact Reel Style */
+        .reel-ticker-wrapper {
+            width: 100%;
+            max-width: 1680px;
+            margin: 0 auto 2.5rem auto;
+            padding: 0 clamp(1.5rem, 4vw, 4.5rem);
+            box-sizing: border-box;
+            position: relative;
+            z-index: 2;
+        }
+        .reel-ticker {
+            position: relative;
+            width: 100%;
+            padding: 18px 0;
+            overflow: hidden;
+            border-radius: 20px;
+            background: linear-gradient(90deg, rgba(124,58,237,0.14) 0%, rgba(6,182,212,0.10) 50%, rgba(124,58,237,0.14) 100%);
+            border: 1px solid rgba(124,58,237,0.35);
+            box-shadow: 0 10px 32px rgba(0,0,0,0.4), 0 0 28px rgba(124,58,237,0.16);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+        }
+        .reel-ticker-track {
+            display: flex; gap: 0; width: max-content;
+            animation: reelTicker 32s linear infinite;
+        }
+        .reel-ticker-track:hover { animation-play-state: paused; }
+        @keyframes reelTicker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+        .reel-ticker-item {
+            display: flex; align-items: center; gap: 14px;
+            padding: 0 36px;
+            font-family: 'Syne', sans-serif !important;
+            font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+        }
+        .reel-ticker-item:nth-child(even) {
+            color: #c4b5fd;
+        }
+        .reel-ticker-item:nth-child(3n) {
+            color: #67e8f9;
+        }
+        .reel-ticker-item:hover {
+            color: #ffffff;
+            transform: scale(1.05);
+            text-shadow: 0 0 20px rgba(124,58,237,0.8);
+        }
+        .reel-ticker-item i {
+            color: #06b6d4;
+            font-size: 0.6rem;
+            display: inline-block;
+            filter: drop-shadow(0 0 8px #06b6d4) drop-shadow(0 0 14px #7c3aed);
+            animation: tickerDotPulse 2s ease-in-out infinite alternate;
+        }
+        @keyframes tickerDotPulse {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            100% { transform: scale(1.3); opacity: 1; }
+        }
+
+        /* ============================================================
+           RESPONSIVE HERO & PHONE SCREEN PERFECTION (320px - 768px)
+        ============================================================ */
+        @media (max-width: 1100px) {
+            .reel-hero-inner {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+            .reel-hero-right {
+                order: -1;
+                margin: 0 auto;
+            }
+            .reel-photo-wrap {
+                width: 280px;
+                height: 350px;
+                margin: 0 auto;
+            }
+            .reel-chip { display: none; }
+            .reel-hero-section {
+                padding: 105px 24px 50px;
+                min-height: auto;
+            }
+            .reel-hero-left {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .reel-hero-role {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .reel-hero-btns {
+                justify-content: center;
+            }
+            .reel-hero-stats {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .reel-hero-section {
+                padding: 95px 16px 40px;
+            }
+            .reel-hero-badge {
+                font-size: 0.72rem;
+                padding: 6px 14px;
+                margin-bottom: 18px;
+            }
+            .reel-hero-name {
+                font-size: clamp(2.3rem, 10.5vw, 3.2rem) !important;
+                letter-spacing: -0.04em !important;
+                line-height: 0.95 !important;
+                margin-bottom: 16px;
+            }
+            .reel-hero-role {
+                font-size: 0.92rem;
+                line-height: 1.6;
+                margin-bottom: 24px;
+                max-width: 100%;
+            }
+            .reel-photo-wrap {
+                width: 220px;
+                height: 275px;
+            }
+            .reel-hero-btns {
+                flex-direction: column;
+                width: 100%;
+                max-width: 320px;
+                gap: 10px;
+                margin-bottom: 32px;
+            }
+            .reel-hero-btns a {
+                width: 100%;
+                justify-content: center;
+                padding: 12px 20px;
+                font-size: 0.88rem;
+                box-sizing: border-box;
+            }
+            .reel-hero-stats {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px 14px;
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            .reel-stat-num {
+                font-size: 1.65rem !important;
+            }
+            .reel-stat-lbl {
+                font-size: 0.65rem !important;
+            }
+
+            /* Marquee Ticker Card on Phone */
+            .reel-ticker-wrapper {
+                padding: 0 10px !important;
+                margin-bottom: 2rem !important;
+            }
+            .reel-ticker {
+                padding: 12px 0 !important;
+                border-radius: 14px !important;
+            }
+            .reel-ticker-item {
+                font-size: 0.92rem !important;
+                padding: 0 18px !important;
+                gap: 10px !important;
+            }
+
+            /* 3D Car sprite on phone */
+            .hero-car-bg {
+                width: 180px !important;
+                height: 90px !important;
+                bottom: -5px !important;
+            }
+
+            /* Scroll hint */
+            .reel-scroll-hint {
+                display: none;
+            }
+
+            /* Header on phone */
+            header {
+                padding: 0 1rem !important;
+                height: 60px !important;
+            }
+            nav {
+                height: 60px !important;
+            }
+            .nav-logo {
+                font-size: 1.45rem !important;
+            }
+        }
+
+        /* Mobile Hamburger Animation */
+        .mobile-nav-toggle.active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+            background: #a78bfa;
+        }
+        .mobile-nav-toggle.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-nav-toggle.active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+            background: #a78bfa;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                background: rgba(6, 8, 17, 0.98) !important;
+                backdrop-filter: blur(24px) !important;
+                -webkit-backdrop-filter: blur(24px) !important;
+                border-bottom: 1px solid rgba(124, 58, 237, 0.25) !important;
+            }
+            .nav-links a {
+                font-family: 'Syne', sans-serif !important;
+                font-size: 1.25rem !important;
+                font-weight: 700 !important;
+                color: #e2e8f0 !important;
+                padding: 12px 24px !important;
+                border-radius: 12px !important;
+                transition: all 0.25s ease !important;
+            }
+            .nav-links a:hover,
+            .nav-links a:active {
+                background: rgba(124, 58, 237, 0.2) !important;
+                color: #ffffff !important;
+            }
+        }
+        /* ============================================================
+           GLOBAL REEL THEME OVERRIDES — Syne Font & Purple/Cyan Palette
+        ============================================================ */
+
+        /* MV Brand Logo */
+        .nav-logo {
+            font-family: 'Syne', sans-serif !important;
+            font-size: 1.7rem !important;
+            font-weight: 800 !important;
+            letter-spacing: -0.04em !important;
+            color: #ffffff !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            text-decoration: none !important;
+            line-height: 1 !important;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        .nav-logo:hover {
+            transform: scale(1.06) !important;
+        }
+        .nav-logo .logo-m {
+            color: #ffffff !important;
+            font-weight: 800 !important;
+        }
+        .nav-logo .logo-v {
+            color: #7c3aed !important;
+            font-weight: 800 !important;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.75) !important;
+        }
+        .logo-bracket { display: none !important; }
+
+        /* Syne Headings Across Whole Page */
+        h1, h2, h3, h4, h5, h6,
+        .section-title,
+        .hero-title,
+        .reel-hero-name,
+        .panel-title,
+        .drawer-title,
+        .experience-title-group h3,
+        .category-header h3,
+        .cert-info h3,
+        .workflow-card h3,
+        .upwork-freelancer-title,
+        .lightbox-title,
+        .contact-title,
+        .stat-value,
+        .stat-number,
+        .reel-stat-num,
+        .metric-val,
+        .about-item-content h4,
+        .linkedin-name {
+            font-family: 'Syne', sans-serif !important;
+            letter-spacing: -0.03em !important;
+        }
+
+        .reel-hero-name {
+            font-family: 'Syne', sans-serif !important;
+            font-size: clamp(3.5rem, 7.5vw, 7rem) !important;
+            font-weight: 800 !important;
+            letter-spacing: -0.04em !important;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif !important;
+            font-size: clamp(2.2rem, 5vw, 3.6rem) !important;
+            font-weight: 800 !important;
+            letter-spacing: -0.03em !important;
+            line-height: 1.15 !important;
+        }
+
+        .drawer-title {
+            font-family: 'Syne', sans-serif !important;
+            font-size: clamp(1.4rem, 2.8vw, 2rem) !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.02em !important;
+        }
+
+        .panel-title {
+            font-family: 'Syne', sans-serif !important;
+            font-size: clamp(1.3rem, 2.5vw, 1.85rem) !important;
+            font-weight: 700 !important;
+        }
+
+        /* Vivid Gradient for Accents */
+        .accent,
+        .gradient-text,
+        .section-title .accent,
+        .section-title span.accent,
+        .hero-title .accent,
+        .reel-hero-name .n2 {
+            background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+            display: inline-block !important;
+        }
+
+        /* Primary Purple Gradient Buttons */
+        .btn-primary,
+        .reel-btn-primary,
+        .drawer-btn-primary,
+        .btn-upwork-hire,
+        .btn-linkedin-connect,
+        .contact-cta {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+            color: #ffffff !important;
+            border: none !important;
+            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.42) !important;
+            font-weight: 700 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .btn-primary:hover,
+        .reel-btn-primary:hover,
+        .drawer-btn-primary:hover,
+        .btn-upwork-hire:hover,
+        .btn-linkedin-connect:hover,
+        .contact-cta:hover {
+            background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%) !important;
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.65) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        /* Interactive Active Indicators & Tabs */
+        .scroll-progress,
+        #scrollProgress {
+            background: linear-gradient(90deg, #7c3aed, #06b6d4, #f59e0b) !important;
+            box-shadow: 0 0 14px rgba(124, 58, 237, 0.6) !important;
+        }
+
+        .drawer-nav-btn.active {
+            background: rgba(124, 58, 237, 0.22) !important;
+            border-color: #7c3aed !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 24px rgba(124, 58, 237, 0.4) !important;
+        }
+
+        .console-tab-btn.active {
+            background: rgba(124, 58, 237, 0.18) !important;
+            border-color: rgba(124, 58, 237, 0.45) !important;
+            box-shadow: 0 4px 22px rgba(124, 58, 237, 0.3) !important;
+        }
+
+        .proj-dot.active .dot-pip {
+            background: #7c3aed !important;
+            box-shadow: 0 0 12px #7c3aed !important;
+        }
+
+        .side-nav-link.active .dot {
+            background: #7c3aed !important;
+            box-shadow: 0 0 12px #7c3aed !important;
+        }
+        .side-nav-progress {
+            background: linear-gradient(to bottom, #7c3aed, #06b6d4) !important;
+        }
+
+        /* Section Tags & Pills */
+        .section-tag {
+            font-family: 'JetBrains Mono', monospace !important;
+            color: #06b6d4 !important;
+            letter-spacing: 0.15em !important;
+            font-weight: 600 !important;
+        }
+
+        .phase-tag,
+        .panel-tag,
+        .upwork-verified-pill,
+        .linkedin-brand-badge {
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+
+        /* Glass Cards with Purple Glow */
+        .glass-card:hover {
+            border-color: rgba(124, 58, 237, 0.35) !important;
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5), 0 0 35px rgba(124, 58, 237, 0.15) !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -31,8 +624,8 @@
     <!-- Navigation -->
     <header id="main-header">
         <nav>
-            <a href="#hero" class="nav-logo">
-                <span class="logo-bracket">[</span>MV<span class="logo-bracket">]</span>
+            <a href="#hero" class="nav-logo" aria-label="Manjesh Verma">
+                <span class="logo-m">M</span><span class="logo-v">V</span>
             </a>
             <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
                 <span class="hamburger-line"></span>
@@ -79,63 +672,137 @@
         </ul>
     </aside>
 
+    <!-- Animated mesh orbs background -->
+    <div class="reel-mesh-bg"></div>
+    <!-- Floating particles -->
+    <div class="reel-particles" id="reelParticles"></div>
+
     <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero-section">
-            <div class="hero-car-bg">
+        <!-- Hero Section — Reel Style with Photo -->
+        <section id="hero" class="reel-hero-section">
+            <!-- 3D Sports Car Ambient Animation -->
+            <div class="hero-car-bg" title="Speed & Low Latency Performance">
                 <div class="hero-car-sprite"></div>
             </div>
-            <div class="hero-content">
-                <div class="hero-tag">
-                    <span class="hero-tag-avatar">
-                        <img src="images/profile.jpg" alt="Manjesh Verma">
-                    </span>
-                    <span class="tag-dot"></span>
-                    <span>Available for opportunities</span>
-                </div>
-                <h1 class="hero-title">
-                    <span class="title-line" data-delay="0">MANJESH</span>
-                    <span class="title-line accent" data-delay="1">VERMA</span>
-                </h1>
-                <p class="hero-subtitle">Python Developer</p>
-                <div class="hero-cta">
-                    <a href="#contact" class="btn btn-primary" id="heroContactBtn">
-                        <span>Get in Touch</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <a href="#projects" class="btn btn-secondary">
-                        <span>View Projects</span>
-                        <i class="fas fa-code"></i>
-                    </a>
-                </div>
-                <div class="hero-terminal">
-                    <div class="terminal-header">
-                        <span class="terminal-dot red"></span>
-                        <span class="terminal-dot yellow"></span>
-                        <span class="terminal-dot green"></span>
-                        <span class="terminal-title">terminal</span>
+
+            <div class="reel-hero-inner">
+
+                <!-- Left: Text Content -->
+                <div class="reel-hero-left">
+                    <div class="reel-hero-badge">
+                        <span class="reel-badge-dot"></span>
+                        Available for Opportunities
                     </div>
-                    <div class="terminal-body">
-                        <span class="terminal-prompt">$</span>
-                        <span class="terminal-text" id="terminalText"></span>
-                        <span class="terminal-cursor">|</span>
+                    <h1 class="reel-hero-name">
+                        <span class="n1">MANJESH</span>
+                        <span class="n2">VERMA</span>
+                    </h1>
+                    <div class="reel-hero-btns">
+                        <a href="#contact" class="reel-btn-primary" id="heroContactBtn">
+                            <i class="fas fa-paper-plane"></i> Let's Work Together
+                        </a>
+                        <a href="#projects" class="reel-btn-outline">
+                            <i class="fas fa-code"></i> View Projects
+                        </a>
+                    </div>
+                    <div class="reel-hero-stats">
+                        <div>
+                            <div class="reel-stat-num">3+</div>
+                            <div class="reel-stat-lbl">Years Exp.</div>
+                        </div>
+                        <div>
+                            <div class="reel-stat-num">6+</div>
+                            <div class="reel-stat-lbl">Projects</div>
+                        </div>
+                        <div>
+                            <div class="reel-stat-num">3</div>
+                            <div class="reel-stat-lbl">Certifications</div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Right: Photo with Spinning Ring & Chips -->
+                <div class="reel-hero-right">
+                    <div class="reel-photo-wrap">
+                        <div class="reel-photo-ring"></div>
+                        <div class="reel-photo-ring-inner"></div>
+                        <img class="reel-hero-photo"
+                             src="images/profile_new.jpg"
+                             alt="Manjesh Verma"
+                             onerror="this.src='images/profile.jpg'">
+
+                        <!-- Floating Chips -->
+                        <div class="reel-chip reel-chip-tl">
+                            <div class="reel-chip-icon" style="background:rgba(124,58,237,0.2);color:#a78bfa">
+                                <i class="fab fa-python"></i>
+                            </div>
+                            <div>FastAPI Expert <span class="reel-chip-sub">Backend Dev</span></div>
+                        </div>
+                        <div class="reel-chip reel-chip-tr">
+                            <div class="reel-chip-icon" style="background:rgba(6,182,212,0.15);color:#67e8f9">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div>AI / ML RAG <span class="reel-chip-sub">LLM Integration</span></div>
+                        </div>
+                        <div class="reel-chip reel-chip-bl">
+                            <div class="reel-chip-icon" style="background:rgba(245,158,11,0.15);color:#fcd34d">
+                                <i class="fab fa-google"></i>
+                            </div>
+                            <div>Docker <span class="reel-chip-sub">Containerization</span></div>
+                        </div>
+                        <div class="reel-chip reel-chip-br">
+                            <div class="reel-chip-icon" style="background:rgba(34,197,94,0.15);color:#4ade80">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div>GitHub Actions <span class="reel-chip-sub">CI/CD automation</span></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Scroll hint -->
+            <div class="reel-scroll-hint">
+                <span>Scroll</span>
+                <div class="reel-scroll-line"></div>
             </div>
         </section>
 
-        <!-- Play Reel Section (Inspired by Vivid Motion) -->
-        <section id="play-reel" class="content-section play-reel-section">
-            <!-- Cinema Stage Card — Full Width, No Border -->
-            <div class="reel-cinema-card" id="reelCinemaCard" role="region" aria-label="Interactive Development Showreel Player">
-                <!-- Ambient Looping Video Preview -->
-                <div class="reel-media-viewport">
-                    <video id="reelAmbientVideo" class="reel-ambient-video" autoplay muted loop playsinline preload="auto" poster="images/upwork_video_thumbnail.jpg">
-                        <source src="upwork_intro_video_1080p.mp4" type="video/mp4">
-                    </video>
+        <!-- Marquee Ticker (Card Length) -->
+        <div class="reel-ticker-wrapper">
+            <div class="reel-ticker">
+                <div class="reel-ticker-track">
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> Python & FastAPI</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> AI / ML Engineering</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> RAG Pipelines</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> LangChain & LangGraph</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> Google Cloud Platform</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> PostgreSQL & Supabase</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> Docker & Kubernetes</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> NestJS & Node</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> OpenAI GPT-4o</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> Vector Databases</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> Meta Graph API</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> CI/CD & DevOps</span>
+                    <!-- duplicate for seamless loop -->
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> Python & FastAPI</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> AI / ML Engineering</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> RAG Pipelines</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> LangChain & LangGraph</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> Google Cloud Platform</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> PostgreSQL & Supabase</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> Docker & Kubernetes</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> NestJS & Node</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> OpenAI GPT-4o</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> Vector Databases</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> Meta Graph API</span>
+                    <span class="reel-ticker-item"><i class="fas fa-circle"></i> CI/CD & DevOps</span>
                 </div>
             </div>
+        </div>
 
+        <!-- Dev Showcase 5-Pillar Console Section -->
+        <section id="play-reel" class="content-section play-reel-section">
             <!-- Interactive 5-Pillar Dev Console -->
             <div class="reel-console-wrapper">
                     <!-- Console Navigation Tabs -->
@@ -166,454 +833,6 @@
                             <span class="tab-badge">Edge • CI/CD</span>
                         </button>
                     </div>
-
-                    <!-- Pillar 1: Python Development Projects -->
-                    <div class="console-panel active glass-card" id="panel-python" role="tabpanel" aria-labelledby="tab-python">
-                        <div class="panel-grid">
-                            <div class="panel-details">
-                                <div class="panel-badge-row">
-                                    <span class="panel-tag python-tag"><i class="fab fa-python"></i> PILLAR 01 // CORE BACKEND</span>
-                                    <span class="panel-sla">99.98% High-Availability</span>
-                                </div>
-                                <h3 class="panel-title">High-Throughput Python & FastAPI Microservices</h3>
-                                <p class="panel-desc">Architecting distributed, asynchronous backend systems engineered for low latency, strict type safety, and massive concurrency. Leveraging FastAPI, Pydantic v2, asyncpg, Celery worker clusters, and Redis caching layers.</p>
-                                
-                                <div class="panel-features-list">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle feature-icon"></i>
-                                        <div>
-                                            <strong>Async Event Loop & Microservices:</strong> High-concurrency async endpoints handling 10,000+ requests/sec with non-blocking I/O.
-                                        </div>
-                                    </div>
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle feature-icon"></i>
-                                        <div>
-                                            <strong>Pydantic v2 & Type-Safe Pipelines:</strong> Strict schema validation, automatic OpenAPI generation, and zero runtime serialization bottlenecks.
-                                        </div>
-                                    </div>
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle feature-icon"></i>
-                                        <div>
-                                            <strong>Distributed Background Workflows:</strong> Celery task scheduling with Redis broker, exponential backoff, and state machines.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="panel-metrics-grid">
-                                    <div class="metric-card">
-                                        <span class="metric-val">&lt; 35ms</span>
-                                        <span class="metric-lbl">P99 API Latency</span>
-                                    </div>
-                                    <div class="metric-card">
-                                        <span class="metric-val">10K+</span>
-                                        <span class="metric-lbl">Req/Sec Throughput</span>
-                                    </div>
-                                    <div class="metric-card">
-                                        <span class="metric-val">100%</span>
-                                        <span class="metric-lbl">Type Coverage</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="panel-code-terminal">
-                                <div class="terminal-bar">
-                                    <div class="terminal-dots">
-                                        <span class="dot red"></span>
-                                        <span class="dot yellow"></span>
-                                        <span class="dot green"></span>
-                                    </div>
-                                    <span class="terminal-filename">backend/api/fastapi_core.py</span>
-                                    <button class="terminal-copy-btn" data-target="code-python" title="Copy Code">
-                                        <i class="far fa-copy"></i>
-                                    </button>
-                                </div>
-                                <div class="terminal-code-body">
-                                    <pre><code id="code-python"><span class="c-keyword">from</span> fastapi <span class="c-keyword">import</span> FastAPI, Depends, BackgroundTasks
-<span class="c-keyword">from</span> pydantic <span class="c-keyword">import</span> BaseModel, Field
-<span class="c-keyword">from</span> sqlalchemy.ext.asyncio <span class="c-keyword">import</span> AsyncSession
-<span class="c-keyword">import</span> asyncio
-
-app = FastAPI(title=<span class="c-str">"High-Throughput Intelligence Engine"</span>, version=<span class="c-str">"3.0"</span>)
-
-<span class="c-keyword">class</span> <span class="c-class">ExecutionPayload</span>(BaseModel):
-    task_id: <span class="c-type">str</span> = Field(..., example=<span class="c-str">"task_99x_rag"</span>)
-    concurrency_limit: <span class="c-type">int</span> = Field(default=50, ge=1)
-    telemetry_enabled: <span class="c-type">bool</span> = True
-
-<span class="c-decorator">@app.post</span>(<span class="c-str">"/api/v3/pipeline/dispatch"</span>)
-<span class="c-keyword">async def</span> <span class="c-func">dispatch_pipeline</span>(
-    payload: ExecutionPayload,
-    bg: BackgroundTasks,
-    session: AsyncSession = Depends(get_async_session)
-):
-    <span class="c-comment"># Non-blocking async transaction with connection pooling</span>
-    record = <span class="c-keyword">await</span> session.execute(select(PipelineJob).filter_by(id=payload.task_id))
-    bg.add_task(celery_async_worker.delay, payload.dict())
-    
-    <span class="c-keyword">return</span> {
-        <span class="c-str">"status"</span>: <span class="c-str">"dispatched"</span>,
-        <span class="c-str">"p99_latency_ms"</span>: 24.8,
-        <span class="c-str">"worker_pool"</span>: <span class="c-str">"celery_redis_cluster_ready"</span>
-    }</code></pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pillar 2: RAG Solutions -->
-                    <div class="console-panel glass-card" id="panel-rag" role="tabpanel" aria-labelledby="tab-rag">
-                        <div class="panel-grid">
-                            <div class="panel-details">
-                                <div class="panel-badge-row">
-                                    <span class="panel-tag rag-tag"><i class="fas fa-brain"></i> PILLAR 02 // VECTOR RAG INTELLIGENCE</span>
-                                    <span class="panel-sla">Zero-Hallucination Guardrails</span>
-                                </div>
-                                <h3 class="panel-title">Enterprise RAG (Retrieval-Augmented Generation)</h3>
-                                <p class="panel-desc">Advanced semantic search, hybrid sparse BM25 + dense embedding retrieval, Cohere re-ranking, and dynamic citation grounding across millions of vector documents.</p>
-                                
-                                <div class="panel-features-list">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle feature-icon"></i>
-                                        <div>
-                                            <strong>Hybrid Search Strategy:</strong> Blending keyword lexical precision (BM25) with semantic deep representations (`text-embedding-3-large`).
-                                        </div>
-                                    </div>
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle feature-icon"></i>
-                                        <div>
-                                            <strong>Cohere Rerank v3.5:</strong> Re-scoring retrieved candidate chunks to filter noise and pass only gold context into the prompt window.
-                                        </div>
-                                    </div>
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle feature-icon"></i>
-                                        <div>
-                                            <strong>Verifiable Citation Attribution:</strong> Linking every sentence in the response to verbatim document page, paragraph, and score metadata.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="panel-metrics-grid">
-                                    <div class="metric-card">
-                                        <span class="metric-val">0.18s</span>
-                                        <span class="metric-lbl">Vector Query Time</span>
-                                    </div>
-                                    <div class="metric-card">
-                                        <span class="metric-val">94.6%</span>
-                                        <span class="metric-lbl">Retrieval Precision</span>
-                                    </div>
-                                    <div class="metric-card">
-                                        <span class="metric-val">0.0%</span>
-                                        <span class="metric-lbl">Hallucination Rate</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="panel-code-terminal">
-                                <div class="terminal-bar">
-                                    <div class="terminal-dots">
-                                        <span class="dot red"></span>
-                                        <span class="dot yellow"></span>
-                                        <span class="dot green"></span>
-                                    </div>
-                                    <span class="terminal-filename">ai/rag_pipeline/hybrid_retriever.py</span>
-                                    <button class="terminal-copy-btn" data-target="code-rag" title="Copy Code">
-                                        <i class="far fa-copy"></i>
-                                    </button>
-                                </div>
-                                <div class="terminal-code-body">
-                                    <pre><code id="code-rag"><span class="c-keyword">from</span> cohere <span class="c-keyword">import</span> ClientV2 <span class="c-keyword">as</span> CohereClient
-<span class="c-keyword">from</span> langchain_community.vectorstores <span class="c-keyword">import</span> SupabaseVectorStore
-<span class="c-keyword">from</span> langchain_openai <span class="c-keyword">import</span> OpenAIEmbeddings
-
-<span class="c-keyword">async def</span> <span class="c-func">execute_hybrid_rag</span>(query: <span class="c-type">str</span>, top_k: <span class="c-type">int</span> = 5):
-    embeddings = OpenAIEmbeddings(model=<span class="c-str">"text-embedding-3-large"</span>)
-    
-    <span class="c-comment"># 1. Dense Semantic Similarity Search via pgvector</span>
-    dense_results = <span class="c-keyword">await</span> vector_store.asimilarity_search_with_relevance_scores(
-        query, k=15
-    )
-    
-    <span class="c-comment"># 2. Sparse Lexical BM25 Search</span>
-    sparse_results = bm25_retriever.get_relevant_documents(query)
-    combined_docs = deduplicate(dense_results + sparse_results)
-    
-    <span class="c-comment"># 3. Cross-Encoder Re-Ranking with Cohere v3.5</span>
-    reranked = cohere.rerank(
-        model=<span class="c-str">"rerank-v3.5"</span>,
-        query=query,
-        documents=[doc.page_content <span class="c-keyword">for</span> doc <span class="c-keyword">in</span> combined_docs],
-        top_n=top_k
-    )
-    <span class="c-keyword">return</span> format_grounded_citations(reranked)</code></pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pillar 3: LLM & AI Integrations -->
-                    <div class="console-panel glass-card" id="panel-llm" role="tabpanel" aria-labelledby="tab-llm">
-                        <div class="panel-grid">
-                            <div class="panel-details">
-                                <div class="panel-badge-row">
-                                    <span class="panel-tag llm-tag"><i class="fas fa-robot"></i> PILLAR 03 // AUTONOMOUS AI AGENTS</span>
-                                    <span class="panel-sla">Streaming & Function Calling</span>
-                                </div>
-                                <h3 class="panel-title">LLM & Multi-Agent Intelligent Systems</h3>
-                                <p class="panel-desc">Designing autonomous multi-agent workflows, tool execution loops, real-time WebSocket token streaming, and multi-model routing across OpenAI GPT-4o, Anthropic Claude 3.5 Sonnet, and Gemini 2.0.</p>
-                                
-                                <div class="panel-features-list">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle feature-icon"></i>
-                                        <div>
-                                            <strong>Supervisor & Subagent Mesh:</strong> Dividing complex problem domains into specialized workers with self-reflection and validation steps.
-                                        </div>
-                                    </div>
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle feature-icon"></i>
-                                        <div>
-                                            <strong>Dynamic Function & Tool Calling:</strong> Zero-shot tool discovery, structured JSON argument parsing, and safe sandbox execution.
-                                        </div>
-                                    </div>
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle feature-icon"></i>
-                                        <div>
-                                            <strong>Sub-50ms Token Streaming:</strong> Server-Sent Events (SSE) and WebSockets piping live tokens directly to the client interface.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="panel-metrics-grid">
-                                    <div class="metric-card">
-                                        <span class="metric-val">&lt; 42ms</span>
-                                        <span class="metric-lbl">Time to First Token (TTFT)</span>
-                                    </div>
-                                    <div class="metric-card">
-                                        <span class="metric-val">99.7%</span>
-                                        <span class="metric-lbl">Tool Schema Adherence</span>
-                                    </div>
-                                    <div class="metric-card">
-                                        <span class="metric-val">3+</span>
-                                        <span class="metric-lbl">LLM Providers Routed</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="panel-code-terminal">
-                                <div class="terminal-bar">
-                                    <div class="terminal-dots">
-                                        <span class="dot red"></span>
-                                        <span class="dot yellow"></span>
-                                        <span class="dot green"></span>
-                                    </div>
-                                    <span class="terminal-filename">ai/agents/multi_agent_router.py</span>
-                                    <button class="terminal-copy-btn" data-target="code-llm" title="Copy Code">
-                                        <i class="far fa-copy"></i>
-                                    </button>
-                                </div>
-                                <div class="terminal-code-body">
-                                    <pre><code id="code-llm"><span class="c-keyword">from</span> langchain_core.messages <span class="c-keyword">import</span> HumanMessage, SystemMessage
-<span class="c-keyword">from</span> langgraph.graph <span class="c-keyword">import</span> StateGraph, END
-
-<span class="c-keyword">class</span> <span class="c-class">AgentState</span>(TypedDict):
-    task: <span class="c-type">str</span>
-    intermediate_steps: <span class="c-type">list</span>
-    verified_answer: <span class="c-type">str</span>
-
-<span class="c-comment"># Supervisor dynamic router node</span>
-<span class="c-keyword">async def</span> <span class="c-func">supervisor_node</span>(state: AgentState):
-    prompt = SystemMessage(content=<span class="c-str">"Route task to specialized workers [coder, analyst, verifier]."</span>)
-    route_decision = <span class="c-keyword">await</span> router_llm.ainvoke([prompt, HumanMessage(content=state[<span class="c-str">"task"</span>])])
-    <span class="c-keyword">return</span> {<span class="c-str">"next_worker"</span>: route_decision.destination}
-
-<span class="c-comment"># Dynamic tool execution loop</span>
-<span class="c-keyword">async def</span> <span class="c-func">tool_execution_worker</span>(state: AgentState):
-    result = <span class="c-keyword">await</span> execute_sandbox_tool(state[<span class="c-str">"action"</span>], state[<span class="c-str">"args"</span>])
-    <span class="c-keyword">return</span> {<span class="c-str">"intermediate_steps"</span>: [result]}</code></pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pillar 4: Supabase Integrations -->
-                    <div class="console-panel glass-card" id="panel-supabase" role="tabpanel" aria-labelledby="tab-supabase">
-                        <div class="panel-grid">
-                            <div class="panel-details">
-                                <div class="panel-badge-row">
-                                    <span class="panel-tag supabase-tag"><i class="fas fa-bolt"></i> PILLAR 04 // SUPABASE & POSTGRES</span>
-                                    <span class="panel-sla">RLS Security & pgvector</span>
-                                </div>
-                                <h3 class="panel-title">Supabase Realtime & Scalable PostgreSQL</h3>
-                                <p class="panel-desc">Harnessing PostgreSQL with pgvector for high-dimensional embeddings, Row-Level Security (RLS) policies for bulletproof tenant isolation, Realtime WebSocket pub/sub channels, and low-latency Edge Functions.</p>
-                                
-                                <div class="panel-features-list">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle feature-icon"></i>
-                                        <div>
-                                            <strong>pgvector HNSW Indexing:</strong> Approximate Nearest Neighbor (ANN) index delivering sub-10ms vector distance calculations.
-                                        </div>
-                                    </div>
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle feature-icon"></i>
-                                        <div>
-                                            <strong>Granular Row-Level Security:</strong> Strict database-level policies enforcing user permission boundaries before queries touch the data tier.
-                                        </div>
-                                    </div>
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle feature-icon"></i>
-                                        <div>
-                                            <strong>Supabase Realtime WebSockets:</strong> Live client synchronizations on database INSERT/UPDATE/DELETE events with zero polling overhead.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="panel-metrics-grid">
-                                    <div class="metric-card">
-                                        <span class="metric-val">&lt; 12ms</span>
-                                        <span class="metric-lbl">Vector ANN Search</span>
-                                    </div>
-                                    <div class="metric-card">
-                                        <span class="metric-val">100%</span>
-                                        <span class="metric-lbl">RLS Protected Tables</span>
-                                    </div>
-                                    <div class="metric-card">
-                                        <span class="metric-val">&lt; 20ms</span>
-                                        <span class="metric-lbl">Realtime Broadcast</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="panel-code-terminal">
-                                <div class="terminal-bar">
-                                    <div class="terminal-dots">
-                                        <span class="dot red"></span>
-                                        <span class="dot yellow"></span>
-                                        <span class="dot green"></span>
-                                    </div>
-                                    <span class="terminal-filename">database/supabase_schema_rls.sql</span>
-                                    <button class="terminal-copy-btn" data-target="code-supabase" title="Copy Code">
-                                        <i class="far fa-copy"></i>
-                                    </button>
-                                </div>
-                                <div class="terminal-code-body">
-                                    <pre><code id="code-supabase"><span class="c-comment">-- Enable vector extension for AI embeddings</span>
-<span class="c-keyword">CREATE EXTENSION IF NOT EXISTS</span> vector;
-
-<span class="c-comment">-- Create knowledge embeddings table with HNSW index</span>
-<span class="c-keyword">CREATE TABLE</span> public.document_embeddings (
-    id <span class="c-type">UUID</span> <span class="c-keyword">DEFAULT</span> gen_random_uuid() <span class="c-keyword">PRIMARY KEY</span>,
-    organization_id <span class="c-type">UUID</span> <span class="c-keyword">REFERENCES</span> public.organizations(id) <span class="c-keyword">ON DELETE CASCADE</span>,
-    content <span class="c-type">TEXT</span> <span class="c-keyword">NOT NULL</span>,
-    embedding <span class="c-type">vector</span>(1536),
-    created_at <span class="c-type">TIMESTAMPTZ</span> <span class="c-keyword">DEFAULT</span> now()
-);
-
-<span class="c-keyword">CREATE INDEX</span> idx_doc_hnsw <span class="c-keyword">ON</span> public.document_embeddings 
-<span class="c-keyword">USING</span> hnsw (embedding vector_cosine_ops) <span class="c-keyword">WITH</span> (m = 16, ef_construction = 64);
-
-<span class="c-comment">-- Bulletproof Multi-Tenant Row Level Security (RLS)</span>
-<span class="c-keyword">ALTER TABLE</span> public.document_embeddings <span class="c-keyword">ENABLE ROW LEVEL SECURITY</span>;
-
-<span class="c-keyword">CREATE POLICY</span> <span class="c-str">"Tenant Isolation Policy"</span> 
-<span class="c-keyword">ON</span> public.document_embeddings <span class="c-keyword">FOR ALL</span>
-<span class="c-keyword">TO</span> authenticated 
-<span class="c-keyword">USING</span> (organization_id = (auth.jwt() ->> <span class="c-str">'org_id'</span>)::<span class="c-type">UUID</span>);</code></pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pillar 5: Netlify Deployments -->
-                    <div class="console-panel glass-card" id="panel-netlify" role="tabpanel" aria-labelledby="tab-netlify">
-                        <div class="panel-grid">
-                            <div class="panel-details">
-                                <div class="panel-badge-row">
-                                    <span class="panel-tag netlify-tag"><i class="fas fa-cloud-upload-alt"></i> PILLAR 05 // NETLIFY EDGE HOSTING</span>
-                                    <span class="panel-sla">Continuous CI/CD & Atomic Rollouts</span>
-                                </div>
-                                <h3 class="panel-title">Modern Netlify Deployments & Edge Infrastructure</h3>
-                                <p class="panel-desc">Streamlined, automated Continuous Integration and Deployment (CI/CD) pipelines on Netlify. Leveraging Deno Edge Functions, zero-downtime atomic rollouts, immutable asset caching, and global CDN distribution across 200+ edge PoPs.</p>
-                                
-                                <div class="panel-features-list">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle feature-icon"></i>
-                                        <div>
-                                            <strong>Zero-Downtime Atomic Rollouts:</strong> Immutable deployment hashes ensuring immediate instant rollbacks and zero broken user sessions.
-                                        </div>
-                                    </div>
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle feature-icon"></i>
-                                        <div>
-                                            <strong>Netlify Edge Handlers & Headers:</strong> Built-in HTTPS, strict Content-Security-Policy (CSP), and HTTP/2 multi-channel asset multiplexing.
-                                        </div>
-                                    </div>
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle feature-icon"></i>
-                                        <div>
-                                            <strong>Automated Preview Environments:</strong> Pull Request deploy previews generated automatically with instant staging URLs.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="panel-metrics-grid">
-                                    <div class="metric-card">
-                                        <span class="metric-val">100/100</span>
-                                        <span class="metric-lbl">Lighthouse Performance</span>
-                                    </div>
-                                    <div class="metric-card">
-                                        <span class="metric-val">&lt; 1.2s</span>
-                                        <span class="metric-lbl">Global Edge TTFB</span>
-                                    </div>
-                                    <div class="metric-card">
-                                        <span class="metric-val">0s</span>
-                                        <span class="metric-lbl">Deploy Downtime</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="panel-code-terminal">
-                                <div class="terminal-bar">
-                                    <div class="terminal-dots">
-                                        <span class="dot red"></span>
-                                        <span class="dot yellow"></span>
-                                        <span class="dot green"></span>
-                                    </div>
-                                    <span class="terminal-filename">config/netlify.toml</span>
-                                    <button class="terminal-copy-btn" data-target="code-netlify" title="Copy Code">
-                                        <i class="far fa-copy"></i>
-                                    </button>
-                                </div>
-                                <div class="terminal-code-body">
-                                    <pre><code id="code-netlify"><span class="c-comment"># Production Netlify Configuration</span>
-[build]
-  publish = <span class="c-str">"."</span>
-  command = <span class="c-str">"echo 'Building production distribution bundle...'"</span>
-
-<span class="c-comment"># Security & Performance Headers</span>
-[[headers]]
-  for = <span class="c-str">"/*"</span>
-  [headers.values]
-    X-Frame-Options = <span class="c-str">"DENY"</span>
-    X-Content-Type-Options = <span class="c-str">"nosniff"</span>
-    Referrer-Policy = <span class="c-str">"strict-origin-when-cross-origin"</span>
-    Permissions-Policy = <span class="c-str">"camera=(), microphone=(), geolocation=()"</span>
-
-<span class="c-comment"># Immutable Long-Term Edge Asset Caching</span>
-[[headers]]
-  for = <span class="c-str">"/**/*.{js,css,png,jpg,mp4}"</span>
-  [headers.values]
-    Cache-Control = <span class="c-str">"public, max-age=31536000, immutable"</span>
-
-<span class="c-comment"># API Proxy Rewrites to Backend Microservices</span>
-[[redirects]]
-  from = <span class="c-str">"/api/*"</span>
-  to = <span class="c-str">"https://api.manjesh.dev/:splat"</span>
-  status = 200
-  force = true</code></pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
         </section>
 
         <!-- About Section -->
@@ -633,65 +852,6 @@ app = FastAPI(title=<span class="c-str">"High-Throughput Intelligence Engine"</s
                     <span class="section-tag">01 // PROFILE</span>
                     <h2 class="section-title">About <span class="accent">Me</span></h2>
                 </div>
-
-                <!-- 4-Card Impact Stats Showcase -->
-                <div class="about-stats-showcase">
-                    <div class="stat-showcase-card glass-card">
-                        <div class="stat-card-icon icon-exp">
-                            <i class="fas fa-briefcase"></i>
-                        </div>
-                        <div class="stat-card-info">
-                            <div class="stat-value">
-                                <span class="stat-number" data-count="3">0</span>
-                                <span class="stat-suffix">+</span>
-                            </div>
-                            <span class="stat-label">Years Experience</span>
-                            <span class="stat-sub">FastAPI & Python Dev</span>
-                        </div>
-                    </div>
-
-                    <div class="stat-showcase-card glass-card">
-                        <div class="stat-card-icon icon-proj">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                        <div class="stat-card-info">
-                            <div class="stat-value">
-                                <span class="stat-number" data-count="6">0</span>
-                                <span class="stat-suffix">+</span>
-                            </div>
-                            <span class="stat-label">Live Projects</span>
-                            <span class="stat-sub">Full-Stack & AI Systems</span>
-                        </div>
-                    </div>
-
-                    <div class="stat-showcase-card glass-card">
-                        <div class="stat-card-icon icon-db">
-                            <i class="fas fa-database"></i>
-                        </div>
-                        <div class="stat-card-info">
-                            <div class="stat-value">
-                                <span class="stat-number" data-count="4">0</span>
-                                <span class="stat-suffix">+</span>
-                            </div>
-                            <span class="stat-label">Core Databases</span>
-                            <span class="stat-sub">PostgreSQL, Mongo, Supabase</span>
-                        </div>
-                    </div>
-
-                    <div class="stat-showcase-card glass-card">
-                        <div class="stat-card-icon icon-cert">
-                            <i class="fas fa-award"></i>
-                        </div>
-                        <div class="stat-card-info">
-                            <div class="stat-value">
-                                <span class="stat-number" data-count="3">0</span>
-                            </div>
-                            <span class="stat-label">Certifications</span>
-                            <span class="stat-sub">Cloud & Software Eng.</span>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="about-grid">
                     <div class="about-card glass-card">
                         <div class="about-text">
@@ -2761,7 +2921,9 @@ app = FastAPI(title=<span class="c-str">"High-Throughput Intelligence Engine"</s
     <footer>
         <div class="footer-content">
             <div class="footer-logo">
-                <span class="logo-bracket">[</span>MV<span class="logo-bracket">]</span>
+                <a href="#hero" class="nav-logo" aria-label="Manjesh Verma">
+                    <span class="logo-m">M</span><span class="logo-v">V</span>
+                </a>
             </div>
             <p class="footer-copy">&copy; 2026 Manjesh Verma. Built with passion.</p>
         </div>
@@ -2781,6 +2943,27 @@ app = FastAPI(title=<span class="c-str">"High-Throughput Intelligence Engine"</s
     </div>
 
     <script src="script.js?v=2.0.0"></script>
+    <script>
+        // Reel Particles Generator
+        (function initReelParticles() {
+            const container = document.getElementById('reelParticles');
+            if (!container) return;
+            const colors = ['rgba(124,58,237,0.6)', 'rgba(6,182,212,0.5)', 'rgba(245,158,11,0.4)', 'rgba(255,255,255,0.3)'];
+            for (let i = 0; i < 35; i++) {
+                const p = document.createElement('div');
+                p.className = 'reel-particle';
+                const size = Math.random() * 3 + 1.5;
+                p.style.cssText = `
+                    width: ${size}px; height: ${size}px;
+                    left: ${Math.random() * 100}%;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    animation-duration: ${Math.random() * 18 + 12}s;
+                    animation-delay: ${Math.random() * 15}s;
+                `;
+                container.appendChild(p);
+            }
+        })();
+    </script>
 </body>
 
 </html>
