@@ -1540,7 +1540,7 @@ main { position: relative; z-index: 1; }
   font-weight: 600;
   font-family: var(--font);
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.16s ease;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -1568,7 +1568,7 @@ main { position: relative; z-index: 1; }
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 2rem;
   padding-bottom: 0;
   width: 100%;
 }
@@ -1577,20 +1577,20 @@ main { position: relative; z-index: 1; }
   position: sticky;
   top: 80px;
   width: 100%;
-  height: 90vh;
-  min-height: 580px;
-  max-height: 800px;
+  height: auto;
+  min-height: auto;
+  max-height: none;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 10px 1.5rem 2rem;
+  padding: 0 1.5rem;
   box-sizing: border-box;
   background: transparent;
   border: none;
   box-shadow: none;
 }
 .project-drawer:last-child {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 #project-1 { z-index: 10; }
 #project-2 { z-index: 20; }
@@ -1619,7 +1619,7 @@ main { position: relative; z-index: 1; }
   will-change: transform, filter;
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  transition: box-shadow 0.35s ease, border-color 0.35s ease;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .drawer-inner::before {
   content: '';
@@ -3203,7 +3203,7 @@ main { position: relative; z-index: 1; }
     max-height: none !important;
     overflow: visible !important;
     padding: 0 !important;
-    margin-bottom: 2.5rem !important;
+    margin-bottom: 0 !important;
     z-index: 1 !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -3295,7 +3295,7 @@ main { position: relative; z-index: 1; }
     height: auto !important;
     min-height: 0 !important;
     max-height: none !important;
-    margin-bottom: 2rem !important;
+    margin-bottom: 0 !important;
     padding: 0 !important;
   }
   .drawer-inner {

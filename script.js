@@ -427,28 +427,54 @@ window.addEventListener('scroll', updateScrollProgress);
   const progressDots = document.getElementById('projectsProgressDots');
   if (!drawers.length) return;
 
-  // Click navigation for top quick-jump buttons
+  // High-speed, responsive smooth scroll helper (replaces sluggish browser scrollIntoView)
+  function fastJumpToDrawer(targetEl) {
+    if (!targetEl) return;
+    const headerHeight = 85;
+    const targetY = Math.max(0, targetEl.getBoundingClientRect().top + window.pageYOffset - headerHeight);
+    const startY = window.pageYOffset;
+    const distance = targetY - startY;
+    if (Math.abs(distance) < 5) return;
+
+    // Fast snappy timing: 240ms - 380ms with exponential ease-out
+    const duration = Math.min(Math.max(Math.abs(distance) * 0.15, 240), 380);
+    const startTime = performance.now();
+
+    function animateScroll(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out exponential for instantaneous response and crisp stop
+      const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      window.scrollTo(0, startY + distance * ease);
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll);
+      }
+    }
+    requestAnimationFrame(animateScroll);
+  }
+
+  // Click navigation for top quick-jump buttons — fast & snappy
   navBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const targetId = btn.getAttribute('data-drawer');
       const targetDrawer = document.getElementById(targetId);
       if (targetDrawer) {
-        targetDrawer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        fastJumpToDrawer(targetDrawer);
         navBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
       }
     });
   });
 
-  // Click navigation for vertical dot buttons
+  // Click navigation for vertical dot buttons — fast & snappy
   dotBtns.forEach(dot => {
     dot.addEventListener('click', (e) => {
       e.preventDefault();
       const targetId = dot.getAttribute('data-drawer');
       const targetDrawer = document.getElementById(targetId);
       if (targetDrawer) {
-        targetDrawer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        fastJumpToDrawer(targetDrawer);
       }
     });
   });
@@ -458,7 +484,7 @@ window.addEventListener('scroll', updateScrollProgress);
     gsap.registerPlugin(ScrollTrigger);
 
     // Stacking card scale & dim effect: strictly for desktop viewports (> 1080px)
-    // where drawers use position: sticky stacking.
+    // where drawers use position: sticky stacking. Fast scrub range.
     ScrollTrigger.matchMedia({
       "(min-width: 1081px)": function () {
         drawers.forEach((drawer, i) => {
@@ -467,15 +493,15 @@ window.addEventListener('scroll', updateScrollProgress);
             const inner = drawer.querySelector('.drawer-inner') || drawer;
 
             gsap.to(inner, {
-              scale: 0.96,
-              opacity: 0.5,
-              filter: 'brightness(0.75)',
-              ease: 'power1.out',
+              scale: 0.97,
+              opacity: 0.55,
+              filter: 'brightness(0.8)',
+              ease: 'power2.out',
               scrollTrigger: {
                 trigger: nextDrawer,
-                start: 'top 70%',
-                end: 'top 10%',
-                scrub: true,
+                start: 'top 65%',
+                end: 'top 25%',
+                scrub: 0.1,
                 invalidateOnRefresh: true,
               }
             });
