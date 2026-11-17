@@ -56,14 +56,14 @@
         .reel-hero-section {
             min-height: 100vh;
             display: flex; align-items: center;
-            padding: 120px 60px 80px;
+            padding: 120px 48px 80px;
             position: relative; z-index: 1;
             overflow: hidden;
         }
         .reel-hero-inner {
-            max-width: 1280px; margin: 0 auto; width: 100%;
-            display: grid; grid-template-columns: 1.1fr 0.9fr;
-            gap: 80px; align-items: center;
+            max-width: 1360px; margin: 0 auto; width: 100%;
+            display: grid; grid-template-columns: 1.25fr 0.85fr;
+            gap: 40px; align-items: center;
             position: relative; z-index: 2;
         }
 
@@ -87,16 +87,27 @@
         @keyframes reelPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.75)} }
 
         .reel-hero-name {
-            font-family: 'Inter', sans-serif;
-            font-size: clamp(3.5rem, 7.5vw, 7rem);
-            font-weight: 900; line-height: 0.9;
-            letter-spacing: -0.04em; margin-bottom: 24px;
+            font-family: 'Syne', sans-serif !important;
+            font-size: clamp(2.4rem, 4.6vw, 5.2rem) !important;
+            font-weight: 800 !important; line-height: 0.95 !important;
+            letter-spacing: -0.035em !important; margin-bottom: 24px !important;
+            max-width: 100% !important;
+            word-break: keep-all !important;
+            overflow-wrap: normal !important;
+            white-space: normal !important;
         }
-        .reel-hero-name .n1 { display: block; color: #f1f5f9; }
+        .reel-hero-name .n1 {
+            display: block !important;
+            white-space: nowrap !important;
+            color: #f1f5f9 !important;
+        }
         .reel-hero-name .n2 {
-            display: block;
-            background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            display: block !important;
+            white-space: nowrap !important;
+            background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
         }
 
         .reel-hero-role {
@@ -139,7 +150,12 @@
         }
         @keyframes reelSlideRight { from{opacity:0;transform:translateX(60px)} to{opacity:1;transform:translateX(0)} }
 
-        .reel-photo-wrap { position: relative; width: 400px; height: 490px; }
+        .reel-photo-wrap {
+            position: relative;
+            width: 380px;
+            height: 465px;
+            max-width: 100%;
+        }
 
         .reel-photo-ring {
             position: absolute; inset: -4px;
@@ -176,10 +192,10 @@
             display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0;
         }
         .reel-chip-sub { font-size: 0.68rem; color: #94a3b8; display: block; margin-top: 1px; }
-        .reel-chip-tl { top: 20px; left: -130px; animation: chipA 4s ease-in-out infinite; }
-        .reel-chip-tr { top: 55px; right: -140px; animation: chipB 5s ease-in-out infinite; }
-        .reel-chip-bl { bottom: 70px; left: -120px; animation: chipC 4.5s ease-in-out infinite; }
-        .reel-chip-br { bottom: 30px; right: -130px; animation: chipD 3.8s ease-in-out infinite; }
+        .reel-chip-tl { top: 25px; left: -85px; animation: chipA 4s ease-in-out infinite; }
+        .reel-chip-tr { top: 55px; right: -90px; animation: chipB 5s ease-in-out infinite; }
+        .reel-chip-bl { bottom: 75px; left: -80px; animation: chipC 4.5s ease-in-out infinite; }
+        .reel-chip-br { bottom: 35px; right: -85px; animation: chipD 3.8s ease-in-out infinite; }
         @keyframes chipA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
         @keyframes chipB { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
         @keyframes chipC { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
@@ -265,125 +281,213 @@
         }
 
         /* ============================================================
-           RESPONSIVE HERO & PHONE SCREEN PERFECTION (320px - 768px)
+           RESPONSIVE HERO & SCREEN PERFECTION (All Devices: 320px - 1440px+)
         ============================================================ */
-        @media (max-width: 1100px) {
+        @media (min-width: 1101px) and (max-width: 1320px) {
             .reel-hero-inner {
-                grid-template-columns: 1fr;
-                gap: 40px;
-                text-align: center;
+                grid-template-columns: 1.2fr 0.8fr;
+                gap: 28px;
             }
-            .reel-hero-right {
-                order: -1;
-                margin: 0 auto;
+            .reel-hero-name {
+                font-size: clamp(2.3rem, 4.2vw, 4.4rem) !important;
             }
             .reel-photo-wrap {
-                width: 280px;
-                height: 350px;
-                margin: 0 auto;
+                width: 320px;
+                height: 395px;
             }
-            .reel-chip { display: none; }
+            .reel-chip-tl { left: -50px; }
+            .reel-chip-tr { right: -55px; }
+            .reel-chip-bl { left: -45px; }
+            .reel-chip-br { right: -50px; }
+        }
+
+        @media (max-width: 1100px) {
+            .reel-hero-inner {
+                grid-template-columns: 1fr !important;
+                gap: 28px !important;
+                text-align: center !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            .reel-hero-right {
+                order: -1 !important;
+                margin: 0 auto !important;
+                width: 100% !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+            }
+            .reel-photo-wrap {
+                width: 260px !important;
+                height: 325px !important;
+                margin: 0 auto !important;
+            }
+            .reel-chip { display: none !important; }
             .reel-hero-section {
-                padding: 105px 24px 50px;
-                min-height: auto;
+                padding: 100px 24px 45px !important;
+                min-height: auto !important;
             }
             .reel-hero-left {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+            }
+            .reel-hero-name {
+                font-size: clamp(2.2rem, 5.5vw, 3.6rem) !important;
+                text-align: center !important;
+                margin-bottom: 18px !important;
+                word-break: keep-all !important;
+                overflow-wrap: normal !important;
+            }
+            .reel-hero-name .n1,
+            .reel-hero-name .n2 {
+                display: block !important;
+                white-space: nowrap !important;
+                text-align: center !important;
+                width: 100% !important;
             }
             .reel-hero-role {
-                margin-left: auto;
-                margin-right: auto;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                text-align: center !important;
             }
             .reel-hero-btns {
-                justify-content: center;
+                justify-content: center !important;
             }
             .reel-hero-stats {
-                justify-content: center;
+                justify-content: center !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .reel-hero-left,
+            .reel-hero-right {
+                animation: none !important;
+                transform: none !important;
+                opacity: 1 !important;
+            }
+            .reel-hero-name {
+                font-size: clamp(2rem, 6.8vw, 2.8rem) !important;
             }
         }
 
         @media (max-width: 600px) {
             .reel-hero-section {
-                padding: 95px 16px 40px;
+                padding: 80px 16px 30px !important;
+                width: 100% !important;
+                max-width: 100vw !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
             }
-            .reel-hero-badge {
-                font-size: 0.72rem;
-                padding: 6px 14px;
-                margin-bottom: 18px;
+            .reel-hero-inner {
+                width: 100% !important;
+                max-width: 100% !important;
+                gap: 16px !important;
+                padding: 0 !important;
+                margin: 0 auto !important;
             }
-            .reel-hero-name {
-                font-size: clamp(2.3rem, 10.5vw, 3.2rem) !important;
-                letter-spacing: -0.04em !important;
-                line-height: 0.95 !important;
-                margin-bottom: 16px;
-            }
-            .reel-hero-role {
-                font-size: 0.92rem;
-                line-height: 1.6;
-                margin-bottom: 24px;
-                max-width: 100%;
+            .reel-hero-right {
+                order: -1 !important;
+                width: 100% !important;
+                margin: 0 auto !important;
             }
             .reel-photo-wrap {
-                width: 220px;
-                height: 275px;
+                width: 190px !important;
+                height: 240px !important;
+                max-width: 65vw !important;
+                margin: 0 auto !important;
+            }
+            .reel-hero-badge {
+                font-size: 0.68rem !important;
+                padding: 5px 12px !important;
+                margin-bottom: 12px !important;
+            }
+            .reel-hero-name {
+                font-size: clamp(1.75rem, 7.5vw, 2.25rem) !important;
+                letter-spacing: -0.025em !important;
+                line-height: 1 !important;
+                margin-bottom: 12px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                text-align: center !important;
+                word-break: keep-all !important;
+                overflow-wrap: normal !important;
+            }
+            .reel-hero-name .n1,
+            .reel-hero-name .n2 {
+                display: block !important;
+                white-space: nowrap !important;
+                width: 100% !important;
+                text-align: center !important;
+            }
+            .reel-hero-role {
+                font-size: 0.85rem !important;
+                line-height: 1.5 !important;
+                margin-bottom: 18px !important;
+                max-width: 95% !important;
+                text-align: center !important;
             }
             .reel-hero-btns {
-                flex-direction: column;
-                width: 100%;
-                max-width: 320px;
-                gap: 10px;
-                margin-bottom: 32px;
+                flex-direction: column !important;
+                width: 100% !important;
+                max-width: 280px !important;
+                gap: 8px !important;
+                margin: 0 auto 22px auto !important;
             }
             .reel-hero-btns a {
-                width: 100%;
-                justify-content: center;
-                padding: 12px 20px;
-                font-size: 0.88rem;
-                box-sizing: border-box;
+                width: 100% !important;
+                justify-content: center !important;
+                padding: 11px 18px !important;
+                font-size: 0.85rem !important;
+                box-sizing: border-box !important;
             }
             .reel-hero-stats {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px 14px;
-                width: 100%;
-                max-width: 300px;
-                margin: 0 auto;
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 8px !important;
+                width: 100% !important;
+                max-width: 320px !important;
+                margin: 0 auto !important;
+                justify-content: center !important;
+                text-align: center !important;
             }
             .reel-stat-num {
-                font-size: 1.65rem !important;
+                font-size: 1.35rem !important;
             }
             .reel-stat-lbl {
-                font-size: 0.65rem !important;
+                font-size: 0.62rem !important;
+                letter-spacing: 0.04em !important;
             }
 
             /* Marquee Ticker Card on Phone */
             .reel-ticker-wrapper {
                 padding: 0 10px !important;
-                margin-bottom: 2rem !important;
+                margin-bottom: 1.75rem !important;
             }
             .reel-ticker {
-                padding: 12px 0 !important;
-                border-radius: 14px !important;
+                padding: 11px 0 !important;
+                border-radius: 12px !important;
             }
             .reel-ticker-item {
-                font-size: 0.92rem !important;
-                padding: 0 18px !important;
-                gap: 10px !important;
+                font-size: 0.88rem !important;
+                padding: 0 14px !important;
+                gap: 8px !important;
             }
 
             /* 3D Car sprite on phone */
             .hero-car-bg {
-                width: 180px !important;
-                height: 90px !important;
+                width: 150px !important;
+                height: 75px !important;
                 bottom: -5px !important;
             }
 
             /* Scroll hint */
             .reel-scroll-hint {
-                display: none;
+                display: none !important;
             }
 
             /* Header on phone */
@@ -396,6 +500,25 @@
             }
             .nav-logo {
                 font-size: 1.45rem !important;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .reel-hero-name {
+                font-size: 1.65rem !important;
+            }
+            .reel-photo-wrap {
+                width: 170px !important;
+                height: 215px !important;
+            }
+            .reel-hero-stats {
+                gap: 4px !important;
+            }
+            .reel-stat-num {
+                font-size: 1.2rem !important;
+            }
+            .reel-stat-lbl {
+                font-size: 0.58rem !important;
             }
         }
 
@@ -489,12 +612,7 @@
             letter-spacing: -0.03em !important;
         }
 
-        .reel-hero-name {
-            font-family: 'Syne', sans-serif !important;
-            font-size: clamp(3.5rem, 7.5vw, 7rem) !important;
-            font-weight: 800 !important;
-            letter-spacing: -0.04em !important;
-        }
+
 
         .section-title {
             font-family: 'Syne', sans-serif !important;
@@ -522,8 +640,7 @@
         .gradient-text,
         .section-title .accent,
         .section-title span.accent,
-        .hero-title .accent,
-        .reel-hero-name .n2 {
+        .hero-title .accent {
             background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%) !important;
             -webkit-background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
