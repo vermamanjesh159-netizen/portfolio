@@ -57,13 +57,15 @@
   particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   particleGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
+  const isDarkInitial = document.documentElement.getAttribute('data-theme') === 'dark';
+
   const particleMat = new THREE.PointsMaterial({
     size: 0.6, // Smaller and elegant
     map: createCircleTexture(),
     vertexColors: true,
     transparent: true,
-    opacity: 0.4, // subtle backdrop opacity
-    blending: THREE.AdditiveBlending,
+    opacity: isDarkInitial ? 0.4 : 0.35,
+    blending: isDarkInitial ? THREE.AdditiveBlending : THREE.NormalBlending,
     sizeAttenuation: true,
     depthWrite: false, // Prevents dark bounding boxes
   });
@@ -77,10 +79,10 @@
   const linePositions = new Float32Array(maxLines * 6);
   lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
   const lineMat = new THREE.LineBasicMaterial({
-    color: 0x818cf8,
+    color: isDarkInitial ? 0x818cf8 : 0x4f46e5,
     transparent: true,
-    opacity: 0.05,
-    blending: THREE.AdditiveBlending,
+    opacity: isDarkInitial ? 0.05 : 0.12,
+    blending: isDarkInitial ? THREE.AdditiveBlending : THREE.NormalBlending,
   });
   const lines = new THREE.LineSegments(lineGeo, lineMat);
   scene.add(lines);
@@ -93,10 +95,29 @@
     new THREE.TetrahedronGeometry(0.5, 0),
   ];
   const shapeMat = new THREE.MeshBasicMaterial({
-    color: 0x818cf8,
+    color: isDarkInitial ? 0x818cf8 : 0x4f46e5,
     wireframe: true,
     transparent: true,
-    opacity: 0.08, // Very subtle wireframes
+    opacity: isDarkInitial ? 0.08 : 0.14,
+  });
+
+  // Dynamic theme switching for Three.js backdrop
+  window.addEventListener('themechange', (e) => {
+    const isDark = e.detail && e.detail.theme === 'dark';
+    particleMat.blending = isDark ? THREE.AdditiveBlending : THREE.NormalBlending;
+    particleMat.opacity = isDark ? 0.4 : 0.35;
+    particleMat.needsUpdate = true;
+
+    lineMat.blending = isDark ? THREE.AdditiveBlending : THREE.NormalBlending;
+    lineMat.color.setHex(isDark ? 0x818cf8 : 0x4f46e5);
+    lineMat.opacity = isDark ? 0.05 : 0.12;
+    lineMat.needsUpdate = true;
+
+    shapes.forEach(mesh => {
+      mesh.material.color.setHex(isDark ? 0x818cf8 : 0x4f46e5);
+      mesh.material.opacity = isDark ? 0.08 : 0.14;
+      mesh.material.needsUpdate = true;
+    });
   });
 
   for (let i = 0; i < 6; i++) {
@@ -380,18 +401,23 @@ window.addEventListener('scroll', updateScrollProgress);
 })();
 
 
-// ===== HEADER SHRINK ON SCROLL =====
+// ===== HEADER SHRINK ON SCROLL & THEME ADAPTATION =====
 (function initHeader() {
   const header = document.getElementById('main-header');
   if (!header) return;
 
-  window.addEventListener('scroll', () => {
+  const updateHeaderBg = () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     if (window.scrollY > 50) {
-      header.style.background = 'rgba(10,10,15,0.95)';
+      header.style.background = isDark ? 'rgba(10,10,15,0.95)' : 'rgba(255,255,255,0.96)';
     } else {
-      header.style.background = 'rgba(10,10,15,0.8)';
+      header.style.background = isDark ? 'rgba(10,10,15,0.8)' : 'rgba(255,255,255,0.85)';
     }
-  });
+  };
+
+  window.addEventListener('scroll', updateHeaderBg, { passive: true });
+  window.addEventListener('themechange', updateHeaderBg);
+  updateHeaderBg();
 })();
 
 // ===== COPY TO CLIPBOARD =====
@@ -493,9 +519,8 @@ window.addEventListener('scroll', updateScrollProgress);
             const inner = drawer.querySelector('.drawer-inner') || drawer;
 
             gsap.to(inner, {
-              scale: 0.97,
-              opacity: 0.55,
-              filter: 'brightness(0.8)',
+              scale: 0.96,
+              transformOrigin: 'center top',
               ease: 'power2.out',
               scrollTrigger: {
                 trigger: nextDrawer,
@@ -1651,622 +1676,6 @@ window.addEventListener('scroll', updateScrollProgress);
     animate();
   })();
 
-  // ===== 3D FLOATING MOVABLE RESUME ROBOT (PAGE-BOT) =====
-  (function initResumeBot() {
-    const widget = document.getElementById('floatingResumeBot');
-    const canvas = document.getElementById('resumeBotCanvas');
-    const container = document.getElementById('resumeBotContainer');
-    const downloadBtn = document.getElementById('resumeBotDownload');
-    const tooltip = document.getElementById('resumeBotTooltip');
-
-    if (!widget || !canvas || typeof THREE === 'undefined') return;
-
-    // --- Three.js Mini Scene Setup ---
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(38, canvas.width / canvas.height, 0.1, 50);
-    camera.position.set(0, 0.15, 3.8);
-
-    const renderer = new THREE.WebGLRenderer({
-      canvas: canvas,
-      alpha: true,
-      antialias: true,
-      powerPreference: 'low-power'
-    });
-    renderer.setSize(canvas.width, canvas.height, false);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
-    scene.add(ambientLight);
-
-    const dirLight1 = new THREE.DirectionalLight(0x818cf8, 1.8);
-    dirLight1.position.set(3, 4, 3);
-    scene.add(dirLight1);
-
-    const dirLight2 = new THREE.DirectionalLight(0x22d3ee, 1.5);
-    dirLight2.position.set(-3, -2, 2);
-    scene.add(dirLight2);
-
-    const rimLight = new THREE.DirectionalLight(0xc084fc, 1.2);
-    rimLight.position.set(0, 3, -3);
-    scene.add(rimLight);
-
-    // Root Group
-    const botRoot = new THREE.Group();
-    scene.add(botRoot);
-
-    // Materials
-    const armorMat = new THREE.MeshStandardMaterial({
-      color: 0xf8fafc,
-      metalness: 0.85,
-      roughness: 0.18
-    });
-
-    const darkMat = new THREE.MeshStandardMaterial({
-      color: 0x0f172a,
-      metalness: 0.9,
-      roughness: 0.25
-    });
-
-    const cyanMat = new THREE.MeshStandardMaterial({
-      color: 0x22d3ee,
-      emissive: 0x22d3ee,
-      emissiveIntensity: 0.85,
-      roughness: 0.2
-    });
-
-    const purpleMat = new THREE.MeshStandardMaterial({
-      color: 0xc084fc,
-      emissive: 0xc084fc,
-      emissiveIntensity: 0.75,
-      roughness: 0.2
-    });
-
-    // --- Dynamic LED Visor Canvas for Resume Bot Eyes ---
-    const eyeCanvas = document.createElement('canvas');
-    eyeCanvas.width = 128;
-    eyeCanvas.height = 64;
-    const eyeCtx = eyeCanvas.getContext('2d');
-    const eyeTexture = new THREE.CanvasTexture(eyeCanvas);
-
-    function drawResumeEyes(mood) {
-      eyeCtx.fillStyle = '#060913';
-      eyeCtx.fillRect(0, 0, 128, 64);
-
-      eyeCtx.lineWidth = 6;
-      eyeCtx.lineCap = 'round';
-      eyeCtx.strokeStyle = '#22d3ee';
-      eyeCtx.shadowColor = '#22d3ee';
-      eyeCtx.shadowBlur = 10;
-
-      if (mood === 'happy') {
-        // Cheerful curved smiling eyes: ^  ^
-        eyeCtx.beginPath();
-        eyeCtx.arc(38, 38, 14, Math.PI * 1.15, Math.PI * 1.85, false);
-        eyeCtx.stroke();
-
-        eyeCtx.beginPath();
-        eyeCtx.arc(90, 38, 14, Math.PI * 1.15, Math.PI * 1.85, false);
-        eyeCtx.stroke();
-      } else if (mood === 'blink') {
-        eyeCtx.lineWidth = 5;
-        eyeCtx.beginPath();
-        eyeCtx.moveTo(26, 32);
-        eyeCtx.lineTo(50, 32);
-        eyeCtx.stroke();
-
-        eyeCtx.beginPath();
-        eyeCtx.moveTo(78, 32);
-        eyeCtx.lineTo(102, 32);
-        eyeCtx.stroke();
-      } else if (mood === 'excited') {
-        eyeCtx.fillStyle = '#22d3ee';
-        eyeCtx.shadowBlur = 12;
-
-        eyeCtx.beginPath();
-        eyeCtx.arc(38, 32, 12, 0, Math.PI * 2);
-        eyeCtx.fill();
-
-        eyeCtx.beginPath();
-        eyeCtx.arc(90, 32, 12, 0, Math.PI * 2);
-        eyeCtx.fill();
-
-        eyeCtx.fillStyle = '#ffffff';
-        eyeCtx.shadowBlur = 0;
-        eyeCtx.beginPath();
-        eyeCtx.arc(42, 28, 4, 0, Math.PI * 2);
-        eyeCtx.fill();
-
-        eyeCtx.beginPath();
-        eyeCtx.arc(94, 28, 4, 0, Math.PI * 2);
-        eyeCtx.fill();
-      }
-      eyeTexture.needsUpdate = true;
-    }
-    drawResumeEyes('happy');
-
-    // Blinking cycle
-    setInterval(() => {
-      if (!isHovered && !isSpinning) {
-        drawResumeEyes('blink');
-        setTimeout(() => {
-          if (!isHovered && !isSpinning) drawResumeEyes('happy');
-        }, 160);
-      }
-    }, 4000);
-
-    // --- Build Robot Parts ---
-    // 1. Head
-    const headGroup = new THREE.Group();
-    headGroup.position.set(0, 0.42, 0);
-    botRoot.add(headGroup);
-
-    const headGeo = new THREE.SphereGeometry(0.5, 32, 24);
-    const headMesh = new THREE.Mesh(headGeo, armorMat);
-    headGroup.add(headMesh);
-
-    // Curved Visor Patch fitting snugly on head front
-    const visorGeo = new THREE.SphereGeometry(0.506, 28, 16, Math.PI * 0.22, Math.PI * 0.56, Math.PI * 0.28, Math.PI * 0.44);
-    const visorMat = new THREE.MeshBasicMaterial({
-      map: eyeTexture,
-      transparent: true,
-      side: THREE.DoubleSide
-    });
-    const visorMesh = new THREE.Mesh(visorGeo, visorMat);
-    visorMesh.rotation.y = -Math.PI / 2;
-    headGroup.add(visorMesh);
-
-    // Cute Antenna
-    const antStalkGeo = new THREE.CylinderGeometry(0.02, 0.02, 0.22, 12);
-    const antStalk = new THREE.Mesh(antStalkGeo, darkMat);
-    antStalk.position.set(0, 0.55, 0);
-    headGroup.add(antStalk);
-
-    const antOrbGeo = new THREE.SphereGeometry(0.07, 16, 16);
-    const antOrb = new THREE.Mesh(antOrbGeo, cyanMat);
-    antOrb.position.set(0, 0.68, 0);
-    headGroup.add(antOrb);
-
-    // Ear Pods
-    const earGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.08, 16);
-    earGeo.rotateZ(Math.PI / 2);
-    const earLeft = new THREE.Mesh(earGeo, darkMat);
-    earLeft.position.set(-0.48, 0.02, 0);
-    headGroup.add(earLeft);
-
-    const earRight = new THREE.Mesh(earGeo, darkMat);
-    earRight.position.set(0.48, 0.02, 0);
-    headGroup.add(earRight);
-
-    // 2. Torso
-    const torsoGroup = new THREE.Group();
-    torsoGroup.position.set(0, -0.15, 0);
-    botRoot.add(torsoGroup);
-
-    const bodyGeo = new THREE.CylinderGeometry(0.32, 0.38, 0.52, 24);
-    const bodyMesh = new THREE.Mesh(bodyGeo, armorMat);
-    torsoGroup.add(bodyMesh);
-
-    const beltGeo = new THREE.CylinderGeometry(0.385, 0.385, 0.09, 24);
-    const beltMesh = new THREE.Mesh(beltGeo, darkMat);
-    beltMesh.position.set(0, -0.16, 0);
-    torsoGroup.add(beltMesh);
-
-    // Torso Chest Core
-    const coreGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.04, 20);
-    coreGeo.rotateX(Math.PI / 2);
-    const coreMesh = new THREE.Mesh(coreGeo, cyanMat);
-    coreMesh.position.set(0, 0.06, 0.32);
-    torsoGroup.add(coreMesh);
-
-    // Floating Propulsion Ring at base
-    const ringGeo = new THREE.TorusGeometry(0.36, 0.035, 16, 32);
-    ringGeo.rotateX(Math.PI / 2);
-    const ringMesh = new THREE.Mesh(ringGeo, purpleMat);
-    ringMesh.position.set(0, -0.42, 0);
-    torsoGroup.add(ringMesh);
-
-    // Bottom thruster dome
-    const domeGeo = new THREE.SphereGeometry(0.24, 16, 12, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2);
-    const domeMesh = new THREE.Mesh(domeGeo, darkMat);
-    domeMesh.position.set(0, -0.28, 0);
-    torsoGroup.add(domeMesh);
-
-    // 3. Holographic 3D Resume Tablet Document
-    const docGroup = new THREE.Group();
-    docGroup.position.set(0.26, 0.02, 0.38);
-    docGroup.rotation.set(-0.18, -0.32, 0.1);
-    botRoot.add(docGroup);
-
-    // 2D Canvas for Resume Hologram Texture
-    const docCanvas = document.createElement('canvas');
-    docCanvas.width = 256;
-    docCanvas.height = 340;
-    const docCtx = docCanvas.getContext('2d');
-
-    function drawDocTexture() {
-      // Dark translucent sci-fi glass card
-      docCtx.fillStyle = '#0a0e1c';
-      docCtx.fillRect(0, 0, 256, 340);
-
-      // Glowing border
-      docCtx.lineWidth = 6;
-      docCtx.strokeStyle = '#22d3ee';
-      docCtx.strokeRect(4, 4, 248, 332);
-
-      // Accent top corner tab
-      docCtx.fillStyle = '#818cf8';
-      docCtx.fillRect(16, 16, 36, 6);
-
-      // Header: [RESUME]
-      docCtx.font = 'bold 22px monospace';
-      docCtx.fillStyle = '#ffffff';
-      docCtx.shadowColor = '#22d3ee';
-      docCtx.shadowBlur = 10;
-      docCtx.fillText('RESUME', 64, 44);
-
-      // PDF Badge
-      docCtx.fillStyle = '#22d3ee';
-      docCtx.beginPath();
-      docCtx.roundRect(178, 24, 60, 24, 6);
-      docCtx.fill();
-      docCtx.font = 'bold 12px sans-serif';
-      docCtx.fillStyle = '#060913';
-      docCtx.shadowBlur = 0;
-      docCtx.fillText('PDF 📄', 188, 41);
-
-      // Divider line
-      docCtx.strokeStyle = 'rgba(129, 140, 248, 0.5)';
-      docCtx.lineWidth = 2;
-      docCtx.beginPath();
-      docCtx.moveTo(18, 62);
-      docCtx.lineTo(238, 62);
-      docCtx.stroke();
-
-      // Simulated code/experience lines
-      const lineY = [86, 114, 142, 170, 198, 226, 254];
-      const widths = [180, 210, 150, 195, 170, 200, 140];
-      const colors = ['#818cf8', '#22d3ee', '#c084fc', '#818cf8', '#22d3ee', '#c084fc', '#818cf8'];
-
-      lineY.forEach((y, i) => {
-        docCtx.fillStyle = colors[i];
-        docCtx.shadowColor = colors[i];
-        docCtx.shadowBlur = 6;
-        docCtx.beginPath();
-        docCtx.roundRect(20, y, widths[i], 10, 5);
-        docCtx.fill();
-      });
-
-      // Bottom interactive prompt
-      docCtx.fillStyle = 'rgba(34, 211, 238, 0.2)';
-      docCtx.strokeStyle = '#22d3ee';
-      docCtx.lineWidth = 2;
-      docCtx.beginPath();
-      docCtx.roundRect(24, 288, 208, 34, 8);
-      docCtx.fill();
-      docCtx.stroke();
-
-      docCtx.font = 'bold 13px sans-serif';
-      docCtx.fillStyle = '#ffffff';
-      docCtx.shadowBlur = 8;
-      docCtx.shadowColor = '#22d3ee';
-      docCtx.fillText('⚡ CLICK TO VIEW', 56, 310);
-    }
-    drawDocTexture();
-
-    const docTexture = new THREE.CanvasTexture(docCanvas);
-    const docGeo = new THREE.BoxGeometry(0.58, 0.78, 0.035);
-    const docMat = new THREE.MeshStandardMaterial({
-      map: docTexture,
-      emissive: 0x818cf8,
-      emissiveIntensity: 0.35,
-      metalness: 0.2,
-      roughness: 0.3,
-      transparent: true,
-      opacity: 0.95
-    });
-    const docMesh = new THREE.Mesh(docGeo, docMat);
-    docGroup.add(docMesh);
-
-    // 4. Arms
-    // Left Arm (cheerfully waving)
-    const armLeftGroup = new THREE.Group();
-    armLeftGroup.position.set(-0.42, 0.04, 0);
-    botRoot.add(armLeftGroup);
-
-    const shoulderGeo = new THREE.SphereGeometry(0.09, 14, 14);
-    const shoulderLeft = new THREE.Mesh(shoulderGeo, darkMat);
-    armLeftGroup.add(shoulderLeft);
-
-    const bicepGeo = new THREE.CylinderGeometry(0.06, 0.055, 0.28, 14);
-    const bicepLeft = new THREE.Mesh(bicepGeo, armorMat);
-    bicepLeft.position.set(-0.12, 0.1, 0);
-    bicepLeft.rotation.z = -0.65;
-    armLeftGroup.add(bicepLeft);
-
-    const handGeo = new THREE.SphereGeometry(0.075, 14, 14);
-    const handLeft = new THREE.Mesh(handGeo, cyanMat);
-    handLeft.position.set(-0.24, 0.24, 0);
-    armLeftGroup.add(handLeft);
-
-    // Right Arm (holding the holographic tablet)
-    const armRightGroup = new THREE.Group();
-    armRightGroup.position.set(0.38, 0.04, 0);
-    botRoot.add(armRightGroup);
-
-    const shoulderRight = new THREE.Mesh(shoulderGeo, darkMat);
-    armRightGroup.add(shoulderRight);
-
-    const forearmRightGeo = new THREE.CylinderGeometry(0.06, 0.055, 0.34, 14);
-    const forearmRight = new THREE.Mesh(forearmRightGeo, armorMat);
-    forearmRight.position.set(0.08, -0.06, 0.2);
-    forearmRight.rotation.set(0.65, -0.3, -0.2);
-    armRightGroup.add(forearmRight);
-
-    const handRight = new THREE.Mesh(handGeo, cyanMat);
-    handRight.position.set(0.12, -0.12, 0.36);
-    armRightGroup.add(handRight);
-
-    // Audio chime generator via Web Audio API
-    function playResumeRobotChime() {
-      try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (!AudioCtx) return;
-        const ctx = new AudioCtx();
-        const start = ctx.currentTime;
-        const freqs = [659.25, 880.00, 1174.66]; // E5, A5, D6
-        freqs.forEach((freq, idx) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, start + idx * 0.08);
-          gain.gain.setValueAtTime(0, start + idx * 0.08);
-          gain.gain.linearRampToValueAtTime(0.12, start + idx * 0.08 + 0.02);
-          gain.gain.exponentialRampToValueAtTime(0.0001, start + idx * 0.08 + 0.28);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(start + idx * 0.08);
-          osc.stop(start + idx * 0.08 + 0.3);
-        });
-      } catch (_) {}
-    }
-
-    // State Variables
-    let isPointerDown = false;
-    let hasMoved = false;
-    let justDragged = false;
-    let isHovered = false;
-    let isSpinning = false;
-    let startX = 0;
-    let startY = 0;
-    let widgetStartX = 0;
-    let widgetStartY = 0;
-    const DRAG_THRESHOLD = 6;
-
-    // Viewport clamping function
-    function clampPosition(x, y) {
-      const w = widget.offsetWidth || 130;
-      const h = widget.offsetHeight || 140;
-      const margin = 12;
-      const topMargin = 75; // Stay below the fixed navbar
-      const minX = margin;
-      const maxX = Math.max(margin, window.innerWidth - w - margin);
-      const minY = topMargin;
-      const maxY = Math.max(minY, window.innerHeight - h - margin);
-
-      return {
-        x: Math.min(Math.max(x, minX), maxX),
-        y: Math.min(Math.max(y, minY), maxY)
-      };
-    }
-
-    function updateTooltipPosition(top) {
-      if (top < 130) {
-        widget.classList.add('tooltip-bottom');
-      } else {
-        widget.classList.remove('tooltip-bottom');
-      }
-    }
-
-    // Restore saved position if available
-    try {
-      const saved = localStorage.getItem('portfolio_resume_bot_pos') || localStorage.getItem('portfolio_resume_pos');
-      if (saved) {
-        const pos = JSON.parse(saved);
-        if (typeof pos.x === 'number' && typeof pos.y === 'number') {
-          const clamped = clampPosition(pos.x, pos.y);
-          widget.style.left = clamped.x + 'px';
-          widget.style.top = clamped.y + 'px';
-          widget.style.right = 'auto';
-          widget.style.bottom = 'auto';
-          updateTooltipPosition(clamped.y);
-        }
-      }
-    } catch (_) {}
-
-    // Pointer Drag Listeners
-    function onPointerDown(e) {
-      if (e.button !== undefined && e.button !== 0) return;
-      if (e.target.closest('#resumeBotDownload')) return; // let download link work natively
-
-      isPointerDown = true;
-      hasMoved = false;
-      startX = e.clientX;
-      startY = e.clientY;
-
-      const rect = widget.getBoundingClientRect();
-      widgetStartX = rect.left;
-      widgetStartY = rect.top;
-
-      try {
-        if (widget.setPointerCapture) widget.setPointerCapture(e.pointerId);
-      } catch (_) {}
-
-      window.addEventListener('pointermove', onPointerMove, { passive: false });
-      window.addEventListener('pointerup', onPointerUp);
-      window.addEventListener('pointercancel', onPointerUp);
-    }
-
-    function onPointerMove(e) {
-      if (!isPointerDown) return;
-
-      const dx = e.clientX - startX;
-      const dy = e.clientY - startY;
-
-      if (!hasMoved && Math.hypot(dx, dy) > DRAG_THRESHOLD) {
-        hasMoved = true;
-        widget.classList.add('is-dragging');
-      }
-
-      if (hasMoved) {
-        e.preventDefault();
-        const targetX = widgetStartX + dx;
-        const targetY = widgetStartY + dy;
-        const clamped = clampPosition(targetX, targetY);
-
-        widget.style.left = clamped.x + 'px';
-        widget.style.top = clamped.y + 'px';
-        widget.style.right = 'auto';
-        widget.style.bottom = 'auto';
-        updateTooltipPosition(clamped.y);
-      }
-    }
-
-    function onPointerUp(e) {
-      if (!isPointerDown) return;
-      isPointerDown = false;
-
-      window.removeEventListener('pointermove', onPointerMove);
-      window.removeEventListener('pointerup', onPointerUp);
-      window.removeEventListener('pointercancel', onPointerUp);
-
-      try {
-        if (widget.hasPointerCapture && widget.hasPointerCapture(e.pointerId)) {
-          widget.releasePointerCapture(e.pointerId);
-        }
-      } catch (_) {}
-
-      if (hasMoved) {
-        widget.classList.remove('is-dragging');
-        justDragged = true;
-        setTimeout(() => { justDragged = false; }, 140);
-
-        const rect = widget.getBoundingClientRect();
-        try {
-          localStorage.setItem('portfolio_resume_bot_pos', JSON.stringify({ x: rect.left, y: rect.top }));
-        } catch (_) {}
-      }
-    }
-
-    widget.addEventListener('pointerdown', onPointerDown);
-
-    // Hover detection on widget
-    widget.addEventListener('pointerenter', () => {
-      isHovered = true;
-      if (!isSpinning) {
-        drawResumeEyes('excited');
-        docMat.emissiveIntensity = 0.6;
-      }
-    });
-
-    widget.addEventListener('pointerleave', () => {
-      isHovered = false;
-      if (!isSpinning) {
-        drawResumeEyes('happy');
-        docMat.emissiveIntensity = 0.35;
-      }
-    });
-
-    // Handle Click (when not dragged and not download button)
-    widget.addEventListener('click', (e) => {
-      if (justDragged || hasMoved) {
-        e.preventDefault();
-        e.stopPropagation();
-        return;
-      }
-
-      if (e.target.closest('#resumeBotDownload')) {
-        // Handled natively by <a> tag download
-        return;
-      }
-
-      // Trigger 360-degree celebration flip & open Resume PDF
-      isSpinning = true;
-      playResumeRobotChime();
-      drawResumeEyes('excited');
-
-      if (typeof gsap !== 'undefined') {
-        gsap.to(botRoot.rotation, {
-          y: '+=6.28318',
-          duration: 0.62,
-          ease: 'power2.out',
-          onComplete: () => {
-            isSpinning = false;
-            if (!isHovered) drawResumeEyes('happy');
-          }
-        });
-        gsap.to(botRoot.position, {
-          y: '+=0.2',
-          duration: 0.18,
-          yoyo: true,
-          repeat: 1,
-          ease: 'sine.out'
-        });
-      } else {
-        setTimeout(() => {
-          isSpinning = false;
-          if (!isHovered) drawResumeEyes('happy');
-        }, 500);
-      }
-
-      // Open Resume PDF in a new tab
-      setTimeout(() => {
-        window.open('Manjesh_Verma_Resume.pdf', '_blank', 'noopener,noreferrer');
-      }, 200);
-    });
-
-    // Window resize handler to clamp widget safely within bounds
-    window.addEventListener('resize', () => {
-      if (widget.style.left && widget.style.top) {
-        const currentX = parseFloat(widget.style.left);
-        const currentY = parseFloat(widget.style.top);
-        const clamped = clampPosition(currentX, currentY);
-        widget.style.left = clamped.x + 'px';
-        widget.style.top = clamped.y + 'px';
-        updateTooltipPosition(clamped.y);
-      }
-    });
-
-    // Render Animation Loop
-    let clock = new THREE.Clock();
-
-    function animate() {
-      requestAnimationFrame(animate);
-
-      const time = clock.getElapsedTime();
-
-      // Levitation floating idle
-      if (!isSpinning) {
-        botRoot.position.y = Math.sin(time * 3.0) * 0.08;
-        botRoot.rotation.z = Math.sin(time * 1.8) * 0.04;
-        botRoot.rotation.x = Math.sin(time * 2.2) * 0.03;
-
-        // Arm wave
-        armLeftGroup.rotation.z = Math.sin(time * 4.0) * 0.18;
-
-        // Tablet subtle breathing tilt
-        docGroup.rotation.y = -0.32 + Math.sin(time * 2.5) * 0.06;
-
-        // Thruster ring subtle pulse
-        const pulse = 1.0 + Math.sin(time * 6.0) * 0.08;
-        ringMesh.scale.set(pulse, pulse, pulse);
-      }
-
-      renderer.render(scene, camera);
-    }
-
-    animate();
-  })();
 
 
 // ==========================================================================
@@ -2932,4 +2341,68 @@ window.addEventListener('scroll', updateScrollProgress);
   };
 
   initAboutBackgroundVideo();
+})();
+
+
+// ===== THEME TOGGLE (LIGHT / DARK) =====
+(function initThemeToggle() {
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+
+  let savedTheme = null;
+  try {
+    savedTheme = localStorage.getItem('portfolio-theme');
+  } catch (err) {
+    console.warn('localStorage not accessible', err);
+  }
+
+  // Always open in LIGHT mode by default; only use dark if user explicitly chose and saved 'dark'
+  let activeTheme = 'light';
+  if (savedTheme === 'dark') {
+    activeTheme = 'dark';
+  }
+
+  function applyTheme(theme, save = false) {
+    activeTheme = theme;
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      if (themeIcon) {
+        themeIcon.className = 'fas fa-sun';
+      }
+      if (themeToggle) {
+        themeToggle.setAttribute('title', 'Switch to light theme');
+        themeToggle.setAttribute('aria-label', 'Switch to light theme');
+      }
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      if (themeIcon) {
+        themeIcon.className = 'fas fa-moon';
+      }
+      if (themeToggle) {
+        themeToggle.setAttribute('title', 'Switch to dark theme');
+        themeToggle.setAttribute('aria-label', 'Switch to dark theme');
+      }
+    }
+
+    if (save) {
+      try {
+        localStorage.setItem('portfolio-theme', theme);
+      } catch (err) {
+        console.warn('Unable to persist theme to localStorage', err);
+      }
+    }
+
+    window.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
+  }
+
+  // Apply resolved initial theme
+  applyTheme(activeTheme, false);
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      const nextTheme = activeTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme, true);
+    });
+  }
 })();

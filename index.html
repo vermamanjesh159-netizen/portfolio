@@ -18,9 +18,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        (function() {
+            try {
+                var saved = localStorage.getItem('portfolio-theme');
+                if (saved === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                }
+            } catch(e) {}
+        })();
+    </script>
     <style>
         /* ============================================================
-           REEL HERO UPGRADE — Photo + Chips + Mesh Background
+           REEL HERO UPGRADE — Light Theme Default (Modern & Clean)
         ============================================================ */
 
         /* Animated mesh orbs */
@@ -28,13 +40,13 @@
         .reel-mesh-bg::before {
             content: ''; position: absolute;
             width: 70vw; height: 70vw; top: -20%; left: -15%;
-            background: radial-gradient(circle, rgba(124,58,237,0.13) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(79,70,229,0.08) 0%, transparent 70%);
             animation: reelDrift1 18s ease-in-out infinite alternate;
         }
         .reel-mesh-bg::after {
             content: ''; position: absolute;
             width: 60vw; height: 60vw; bottom: -15%; right: -10%;
-            background: radial-gradient(circle, rgba(6,182,212,0.10) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(8,145,178,0.06) 0%, transparent 70%);
             animation: reelDrift2 22s ease-in-out infinite alternate;
         }
         @keyframes reelDrift1 { from{transform:translate(0,0) scale(1)} to{transform:translate(5%,8%) scale(1.15)} }
@@ -44,15 +56,16 @@
         .reel-particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
         .reel-particle {
             position: absolute; border-radius: 50%; opacity: 0;
+            background: var(--accent);
             animation: reelFloatUp linear infinite;
         }
         @keyframes reelFloatUp {
             0%{transform:translateY(100vh) scale(0);opacity:0}
-            10%{opacity:0.8} 90%{opacity:0.3}
+            10%{opacity:0.6} 90%{opacity:0.2}
             100%{transform:translateY(-10vh) scale(1);opacity:0}
         }
 
-        /* NEW hero layout */
+        /* Hero layout */
         .reel-hero-section {
             min-height: 100vh;
             display: flex; align-items: center;
@@ -73,15 +86,15 @@
 
         .reel-hero-badge {
             display: inline-flex; align-items: center; gap: 10px;
-            background: rgba(124,58,237,0.12);
-            border: 1px solid rgba(124,58,237,0.3);
+            background: var(--accent-soft);
+            border: 1px solid rgba(79,70,229,0.2);
             border-radius: 50px; padding: 8px 18px;
-            font-size: 0.78rem; font-weight: 600; color: #a78bfa;
+            font-size: 0.78rem; font-weight: 600; color: var(--accent);
             margin-bottom: 28px; letter-spacing: 0.06em; text-transform: uppercase;
         }
         .reel-badge-dot {
             width: 8px; height: 8px; border-radius: 50%;
-            background: #22c55e; box-shadow: 0 0 8px #22c55e;
+            background: #10b981; box-shadow: 0 0 8px rgba(16,185,129,0.5);
             animation: reelPulse 2s infinite;
         }
         @keyframes reelPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.75)} }
@@ -99,49 +112,72 @@
         .reel-hero-name .n1 {
             display: block !important;
             white-space: nowrap !important;
-            color: #f1f5f9 !important;
+            color: var(--text) !important;
         }
         .reel-hero-name .n2 {
             display: block !important;
             white-space: nowrap !important;
-            background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%) !important;
+            background: linear-gradient(135deg, var(--accent) 0%, #7C3AED 100%) !important;
             -webkit-background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
             background-clip: text !important;
         }
 
         .reel-hero-role {
-            font-size: 1rem; color: #94a3b8; line-height: 1.8;
+            font-size: 1rem; color: var(--text-muted); line-height: 1.8;
             max-width: 480px; margin-bottom: 36px;
         }
-        .reel-hero-role strong { color: #f1f5f9; font-weight: 600; }
+        .reel-hero-role strong { color: var(--text); font-weight: 600; }
 
         .reel-hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 52px; }
         .reel-btn-primary {
             display: inline-flex; align-items: center; gap: 10px;
             padding: 14px 30px; border-radius: 50px;
-            background: #7c3aed; color: #fff; font-size: 0.9rem; font-weight: 700;
+            background: linear-gradient(135deg, var(--accent) 0%, #7C3AED 100%);
+            color: #ffffff !important; font-size: 0.9rem; font-weight: 700;
             text-decoration: none; border: none; cursor: pointer;
-            box-shadow: 0 8px 32px rgba(124,58,237,0.4);
+            box-shadow: var(--shadow-sm);
             transition: all 0.3s ease;
         }
-        .reel-btn-primary:hover { background: #6d28d9; transform: translateY(-2px); box-shadow: 0 14px 40px rgba(124,58,237,0.5); }
+        .reel-btn-primary:hover {
+            background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
         .reel-btn-outline {
             display: inline-flex; align-items: center; gap: 10px;
             padding: 14px 28px; border-radius: 50px;
-            background: transparent; color: #f1f5f9; font-size: 0.9rem; font-weight: 600;
-            text-decoration: none; border: 1px solid rgba(255,255,255,0.15); cursor: pointer;
+            background: var(--surface); color: var(--text); font-size: 0.9rem; font-weight: 600;
+            text-decoration: none; border: 1px solid var(--border); cursor: pointer;
+            box-shadow: var(--shadow-sm);
             transition: all 0.3s ease;
         }
-        .reel-btn-outline:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.3); transform: translateY(-2px); }
+        .reel-btn-outline:hover {
+            background: var(--accent-soft); border-color: var(--accent); color: var(--accent);
+            transform: translateY(-2px); box-shadow: var(--shadow-md);
+        }
+        .reel-btn-resume {
+            display: inline-flex; align-items: center; gap: 9px;
+            padding: 14px 26px; border-radius: 50px;
+            background: var(--accent-soft); color: var(--accent) !important; font-size: 0.9rem; font-weight: 600;
+            text-decoration: none; border: 1px solid rgba(79, 70, 229, 0.22); cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+        .reel-btn-resume:hover {
+            background: var(--accent); color: #ffffff !important; border-color: var(--accent);
+            transform: translateY(-2px); box-shadow: var(--shadow-md);
+        }
+        .reel-btn-resume i { font-size: 0.85rem; transition: transform 0.2s ease; }
+        .reel-btn-resume:hover i { transform: translateY(1px); }
 
         .reel-hero-stats { display: flex; gap: 40px; flex-wrap: wrap; }
         .reel-stat-num {
             font-size: 2rem; font-weight: 900; line-height: 1;
-            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            background: linear-gradient(135deg, var(--accent), #7C3AED);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
-        .reel-stat-lbl { font-size: 0.72rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+        .reel-stat-lbl { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
 
         /* Right photo */
         .reel-hero-right {
@@ -160,38 +196,39 @@
         .reel-photo-ring {
             position: absolute; inset: -4px;
             border-radius: 40px 40px 100px 100px;
-            background: conic-gradient(from 0deg, #7c3aed, #06b6d4, #f59e0b, #7c3aed);
+            background: conic-gradient(from 0deg, var(--accent), #7C3AED, var(--accent-2), var(--accent));
             animation: reelSpinRing 7s linear infinite; z-index: 0;
         }
         @keyframes reelSpinRing { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
         .reel-photo-ring-inner {
             position: absolute; inset: 3px;
             border-radius: 38px 38px 97px 97px;
-            background: #060811; z-index: 1;
+            background: var(--bg); z-index: 1;
         }
         .reel-hero-photo {
             position: relative; z-index: 2;
             width: 100%; height: 100%;
             object-fit: cover; object-position: center top;
             border-radius: 36px 36px 95px 95px;
+            box-shadow: var(--shadow-md);
         }
 
         /* Floating chips */
         .reel-chip {
             position: absolute; z-index: 10;
-            background: rgba(10,15,30,0.92);
+            background: var(--surface);
             backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255,255,255,0.12);
+            border: 1px solid var(--border);
             border-radius: 14px; padding: 10px 14px;
             display: flex; align-items: center; gap: 10px;
-            font-size: 0.8rem; font-weight: 600; color: #f1f5f9;
-            white-space: nowrap; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            font-size: 0.8rem; font-weight: 600; color: var(--text);
+            white-space: nowrap; box-shadow: var(--shadow-md);
         }
         .reel-chip-icon {
             width: 32px; height: 32px; border-radius: 8px;
             display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0;
         }
-        .reel-chip-sub { font-size: 0.68rem; color: #94a3b8; display: block; margin-top: 1px; }
+        .reel-chip-sub { font-size: 0.68rem; color: var(--text-muted); display: block; margin-top: 1px; }
         .reel-chip-tl { top: 25px; left: -85px; animation: chipA 4s ease-in-out infinite; }
         .reel-chip-tr { top: 55px; right: -90px; animation: chipB 5s ease-in-out infinite; }
         .reel-chip-bl { bottom: 75px; left: -80px; animation: chipC 4.5s ease-in-out infinite; }
@@ -205,11 +242,11 @@
         .reel-scroll-hint {
             position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
             display: flex; flex-direction: column; align-items: center; gap: 8px;
-            color: #334155; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; z-index: 1;
+            color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; z-index: 1;
         }
         .reel-scroll-line {
             width: 1px; height: 48px;
-            background: linear-gradient(to bottom, #7c3aed, transparent);
+            background: linear-gradient(to bottom, var(--accent), transparent);
             animation: reelScrollHint 2s ease-in-out infinite;
         }
         @keyframes reelScrollHint { 0%,100%{opacity:0.3} 50%{opacity:1} }
@@ -230,9 +267,9 @@
             padding: 18px 0;
             overflow: hidden;
             border-radius: 20px;
-            background: linear-gradient(90deg, rgba(124,58,237,0.14) 0%, rgba(6,182,212,0.10) 50%, rgba(124,58,237,0.14) 100%);
-            border: 1px solid rgba(124,58,237,0.35);
-            box-shadow: 0 10px 32px rgba(0,0,0,0.4), 0 0 28px rgba(124,58,237,0.16);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
@@ -250,34 +287,84 @@
             font-family: 'Syne', sans-serif !important;
             font-size: clamp(1.05rem, 1.8vw, 1.25rem);
             font-weight: 800;
-            color: #ffffff;
+            color: var(--text);
             letter-spacing: 0.05em;
             text-transform: uppercase;
             white-space: nowrap;
             transition: all 0.3s ease;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
         }
         .reel-ticker-item:nth-child(even) {
-            color: #c4b5fd;
+            color: var(--accent);
         }
         .reel-ticker-item:nth-child(3n) {
-            color: #67e8f9;
+            color: var(--accent-2);
         }
         .reel-ticker-item:hover {
-            color: #ffffff;
+            color: var(--accent-hover);
             transform: scale(1.05);
-            text-shadow: 0 0 20px rgba(124,58,237,0.8);
         }
         .reel-ticker-item i {
-            color: #06b6d4;
+            color: var(--accent);
             font-size: 0.6rem;
             display: inline-block;
-            filter: drop-shadow(0 0 8px #06b6d4) drop-shadow(0 0 14px #7c3aed);
             animation: tickerDotPulse 2s ease-in-out infinite alternate;
         }
         @keyframes tickerDotPulse {
             0% { transform: scale(0.9); opacity: 0.8; }
             100% { transform: scale(1.3); opacity: 1; }
+        }
+
+        /* Navbar Actions & Theme Toggle Button */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1002;
+        }
+        .theme-toggle-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-soft);
+            border: 1px solid rgba(79, 70, 229, 0.2);
+            color: var(--accent);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        .theme-toggle-btn:hover {
+            background: var(--accent);
+            color: #ffffff;
+            transform: scale(1.08);
+            box-shadow: var(--shadow-md);
+        }
+        .theme-toggle-btn:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+        .nav-resume-btn {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 8px 16px; border-radius: 50px;
+            background: var(--surface); border: 1px solid var(--border);
+            color: var(--text); font-family: 'Inter', sans-serif;
+            font-size: 0.82rem; font-weight: 600; text-decoration: none;
+            letter-spacing: 0.02em; transition: all 0.25s ease;
+            box-shadow: var(--shadow-sm); white-space: nowrap;
+        }
+        .nav-resume-btn i { color: var(--accent); font-size: 0.82rem; transition: transform 0.2s ease; }
+        .nav-resume-btn:hover {
+            background: var(--accent-soft); border-color: var(--accent);
+            color: var(--accent); transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        .nav-resume-btn:hover i { transform: translateY(1px); }
+        .nav-resume-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        @media (max-width: 480px) {
+            .nav-resume-btn { padding: 6px 11px; font-size: 0.76rem; gap: 5px; }
         }
 
         /* ============================================================
@@ -429,11 +516,12 @@
                 font-size: 0.63rem !important;
                 font-weight: 700 !important;
                 gap: 6px !important;
-                box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+                box-shadow: var(--shadow-md) !important;
                 backdrop-filter: blur(12px) !important;
                 -webkit-backdrop-filter: blur(12px) !important;
-                background: rgba(8, 12, 24, 0.94) !important;
-                border: 1px solid rgba(255, 255, 255, 0.16) !important;
+                background: var(--surface) !important;
+                border: 1px solid var(--border) !important;
+                color: var(--text) !important;
                 z-index: 10 !important;
             }
             .reel-chip-icon {
@@ -444,7 +532,7 @@
             }
             .reel-chip-sub {
                 font-size: 0.52rem !important;
-                color: #94a3b8 !important;
+                color: var(--text-muted) !important;
                 display: block !important;
                 margin-top: 1px !important;
             }
@@ -610,40 +698,42 @@
         /* Mobile Hamburger Animation */
         .mobile-nav-toggle.active .hamburger-line:nth-child(1) {
             transform: rotate(45deg) translate(5px, 5px);
-            background: #a78bfa;
+            background: var(--accent);
         }
         .mobile-nav-toggle.active .hamburger-line:nth-child(2) {
             opacity: 0;
         }
         .mobile-nav-toggle.active .hamburger-line:nth-child(3) {
             transform: rotate(-45deg) translate(5px, -5px);
-            background: #a78bfa;
+            background: var(--accent);
         }
 
         @media (max-width: 768px) {
             .nav-links {
-                background: rgba(6, 8, 17, 0.98) !important;
+                background: rgba(255, 255, 255, 0.98) !important;
                 backdrop-filter: blur(24px) !important;
                 -webkit-backdrop-filter: blur(24px) !important;
-                border-bottom: 1px solid rgba(124, 58, 237, 0.25) !important;
+                border-bottom: 1px solid var(--border) !important;
+                box-shadow: var(--shadow-md) !important;
             }
             .nav-links a {
                 font-family: 'Syne', sans-serif !important;
                 font-size: 1.25rem !important;
                 font-weight: 700 !important;
-                color: #e2e8f0 !important;
+                color: var(--text) !important;
                 padding: 12px 24px !important;
                 border-radius: 12px !important;
                 transition: all 0.25s ease !important;
             }
             .nav-links a:hover,
             .nav-links a:active {
-                background: rgba(124, 58, 237, 0.2) !important;
-                color: #ffffff !important;
+                background: var(--accent-soft) !important;
+                color: var(--accent) !important;
             }
         }
+
         /* ============================================================
-           GLOBAL REEL THEME OVERRIDES — Syne Font & Purple/Cyan Palette
+           GLOBAL REEL THEME OVERRIDES — Syne Font & Modern Indigo Palette
         ============================================================ */
 
         /* MV Brand Logo */
@@ -652,7 +742,7 @@
             font-size: 1.7rem !important;
             font-weight: 800 !important;
             letter-spacing: -0.04em !important;
-            color: #ffffff !important;
+            color: var(--text) !important;
             display: inline-flex !important;
             align-items: center !important;
             text-decoration: none !important;
@@ -663,13 +753,13 @@
             transform: scale(1.06) !important;
         }
         .nav-logo .logo-m {
-            color: #ffffff !important;
+            color: var(--text) !important;
             font-weight: 800 !important;
         }
         .nav-logo .logo-v {
-            color: #7c3aed !important;
+            color: var(--accent) !important;
             font-weight: 800 !important;
-            text-shadow: 0 0 20px rgba(124, 58, 237, 0.75) !important;
+            text-shadow: none !important;
         }
         .logo-bracket { display: none !important; }
 
@@ -695,9 +785,8 @@
         .linkedin-name {
             font-family: 'Syne', sans-serif !important;
             letter-spacing: -0.03em !important;
+            color: var(--text);
         }
-
-
 
         .section-title {
             font-family: 'Syne', sans-serif !important;
@@ -705,6 +794,7 @@
             font-weight: 800 !important;
             letter-spacing: -0.03em !important;
             line-height: 1.15 !important;
+            color: var(--text) !important;
         }
 
         .drawer-title {
@@ -712,12 +802,14 @@
             font-size: clamp(1.4rem, 2.8vw, 2rem) !important;
             font-weight: 700 !important;
             letter-spacing: -0.02em !important;
+            color: var(--text) !important;
         }
 
         .panel-title {
             font-family: 'Syne', sans-serif !important;
             font-size: clamp(1.3rem, 2.5vw, 1.85rem) !important;
             font-weight: 700 !important;
+            color: var(--text) !important;
         }
 
         /* Vivid Gradient for Accents */
@@ -726,24 +818,24 @@
         .section-title .accent,
         .section-title span.accent,
         .hero-title .accent {
-            background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%) !important;
+            background: linear-gradient(135deg, var(--accent) 0%, #7C3AED 100%) !important;
             -webkit-background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
             background-clip: text !important;
             display: inline-block !important;
         }
 
-        /* Primary Purple Gradient Buttons */
+        /* Primary Indigo Gradient Buttons */
         .btn-primary,
         .reel-btn-primary,
         .drawer-btn-primary,
         .btn-upwork-hire,
         .btn-linkedin-connect,
         .contact-cta {
-            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+            background: linear-gradient(135deg, var(--accent) 0%, #7C3AED 100%) !important;
             color: #ffffff !important;
             border: none !important;
-            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.42) !important;
+            box-shadow: var(--shadow-sm) !important;
             font-weight: 700 !important;
             transition: all 0.3s ease !important;
         }
@@ -754,48 +846,49 @@
         .btn-upwork-hire:hover,
         .btn-linkedin-connect:hover,
         .contact-cta:hover {
-            background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%) !important;
-            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.65) !important;
+            background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%) !important;
+            box-shadow: var(--shadow-md) !important;
             transform: translateY(-2px) !important;
         }
 
         /* Interactive Active Indicators & Tabs */
         .scroll-progress,
         #scrollProgress {
-            background: linear-gradient(90deg, #7c3aed, #06b6d4, #f59e0b) !important;
-            box-shadow: 0 0 14px rgba(124, 58, 237, 0.6) !important;
+            background: linear-gradient(90deg, var(--accent), #7C3AED, var(--accent-2)) !important;
+            box-shadow: none !important;
         }
 
         .drawer-nav-btn.active {
-            background: rgba(124, 58, 237, 0.22) !important;
-            border-color: #7c3aed !important;
+            background: var(--accent) !important;
+            border-color: var(--accent) !important;
             color: #ffffff !important;
-            box-shadow: 0 0 24px rgba(124, 58, 237, 0.4) !important;
+            box-shadow: var(--shadow-sm) !important;
         }
 
         .console-tab-btn.active {
-            background: rgba(124, 58, 237, 0.18) !important;
-            border-color: rgba(124, 58, 237, 0.45) !important;
-            box-shadow: 0 4px 22px rgba(124, 58, 237, 0.3) !important;
+            background: var(--accent-soft) !important;
+            border-color: var(--accent) !important;
+            color: var(--accent) !important;
+            box-shadow: var(--shadow-sm) !important;
         }
 
         .proj-dot.active .dot-pip {
-            background: #7c3aed !important;
-            box-shadow: 0 0 12px #7c3aed !important;
+            background: var(--accent) !important;
+            box-shadow: 0 0 8px rgba(79, 70, 229, 0.4) !important;
         }
 
         .side-nav-link.active .dot {
-            background: #7c3aed !important;
-            box-shadow: 0 0 12px #7c3aed !important;
+            background: var(--accent) !important;
+            box-shadow: 0 0 8px rgba(79, 70, 229, 0.4) !important;
         }
         .side-nav-progress {
-            background: linear-gradient(to bottom, #7c3aed, #06b6d4) !important;
+            background: linear-gradient(to bottom, var(--accent), var(--accent-2)) !important;
         }
 
         /* Section Tags & Pills */
         .section-tag {
             font-family: 'JetBrains Mono', monospace !important;
-            color: #06b6d4 !important;
+            color: var(--accent) !important;
             letter-spacing: 0.15em !important;
             font-weight: 600 !important;
         }
@@ -807,10 +900,209 @@
             font-family: 'JetBrains Mono', monospace !important;
         }
 
-        /* Glass Cards with Purple Glow */
+        /* Glass Cards with Soft Shadows */
         .glass-card:hover {
+            border-color: rgba(79, 70, 229, 0.3) !important;
+            box-shadow: var(--shadow-md) !important;
+        }
+
+        /* ============================================================
+           DARK THEME SPECIFIC OVERRIDES (When data-theme="dark" is set)
+        ============================================================ */
+        [data-theme="dark"] .reel-mesh-bg::before {
+            background: radial-gradient(circle, rgba(124,58,237,0.13) 0%, transparent 70%);
+        }
+        [data-theme="dark"] .reel-mesh-bg::after {
+            background: radial-gradient(circle, rgba(6,182,212,0.10) 0%, transparent 70%);
+        }
+        [data-theme="dark"] .reel-hero-badge {
+            background: rgba(124,58,237,0.12);
+            border: 1px solid rgba(124,58,237,0.3);
+            color: #a78bfa;
+        }
+        [data-theme="dark"] .reel-hero-name .n1 {
+            color: #f1f5f9 !important;
+        }
+        [data-theme="dark"] .reel-hero-name .n2 {
+            background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+        [data-theme="dark"] .reel-hero-role {
+            color: #94a3b8;
+        }
+        [data-theme="dark"] .reel-hero-role strong {
+            color: #f1f5f9;
+        }
+        [data-theme="dark"] .reel-btn-primary {
+            background: #7c3aed !important;
+            box-shadow: 0 8px 32px rgba(124,58,237,0.4) !important;
+        }
+        [data-theme="dark"] .reel-btn-primary:hover {
+            background: #6d28d9 !important;
+            box-shadow: 0 14px 40px rgba(124,58,237,0.5) !important;
+        }
+        [data-theme="dark"] .reel-btn-outline {
+            background: transparent;
+            color: #f1f5f9;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        [data-theme="dark"] .reel-btn-outline:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.3);
+            color: #ffffff;
+        }
+        [data-theme="dark"] .reel-stat-num {
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        [data-theme="dark"] .reel-stat-lbl {
+            color: #64748b;
+        }
+        [data-theme="dark"] .reel-photo-ring {
+            background: conic-gradient(from 0deg, #7c3aed, #06b6d4, #f59e0b, #7c3aed);
+        }
+        [data-theme="dark"] .reel-photo-ring-inner {
+            background: #060811;
+        }
+        [data-theme="dark"] .reel-chip {
+            background: rgba(10,15,30,0.92) !important;
+            border: 1px solid rgba(255,255,255,0.12) !important;
+            color: #f1f5f9 !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
+        }
+        [data-theme="dark"] .reel-chip-sub {
+            color: #94a3b8 !important;
+        }
+        [data-theme="dark"] .reel-scroll-hint {
+            color: #334155;
+        }
+        [data-theme="dark"] .reel-scroll-line {
+            background: linear-gradient(to bottom, #7c3aed, transparent);
+        }
+        [data-theme="dark"] .reel-ticker {
+            background: linear-gradient(90deg, rgba(124,58,237,0.14) 0%, rgba(6,182,212,0.10) 50%, rgba(124,58,237,0.14) 100%);
+            border: 1px solid rgba(124,58,237,0.35);
+            box-shadow: 0 10px 32px rgba(0,0,0,0.4), 0 0 28px rgba(124,58,237,0.16);
+        }
+        [data-theme="dark"] .reel-ticker-item {
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+        }
+        [data-theme="dark"] .reel-ticker-item:nth-child(even) {
+            color: #c4b5fd;
+        }
+        [data-theme="dark"] .reel-ticker-item:nth-child(3n) {
+            color: #67e8f9;
+        }
+        [data-theme="dark"] .reel-ticker-item:hover {
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(124,58,237,0.8);
+        }
+        [data-theme="dark"] .reel-ticker-item i {
+            color: #06b6d4;
+            filter: drop-shadow(0 0 8px #06b6d4) drop-shadow(0 0 14px #7c3aed);
+        }
+        @media (max-width: 768px) {
+            [data-theme="dark"] .nav-links {
+                background: rgba(6, 8, 17, 0.98) !important;
+                border-bottom: 1px solid rgba(124, 58, 237, 0.25) !important;
+            }
+            [data-theme="dark"] .nav-links a {
+                color: #e2e8f0 !important;
+            }
+            [data-theme="dark"] .nav-links a:hover,
+            [data-theme="dark"] .nav-links a:active {
+                background: rgba(124, 58, 237, 0.2) !important;
+                color: #ffffff !important;
+            }
+        }
+        [data-theme="dark"] .nav-logo {
+            color: #ffffff !important;
+        }
+        [data-theme="dark"] .nav-logo .logo-m {
+            color: #ffffff !important;
+        }
+        [data-theme="dark"] .nav-logo .logo-v {
+            color: #7c3aed !important;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.75) !important;
+        }
+        [data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3, [data-theme="dark"] h4,
+        [data-theme="dark"] .section-title, [data-theme="dark"] .hero-title, [data-theme="dark"] .drawer-title, [data-theme="dark"] .panel-title {
+            color: #f1f5f9;
+        }
+        [data-theme="dark"] .accent, [data-theme="dark"] .gradient-text {
+            background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+        [data-theme="dark"] .btn-primary, [data-theme="dark"] .reel-btn-primary,
+        [data-theme="dark"] .drawer-btn-primary, [data-theme="dark"] .btn-upwork-hire,
+        [data-theme="dark"] .btn-linkedin-connect, [data-theme="dark"] .contact-cta {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.42) !important;
+            color: #ffffff !important;
+        }
+        [data-theme="dark"] .scroll-progress, [data-theme="dark"] #scrollProgress {
+            background: linear-gradient(90deg, #7c3aed, #06b6d4, #f59e0b) !important;
+            box-shadow: 0 0 14px rgba(124, 58, 237, 0.6) !important;
+        }
+        [data-theme="dark"] .drawer-nav-btn.active {
+            background: rgba(124, 58, 237, 0.22) !important;
+            border-color: #7c3aed !important;
+            box-shadow: 0 0 24px rgba(124, 58, 237, 0.4) !important;
+            color: #ffffff !important;
+        }
+        [data-theme="dark"] .console-tab-btn.active {
+            background: rgba(124, 58, 237, 0.18) !important;
+            border-color: rgba(124, 58, 237, 0.45) !important;
+            box-shadow: 0 4px 22px rgba(124, 58, 237, 0.3) !important;
+        }
+        [data-theme="dark"] .proj-dot.active .dot-pip,
+        [data-theme="dark"] .side-nav-link.active .dot {
+            background: #7c3aed !important;
+            box-shadow: 0 0 12px #7c3aed !important;
+        }
+        [data-theme="dark"] .side-nav-progress {
+            background: linear-gradient(to bottom, #7c3aed, #06b6d4) !important;
+        }
+        [data-theme="dark"] .section-tag {
+            color: #06b6d4 !important;
+        }
+        [data-theme="dark"] .glass-card:hover {
             border-color: rgba(124, 58, 237, 0.35) !important;
             box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5), 0 0 35px rgba(124, 58, 237, 0.15) !important;
+        }
+        [data-theme="dark"] .theme-toggle-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: #f1f5f9;
+        }
+        [data-theme="dark"] .theme-toggle-btn:hover {
+            background: var(--accent);
+            color: #ffffff;
+        }
+        [data-theme="dark"] .reel-btn-resume {
+            background: rgba(129, 140, 248, 0.12) !important;
+            border-color: rgba(129, 140, 248, 0.3) !important;
+            color: #818cf8 !important;
+        }
+        [data-theme="dark"] .reel-btn-resume:hover {
+            background: #818cf8 !important;
+            color: #0b0f19 !important;
+            border-color: #818cf8 !important;
+        }
+        [data-theme="dark"] .nav-resume-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: #f1f5f9;
+        }
+        [data-theme="dark"] .nav-resume-btn i { color: #818cf8; }
+        [data-theme="dark"] .nav-resume-btn:hover {
+            background: rgba(129, 140, 248, 0.18);
+            border-color: rgba(129, 140, 248, 0.45);
+            color: #ffffff;
         }
     </style>
 </head>
@@ -829,11 +1121,6 @@
             <a href="#hero" class="nav-logo" aria-label="Manjesh Verma">
                 <span class="logo-m">M</span><span class="logo-v">V</span>
             </a>
-            <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#about" data-key="A"><span class="nav-key">[A]</span> About</a></li>
                 <li><a href="#experience" data-key="E"><span class="nav-key">[E]</span> Experience</a></li>
@@ -844,6 +1131,19 @@
                 <li><a href="#upwork" data-key="U"><span class="nav-key">[U]</span> Upwork</a></li>
                 <li><a href="#contact" data-key="X"><span class="nav-key">[X]</span> Contact</a></li>
             </ul>
+            <div class="nav-actions">
+                <a href="Manjesh_Verma_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-resume-btn" title="View Resume (PDF)">
+                    <i class="fas fa-file-pdf"></i> <span>Resume</span>
+                </a>
+                <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme (Light / Dark)">
+                    <i class="fas fa-sun" id="themeIcon"></i>
+                </button>
+                <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
         </nav>
     </header>
 
@@ -906,6 +1206,9 @@
                         <a href="#projects" class="reel-btn-outline">
                             <i class="fas fa-code"></i> View Projects
                         </a>
+                        <a href="Manjesh_Verma_Resume.pdf" target="_blank" rel="noopener noreferrer" class="reel-btn-resume" title="View Resume (PDF)">
+                            <i class="fas fa-file-pdf"></i> Resume
+                        </a>
                     </div>
                     <div class="reel-hero-stats">
                         <div>
@@ -935,25 +1238,25 @@
 
                         <!-- Floating Chips -->
                         <div class="reel-chip reel-chip-tl">
-                            <div class="reel-chip-icon" style="background:rgba(124,58,237,0.2);color:#a78bfa">
+                            <div class="reel-chip-icon" style="background:#EEF2FF;color:#4F46E5">
                                 <i class="fab fa-python"></i>
                             </div>
                             <div>FastAPI Expert <span class="reel-chip-sub">Backend Dev</span></div>
                         </div>
                         <div class="reel-chip reel-chip-tr">
-                            <div class="reel-chip-icon" style="background:rgba(6,182,212,0.15);color:#67e8f9">
+                            <div class="reel-chip-icon" style="background:#ECFEFF;color:#0891B2">
                                 <i class="fas fa-brain"></i>
                             </div>
                             <div>AI / ML RAG <span class="reel-chip-sub">LLM Integration</span></div>
                         </div>
                         <div class="reel-chip reel-chip-bl">
-                            <div class="reel-chip-icon" style="background:rgba(245,158,11,0.15);color:#fcd34d">
+                            <div class="reel-chip-icon" style="background:#FEF3C7;color:#D97706">
                                 <i class="fab fa-google"></i>
                             </div>
                             <div>Docker <span class="reel-chip-sub">Containerization</span></div>
                         </div>
                         <div class="reel-chip reel-chip-br">
-                            <div class="reel-chip-icon" style="background:rgba(34,197,94,0.15);color:#4ade80">
+                            <div class="reel-chip-icon" style="background:#DCFCE7;color:#16A34A">
                                 <i class="fas fa-star"></i>
                             </div>
                             <div>GitHub Actions <span class="reel-chip-sub">CI/CD automation</span></div>
@@ -1507,7 +1810,7 @@
                 <div class="workflow-grid">
                     <!-- Tool 1: Antigravity -->
                     <div class="workflow-card glass-card" data-tilt>
-                        <div class="workflow-icon" style="background: rgba(34,211,238,0.15); color: var(--accent3);">
+                        <div class="workflow-icon" style="background: #ECFEFF; color: var(--accent-2);">
                             <i class="fas fa-robot"></i>
                         </div>
                         <h3>Antigravity (DeepMind)</h3>
@@ -1516,7 +1819,7 @@
 
                     <!-- Tool 2: Cursor AI -->
                     <div class="workflow-card glass-card" data-tilt>
-                        <div class="workflow-icon" style="background: rgba(192,132,252,0.15); color: var(--accent2);">
+                        <div class="workflow-icon" style="background: #F3E8FF; color: #7C3AED;">
                             <i class="fas fa-code"></i>
                         </div>
                         <h3>Cursor AI Editor</h3>
@@ -1525,7 +1828,7 @@
 
                     <!-- Tool 3: Advanced Claude Prompting -->
                     <div class="workflow-card glass-card" data-tilt>
-                        <div class="workflow-icon" style="background: rgba(129,140,248,0.15); color: var(--accent);">
+                        <div class="workflow-icon" style="background: var(--accent-soft); color: var(--accent);">
                             <i class="fas fa-terminal"></i>
                         </div>
                         <h3>Claude & Prompting</h3>
@@ -3131,18 +3434,7 @@
         </div>
     </footer>
 
-    <!-- Floating Movable 3D Resume Robot Widget -->
-    <div class="floating-resume-bot" id="floatingResumeBot" role="region" aria-label="3D Resume Assistant Bot">
-        <div class="resume-bot-container" id="resumeBotContainer">
-            <canvas id="resumeBotCanvas" width="130" height="140"></canvas>
-            <a href="Manjesh_Verma_Resume.pdf" download="Manjesh_Verma_Resume.pdf" class="resume-bot-download" id="resumeBotDownload" title="Download Resume PDF">
-                <i class="fas fa-download"></i>
-            </a>
-            <div class="resume-bot-tooltip" id="resumeBotTooltip">
-                <span class="tooltip-badge">VIEW RESUME</span>
-            </div>
-        </div>
-    </div>
+
 
     <script src="script.js?v=2.0.0"></script>
     <script>
